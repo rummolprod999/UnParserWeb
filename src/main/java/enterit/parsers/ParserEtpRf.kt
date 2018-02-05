@@ -10,6 +10,7 @@ import java.util.logging.Level
 const val PageNumEtpRf = 10
 
 class ParserEtpRf : Iparser {
+    val BaseUrl = "http://etprf.ru"
     init {
         java.util.logging.Logger.getLogger("com.gargoylesoftware").level = Level.OFF
         System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog")
@@ -55,7 +56,9 @@ class ParserEtpRf : Iparser {
             val dateEndTmp = t.getCell(8).textContent.trim { it <= ' ' }
             val datePub = getDateEtpRf(datePubTmp)
             val dateEnd = getDateEtpRf(dateEndTmp)
-            val tt = TenderEtpRf(status, entNum, purNum, purObj, nmck, placingWay, datePub, dateEnd)
+            val urlT = t.getCell(11).getElementsByTagName("a")[0].getAttribute("href")
+            val url = "$BaseUrl$urlT"
+            val tt = TenderEtpRf(status, entNum, purNum, purObj, nmck, placingWay, datePub, dateEnd, url)
             tt.parsing()
         } catch (e: Exception) {
             logger("error in ParserEtpRf.parserTender()", e.stackTrace, e)

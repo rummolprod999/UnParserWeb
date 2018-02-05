@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="UnParserWeb:jar">
+  <artifact type="jar" name="UnParserWeb:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/UnParserWeb_jar</output-path>
     <root id="archive" name="UnParserWeb.jar">
       <element id="module-output" name="UnParserWeb" />

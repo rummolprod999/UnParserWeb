@@ -4,6 +4,7 @@ import com.gargoylesoftware.htmlunit.html.*
 import com.gargoylesoftware.htmlunit.*
 import enterit.getDateEtpRf
 import enterit.logger
+import enterit.tenders.TenderEtpRf
 import java.util.logging.Level
 
 const val PageNumEtpRf = 10
@@ -31,8 +32,6 @@ class ParserEtpRf : Iparser {
             } catch (e: Exception) {
                 logger("Error in parserPage function", e.stackTrace, e)
             }
-
-
         }
         webClient.close()
     }
@@ -45,18 +44,23 @@ class ParserEtpRf : Iparser {
     }
 
     private fun parserTender(t: HtmlTableRow) {
-        val status = t.getCell(10).textContent.trim { it <= ' ' }
-        val entNum = t.getCell(0).textContent.trim { it <= ' ' }
-        val purNum = t.getCell(1).textContent.trim { it <= ' ' }
-        val purObj =  t.getCell(3).textContent.trim { it <= ' ' }
-        val nmck =  t.getCell(4).textContent.trim { it <= ' ' }
-        val placingWay = t.getCell(6).textContent.trim { it <= ' ' }
-        val datePubTmp = t.getCell(7).textContent.trim { it <= ' ' }
-        val dateEndTmp = t.getCell(8).textContent.trim { it <= ' ' }
-        val dateEnd = getDateEtpRf(dateEndTmp)
-        println(dateEndTmp)
-        println(dateEnd)
-        println()
+        try {
+            val status = t.getCell(10).textContent.trim { it <= ' ' }
+            val entNum = t.getCell(0).textContent.trim { it <= ' ' }
+            val purNum = t.getCell(1).textContent.trim { it <= ' ' }
+            val purObj = t.getCell(3).textContent.trim { it <= ' ' }
+            val nmck = t.getCell(4).textContent.trim { it <= ' ' }
+            val placingWay = t.getCell(6).textContent.trim { it <= ' ' }
+            val datePubTmp = t.getCell(7).textContent.trim { it <= ' ' }
+            val dateEndTmp = t.getCell(8).textContent.trim { it <= ' ' }
+            val datePub = getDateEtpRf(datePubTmp)
+            val dateEnd = getDateEtpRf(dateEndTmp)
+            val tt = TenderEtpRf(status, entNum, purNum, purObj, nmck, placingWay, datePub, dateEnd)
+            tt.parsing()
+        } catch (e: Exception) {
+            logger("error in ParserEtpRf.parserTender()", e.stackTrace, e)
+        }
+
     }
 
 }

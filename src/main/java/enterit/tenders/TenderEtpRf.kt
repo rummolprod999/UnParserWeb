@@ -5,12 +5,7 @@ import org.jsoup.Jsoup
 import org.jsoup.select.Elements
 import java.sql.*
 import java.util.Date
-import java.sql.ResultSet
-import java.lang.reflect.Array.setInt
-import java.sql.Statement.RETURN_GENERATED_KEYS
-import java.util.Objects
-import java.lang.reflect.Array.setInt
-import java.sql.Statement.RETURN_GENERATED_KEYS
+
 
 
 class TenderEtpRf(val status: String, val entNum: String, var purNum: String, val purObj: String, val nmck: String, val placingWay: String, val datePub: Date, val dateEnd: Date, val url: String) {

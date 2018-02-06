@@ -6,8 +6,10 @@ import enterit.getDateEtpRf
 import enterit.logger
 import enterit.tenders.TenderEtpRf
 import java.util.logging.Level
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
-const val PageNumEtpRf = 10
+const val PageNumEtpRf = 30
 
 class ParserEtpRf : Iparser {
     val BaseUrl = "http://etprf.ru"
@@ -48,7 +50,10 @@ class ParserEtpRf : Iparser {
         try {
             val status = t.getCell(10).textContent.trim { it <= ' ' }
             val entNum = t.getCell(0).textContent.trim { it <= ' ' }
-            val purNum = t.getCell(1).textContent.trim { it <= ' ' }
+            var purNum = t.getCell(1).textContent.trim { it <= ' ' }
+            val pattern: Pattern = Pattern.compile("\\s+")
+            val matcher: Matcher = pattern.matcher(purNum)
+            purNum = matcher.replaceAll("")
             val purObj = t.getCell(3).textContent.trim { it <= ' ' }
             val nmck = t.getCell(4).textContent.trim { it <= ' ' }
             val placingWay = t.getCell(6).textContent.trim { it <= ' ' }

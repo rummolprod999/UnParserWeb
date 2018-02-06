@@ -187,3 +187,34 @@ fun extractNum(s: String): String {
     }
     return nm
 }
+fun returnPriceEtpRf(s: String): String{
+    var t = ""
+    val tt = s.replace(',', '.')
+    val pattern: Pattern = Pattern.compile("\\s+")
+    val matcher: Matcher = pattern.matcher(tt)
+    t = matcher.replaceAll("")
+    return t
+}
+
+fun getOkpd(s: String):Pair<Int, String>{
+    var okpd2GroupCode = 0
+    var okpd2GroupLevel1Code = ""
+    if(s.length > 1){
+        val dot = s.indexOf('.')
+        if(dot != -1){
+            val okpd2GroupCodeTemp = s.slice(0 until dot)
+            try {
+                okpd2GroupCode = Integer.parseInt(okpd2GroupCodeTemp)
+            } catch (e: Exception) {
+            }
+        }
+    }
+    if(s.length > 3){
+        val dot = s.indexOf('.')
+        if(dot != -1){
+            okpd2GroupLevel1Code = s.slice(dot+1 until dot+2)
+        }
+
+    }
+    return Pair(okpd2GroupCode, okpd2GroupLevel1Code)
+}

@@ -1,6 +1,7 @@
 package enterit
 
 import java.sql.*
+import java.text.Format
 import java.util.*
 import java.util.Date
 import java.util.regex.Matcher
@@ -155,10 +156,10 @@ fun getDate(dt: String): Date {
 
     return d
 }
-fun getDateEtpRf(dt: String): Date {
+fun getDateFromFormat(dt: String, format: Format): Date {
     var d = Date(0L)
     try {
-        d = formatterEtpRf.parseObject(dt) as Date
+        d = format.parseObject(dt) as Date
     } catch (e: Exception) {
     }
 
@@ -217,4 +218,9 @@ fun getOkpd(s: String):Pair<Int, String>{
 
     }
     return Pair(okpd2GroupCode, okpd2GroupLevel1Code)
+}
+fun getDateFromString(d: String): Date{
+    var t = Date(0L)
+
+    return t
 }

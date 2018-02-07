@@ -8,13 +8,15 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 val executePath: String = File(Class.forName("enterit.ApplicationKt").protectionDomain.codeSource.location.path).parentFile.toString()
-const val arguments = "etprf"
+const val arguments = "etprf, gpn"
 lateinit var arg: Arguments
 var Database: String? = null
 var tempDirTenders: String? = null
 var logDirTenders: String? = null
 var tempDirTendersEtpRf: String? = null
 var logDirTendersEtpRf: String? = null
+var tempDirTendersGpn: String? = null
+var logDirTendersGpn: String? = null
 var Prefix: String? = null
 var UserDb: String? = null
 var PassDb: String? = null
@@ -23,12 +25,14 @@ var Port: Int = 0
 var logPath: String? = null
 val DateNow = Date()
 var AddTenderEtpRf: Int = 0
+var AddTenderGpn: Int = 0
 var UrlConnect: String? = null
 var formatter: Format = SimpleDateFormat("dd.MM.yyyy kk:mm:ss")
+var formatterGpn: Format = SimpleDateFormat("dd.MM.yyyy kk:mm")
 var formatterOnlyDate: Format = SimpleDateFormat("dd.MM.yyyy")
 var formatterEtpRf: Format = SimpleDateFormat("dd.MM.yyyy kk:mm:ss (XXX)")
 
-fun GetSettings() = try {
+fun getSettings() = try {
     val filePathSetting = executePath + File.separator + "setting_tenders.xml"
     val documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder()
     val document = documentBuilder.parse(filePathSetting)
@@ -46,6 +50,8 @@ fun GetSettings() = try {
                     "database" -> Database = it.childNodes.item(0).textContent
                     "tempdir_tenders_etprf" -> tempDirTendersEtpRf = executePath + File.separator + it.childNodes.item(0).textContent
                     "logdir_tenders_etprf" -> logDirTendersEtpRf = executePath + File.separator + it.childNodes.item(0).textContent
+                    "tempdir_tenders_gpn" -> tempDirTendersGpn = executePath + File.separator + it.childNodes.item(0).textContent
+                    "logdir_tenders_gpn" -> logDirTendersGpn = executePath + File.separator + it.childNodes.item(0).textContent
                     "prefix" -> Prefix = try {
                         it.childNodes.item(0).textContent
                     } catch (e: Exception) {
@@ -70,13 +76,15 @@ fun init(args: Array<String>) {
     } else {
         when (args[0]) {
             "etprf" -> arg = Arguments.ETPRF
+            "gpn" -> arg = Arguments.GPN
             else -> run { println("Неверно указаны аргументы, используйте $arguments, выходим из программы"); System.exit(0) }
 
         }
     }
-    GetSettings()
+    getSettings()
     when (arg) {
         Arguments.ETPRF -> run { tempDirTenders = tempDirTendersEtpRf; logDirTenders = logDirTendersEtpRf }
+        Arguments.GPN -> run { tempDirTenders = tempDirTendersGpn; logDirTenders = logDirTendersGpn }
     }
     if (tempDirTenders == null || tempDirTenders == "") {
         println("Не задана папка для временных файлов, выходим из программы")

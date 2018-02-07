@@ -2,7 +2,8 @@ package enterit.parsers
 
 import com.gargoylesoftware.htmlunit.html.*
 import com.gargoylesoftware.htmlunit.*
-import enterit.getDateEtpRf
+import enterit.formatterEtpRf
+import enterit.getDateFromFormat
 import enterit.logger
 import enterit.tenders.TenderEtpRf
 import java.util.logging.Level
@@ -59,8 +60,8 @@ class ParserEtpRf : Iparser {
             val placingWay = t.getCell(6).textContent.trim { it <= ' ' }
             val datePubTmp = t.getCell(7).textContent.trim { it <= ' ' }
             val dateEndTmp = t.getCell(8).textContent.trim { it <= ' ' }
-            val datePub = getDateEtpRf(datePubTmp)
-            val dateEnd = getDateEtpRf(dateEndTmp)
+            val datePub = getDateFromFormat(datePubTmp, formatterEtpRf)
+            val dateEnd = getDateFromFormat(dateEndTmp, formatterEtpRf)
             val urlT = t.getCell(11).getElementsByTagName("a")[0].getAttribute("href")
             val url = "$BaseUrl$urlT"
             val tt = TenderEtpRf(status, entNum, purNum, purObj, nmck, placingWay, datePub, dateEnd, url)

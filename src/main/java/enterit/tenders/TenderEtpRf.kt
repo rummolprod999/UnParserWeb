@@ -171,7 +171,7 @@ class TenderEtpRf(val status: String, val entNum: String, var purNum: String, va
             var idTender = 0
             val scoringDT = html.selectFirst("td:containsOwn(Дата и время рассмотрения заявок) ~ td")?.ownText()?.trim { it <= ' ' }
                     ?: ""
-            val scoringDate = getDateEtpRf(scoringDT)
+            val scoringDate = getDateFromFormat(scoringDT, formatterEtpRf)
             val insertTender = con.prepareStatement("INSERT INTO ${Prefix}tender SET id_region = 0, id_xml = ?, purchase_number = ?, doc_publish_date = ?, href = ?, purchase_object_info = ?, type_fz = ?, id_organizer = ?, id_placing_way = ?, id_etp = ?, end_date = ?, cancel = ?, date_version = ?, num_version = ?, notice_version = ?, xml = ?, print_form = ?, scoring_date = ?", Statement.RETURN_GENERATED_KEYS)
             insertTender.setString(1, entNum)
             insertTender.setString(2, purNum)
@@ -258,7 +258,7 @@ class TenderEtpRf(val status: String, val entNum: String, var purNum: String, va
             }
             val purObj: Elements = html.select("table[data-orm-table-id = Lot_LotItems] tbody tr[style]")
             if (purObj.count() > 0) {
-                for (po in purObj) {
+                purObj.forEach { po ->
                     val okpd2Code = po.select("td:eq(1)")?.text()?.trim { it <= ' ' } ?: ""
                     val okpd2Name = po.select("td:eq(2)")?.text()?.trim { it <= ' ' } ?: ""
                     val (okpd2GroupCode, okpd2GroupLevel1Code) = getOkpd(okpd2Code)

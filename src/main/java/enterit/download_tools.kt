@@ -19,7 +19,7 @@ fun downloadFromUrl(urls: String): String {
         try {
             var s: String
             val executor = Executors.newCachedThreadPool()
-            val task = { downloadWait(urls) }
+            val task = { downloadWaitWithRef(urls) }
             val future = executor.submit(task)
             try {
                 s =  future.get(60, TimeUnit.SECONDS)
@@ -36,6 +36,7 @@ fun downloadFromUrl(urls: String): String {
             return s
 
         } catch (e: Exception) {
+            println(e)
             count++
             sleep(5000)
         }
@@ -48,6 +49,30 @@ fun downloadWait(urls: String): String {
     val s = StringBuilder()
     val url = URL(urls)
     val `is`: InputStream = url.openStream()
+    val br = BufferedReader(InputStreamReader(`is`))
+    var inputLine: String?
+    var value = true
+    while (value) {
+        inputLine = br.readLine()
+        if (inputLine == null) {
+            value = false
+        } else {
+            s.append(inputLine)
+        }
+
+    }
+    br.close()
+    `is`.close()
+    return s.toString()
+}
+
+fun downloadWaitWithRef(urls: String): String {
+    val s = StringBuilder()
+    val url = URL(urls)
+    val uc = url.openConnection()
+    uc.addRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_8; en-US) AppleWebKit/532.5 (KHTML, like Gecko) Chrome/4.0.249.0 Safari/532.5")
+    uc.connect()
+    val `is`: InputStream = uc.getInputStream()
     val br = BufferedReader(InputStreamReader(`is`))
     var inputLine: String?
     var value = true

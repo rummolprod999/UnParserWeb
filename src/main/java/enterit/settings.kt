@@ -8,9 +8,13 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 val executePath: String = File(Class.forName("enterit.ApplicationKt").protectionDomain.codeSource.location.path).parentFile.toString()
+const val arguments = "etprf"
+lateinit var arg: Arguments
 var Database: String? = null
 var tempDirTenders: String? = null
 var logDirTenders: String? = null
+var tempDirTendersEtpRf: String? = null
+var logDirTendersEtpRf: String? = null
 var Prefix: String? = null
 var UserDb: String? = null
 var PassDb: String? = null
@@ -40,8 +44,8 @@ fun GetSettings() = try {
             .forEach {
                 when (it.nodeName) {
                     "database" -> Database = it.childNodes.item(0).textContent
-                    "tempdir_tenders_etprf" -> tempDirTenders = executePath + File.separator + it.childNodes.item(0).textContent
-                    "logdir_tenders_etprf" -> logDirTenders = executePath + File.separator + it.childNodes.item(0).textContent
+                    "tempdir_tenders_etprf" -> tempDirTendersEtpRf = executePath + File.separator + it.childNodes.item(0).textContent
+                    "logdir_tenders_etprf" -> logDirTendersEtpRf = executePath + File.separator + it.childNodes.item(0).textContent
                     "prefix" -> Prefix = try {
                         it.childNodes.item(0).textContent
                     } catch (e: Exception) {
@@ -59,8 +63,21 @@ fun GetSettings() = try {
     System.exit(1)
 }
 
-fun Init() {
+fun init(args: Array<String>) {
+    if (args.isEmpty()) {
+        println("Недостаточно агрументов для запуска, используйте $arguments для запуска")
+        System.exit(0)
+    } else {
+        when (args[0]) {
+            "etprf" -> arg = Arguments.ETPRF
+            else -> run { println("Неверно указаны аргументы, используйте $arguments, выходим из программы"); System.exit(0) }
+
+        }
+    }
     GetSettings()
+    when (arg) {
+        Arguments.ETPRF -> run { tempDirTenders = tempDirTendersEtpRf; logDirTenders = logDirTendersEtpRf }
+    }
     if (tempDirTenders == null || tempDirTenders == "") {
         println("Не задана папка для временных файлов, выходим из программы")
         System.exit(0)

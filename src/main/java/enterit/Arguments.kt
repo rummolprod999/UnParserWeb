@@ -1,0 +1,5 @@
+package enterit
+
+enum class Arguments {
+    ETPRF
+}

@@ -3,7 +3,7 @@ package enterit
 import enterit.parsers.ParserEtpRf
 
 fun main(args: Array<String>) {
-    Init()
+    init(args)
     parserEtpRf()
 }
 

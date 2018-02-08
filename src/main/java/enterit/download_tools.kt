@@ -39,7 +39,7 @@ fun downloadFromUrl(urls: String): String {
             return s
 
         } catch (e: Exception) {
-            println(e)
+            logger(e)
             count++
             sleep(5000)
         }

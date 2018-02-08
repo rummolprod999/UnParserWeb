@@ -1,7 +1,9 @@
 package enterit.tenders
 
 import enterit.*
+import enterit.parsers.ParserGpn
 import org.jsoup.Jsoup
+import org.jsoup.select.Elements
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.Statement
@@ -20,12 +22,14 @@ class TenderGpn(val status: String, val url: String) {
             return
         }
         val html = Jsoup.parse(stPage)
+        val uTC = html.selectFirst("div:contains(Местное время:) + div")?.ownText()?.trim { it <= ' ' } ?: ""
+        val offset = getOffset(uTC)
         val startDateT = html.selectFirst("div:contains(Дата и время начала приёма предложений:) + div")?.ownText()?.trim { it <= ' ' }
                 ?: ""
         val endDateT = html.selectFirst("div:contains(Дата и время окончания приёма предложений:) + div")?.ownText()?.trim { it <= ' ' }
                 ?: ""
-        val startDate = getDateFromFormat(startDateT, formatterGpn)
-        val endDate = getDateFromFormat(endDateT, formatterGpn)
+        val startDate = getDateFromFormatOffset(startDateT, formatterGpn, offset)
+        val endDate = getDateFromFormatOffset(endDateT, formatterGpn, offset)
         if (startDate == Date(0L)) {
             logger("Empty start date in $url")
             return
@@ -188,6 +192,99 @@ class TenderGpn(val status: String, val url: String) {
             rt.close()
             insertTender.close()
             AddTenderGpn++
+            val documents: Elements = html.select("table#files tbody tr")
+            documents.forEach { doc ->
+                val hrefT = doc.select("tr > td > a[href]")?.attr("href")?.trim { it <= ' ' } ?: ""
+                val href = "${ParserGpn.BaseT}$hrefT"
+                val nameDoc = doc.select("tr > td > a[href]")?.text()?.trim { it <= ' ' } ?: ""
+                if (href != "") {
+                    val insertDoc = con.prepareStatement("INSERT INTO ${Prefix}attachment SET id_tender = ?, file_name = ?, url = ?")
+                    insertDoc.setInt(1, idTender)
+                    insertDoc.setString(2, nameDoc)
+                    insertDoc.setString(3, href)
+                    insertDoc.executeUpdate()
+                    insertDoc.close()
+                }
+            }
+            var idLot = 0
+            val lots: Elements = html.select("table#table_spec tbody tr")
+            lots.forEach { lot ->
+                val noLots = lot.selectFirst("tr > td:contains(лотов нет)")
+                if (noLots != null) return@forEach
+                val lotNumT = lot.selectFirst("tr > td:eq(0)")?.text()?.trim { it <= ' ' } ?: ""
+                val lotNum = if (lotNumT.tryParseInt()) Integer.parseInt(lotNumT) else 1
+                val insertLot = con.prepareStatement("INSERT INTO ${Prefix}lot SET id_tender = ?, lot_number = ?", Statement.RETURN_GENERATED_KEYS)
+                insertLot.setInt(1, idTender)
+                insertLot.setInt(2, lotNum)
+                insertLot.executeUpdate()
+                val rl = insertLot.generatedKeys
+                if (rl.next()) {
+                    idLot = rl.getInt(1)
+                }
+                rl.close()
+                insertLot.close()
+                var idCustomer = 0
+                if (fullnameOrg != "") {
+                    val stmto = con.prepareStatement("SELECT id_customer FROM ${Prefix}customer WHERE full_name = ? LIMIT 1")
+                    stmto.setString(1, fullnameOrg)
+                    val rso = stmto.executeQuery()
+                    if (rso.next()) {
+                        idCustomer = rso.getInt(1)
+                        rso.close()
+                        stmto.close()
+                    } else {
+                        rso.close()
+                        stmto.close()
+                        val stmtins = con.prepareStatement("INSERT INTO ${Prefix}customer SET full_name = ?, is223=1, reg_num = ?", Statement.RETURN_GENERATED_KEYS)
+                        stmtins.setString(1, fullnameOrg)
+                        stmtins.setString(2, java.util.UUID.randomUUID().toString())
+                        stmtins.executeUpdate()
+                        val rsoi = stmtins.generatedKeys
+                        if (rsoi.next()) {
+                            idCustomer = rsoi.getInt(1)
+                        }
+                        rsoi.close()
+                        stmtins.close()
+                    }
+                }
+                val lotName = lot.selectFirst("tr > td:eq(1)")?.text()?.trim { it <= ' ' } ?: ""
+                val lotObj = lot.selectFirst("tr > td:eq(4)")?.text()?.trim { it <= ' ' } ?: ""
+                val quantityValue = lot.selectFirst("tr > td:eq(3)")?.text()?.trim { it <= ' ' } ?: ""
+                val purName = "$lotName $lotObj"
+                val insertPurObj = con.prepareStatement("INSERT INTO ${Prefix}purchase_object SET id_lot = ?, id_customer = ?, name = ?, quantity_value = ?, customer_quantity_value = ?")
+                insertPurObj.setInt(1, idLot)
+                insertPurObj.setInt(2, idCustomer)
+                insertPurObj.setString(3, purName)
+                insertPurObj.setString(4, quantityValue)
+                insertPurObj.setString(5, quantityValue)
+                insertPurObj.executeUpdate()
+                insertPurObj.close()
+                val delivPlace = html.selectFirst("div:contains(Место оказания работ/услуг:) + div")?.ownText()?.trim { it <= ' ' }
+                        ?: ""
+                val delivTermT = lot.selectFirst("tr > td:eq(2)")?.text()?.trim { it <= ' ' } ?: ""
+                val delivTerm = "Срок выполнения: $delivTermT"
+                if (delivPlace != "") {
+                    val insertCusRec = con.prepareStatement("INSERT INTO ${Prefix}customer_requirement SET id_lot = ?, id_customer = ?, delivery_term = ?, delivery_place = ?")
+                    insertCusRec.setInt(1, idLot)
+                    insertCusRec.setInt(2, idCustomer)
+                    insertCusRec.setString(3, delivTerm)
+                    insertCusRec.setString(4, delivPlace)
+                    insertCusRec.executeUpdate()
+                    insertCusRec.close()
+                }
+            }
+            try {
+                tenderKwords(idTender, con)
+            } catch (e: Exception) {
+                logger("Ошибка добавления ключевых слов", e.stackTrace, e)
+            }
+
+
+            try {
+                addVNum(con, purNum, typeFz)
+            } catch (e: Exception) {
+                logger("Ошибка добавления версий", e.stackTrace, e)
+            }
         })
     }
 }

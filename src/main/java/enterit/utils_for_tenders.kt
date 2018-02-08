@@ -1,9 +1,12 @@
 package enterit
 
-import java.sql.*
+import java.sql.Connection
+import java.sql.PreparedStatement
+import java.sql.ResultSet
+import java.sql.SQLException
 import java.text.Format
+import java.text.SimpleDateFormat
 import java.util.*
-import java.util.Date
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -156,6 +159,7 @@ fun getDate(dt: String): Date {
 
     return d
 }
+
 fun getDateFromFormat(dt: String, format: Format): Date {
     var d = Date(0L)
     try {
@@ -178,9 +182,9 @@ fun extractNum(s: String): String {
     try {
         val pattern: Pattern = Pattern.compile("\\s+")
         val matcher: Matcher = pattern.matcher(s)
-        val s = matcher.replaceAll("")
+        val ss = matcher.replaceAll("")
         val p = Pattern.compile("""(\d+\.*\d*)""")
-        val m = p.matcher(s)
+        val m = p.matcher(ss)
         if (m.find()) {
             nm = m.group()
         }
@@ -188,7 +192,8 @@ fun extractNum(s: String): String {
     }
     return nm
 }
-fun returnPriceEtpRf(s: String): String{
+
+fun returnPriceEtpRf(s: String): String {
     var t = ""
     val tt = s.replace(',', '.')
     val pattern: Pattern = Pattern.compile("\\s+")
@@ -197,12 +202,12 @@ fun returnPriceEtpRf(s: String): String{
     return t
 }
 
-fun getOkpd(s: String):Pair<Int, String>{
+fun getOkpd(s: String): Pair<Int, String> {
     var okpd2GroupCode = 0
     var okpd2GroupLevel1Code = ""
-    if(s.length > 1){
+    if (s.length > 1) {
         val dot = s.indexOf('.')
-        if(dot != -1){
+        if (dot != -1) {
             val okpd2GroupCodeTemp = s.slice(0 until dot)
             try {
                 okpd2GroupCode = Integer.parseInt(okpd2GroupCodeTemp)
@@ -210,17 +215,52 @@ fun getOkpd(s: String):Pair<Int, String>{
             }
         }
     }
-    if(s.length > 3){
+    if (s.length > 3) {
         val dot = s.indexOf('.')
-        if(dot != -1){
-            okpd2GroupLevel1Code = s.slice(dot+1 until dot+2)
+        if (dot != -1) {
+            okpd2GroupLevel1Code = s.slice(dot + 1 until dot + 2)
         }
 
     }
     return Pair(okpd2GroupCode, okpd2GroupLevel1Code)
 }
-fun getDateFromString(d: String): Date{
-    var t = Date(0L)
 
+fun getDateFromString(d: String): Date {
+    val t = Date(0L)
     return t
+}
+
+fun String.tryParseInt(): Boolean {
+    return try {
+        Integer.parseInt(this)
+        true
+    } catch (e: NumberFormatException) {
+        false
+    }
+
+}
+
+fun getOffset(s: String): String {
+    var g = "GMT+3"
+    try {
+        val pattern: Pattern = Pattern.compile("""\((\S*)\)""")
+        val matcher: Matcher = pattern.matcher(s)
+        if (matcher.find()) {
+            val mt = matcher.group(1)
+            g = mt.replace("UTC", "GMT")
+        }
+    } catch (e: Exception) {
+    }
+    return g
+}
+
+fun getDateFromFormatOffset(dt: String, format: SimpleDateFormat, offset: String): Date {
+    var d = Date(0L)
+    try {
+        format.timeZone = TimeZone.getTimeZone(offset)
+        d = format.parseObject(dt) as Date
+    } catch (e: Exception) {
+    }
+
+    return d
 }

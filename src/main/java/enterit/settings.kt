@@ -1,11 +1,11 @@
 package enterit
 
-import java.io.File
-import javax.xml.parsers.DocumentBuilderFactory
 import org.w3c.dom.Node
+import java.io.File
 import java.text.Format
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.xml.parsers.DocumentBuilderFactory
 
 val executePath: String = File(Class.forName("enterit.ApplicationKt").protectionDomain.codeSource.location.path).parentFile.toString()
 const val arguments = "etprf, gpn"
@@ -28,7 +28,7 @@ var AddTenderEtpRf: Int = 0
 var AddTenderGpn: Int = 0
 var UrlConnect: String? = null
 var formatter: Format = SimpleDateFormat("dd.MM.yyyy kk:mm:ss")
-var formatterGpn: Format = SimpleDateFormat("dd.MM.yyyy kk:mm")
+var formatterGpn: SimpleDateFormat = SimpleDateFormat("dd.MM.yyyy kk:mm")
 var formatterOnlyDate: Format = SimpleDateFormat("dd.MM.yyyy")
 var formatterEtpRf: Format = SimpleDateFormat("dd.MM.yyyy kk:mm:ss (XXX)")
 

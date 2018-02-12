@@ -2,6 +2,7 @@ package enterit
 
 import enterit.parsers.ParserEtpRf
 import enterit.parsers.ParserGpn
+import enterit.parsers.ParserPol
 
 fun main(args: Array<String>) {
     init(args)
@@ -9,6 +10,7 @@ fun main(args: Array<String>) {
 
         Arguments.ETPRF -> parserEtpRf()
         Arguments.GPN -> parserGpn()
+        Arguments.POL -> parserPol()
     }
 
 }
@@ -41,5 +43,13 @@ fun parserGpn() {
     val p = ParserGpn()
     p.parser()
     logger("Добавили тендеров $AddTenderGpn")
+    logger("Конец парсинга")
+}
+
+fun parserPol() {
+    logger("Начало парсинга")
+    val p = ParserPol()
+    p.parser()
+    logger("Добавили тендеров $AddTenderPol")
     logger("Конец парсинга")
 }

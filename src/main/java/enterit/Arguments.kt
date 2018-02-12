@@ -2,5 +2,6 @@ package enterit
 
 enum class Arguments {
     ETPRF,
-    GPN
+    GPN,
+    POL
 }

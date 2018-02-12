@@ -1,5 +1,7 @@
 package enterit
 
+import enterit.tenders.TenderInfoPol
+import enterit.tenders.TenderPol
 import java.sql.Connection
 import java.sql.PreparedStatement
 import java.sql.ResultSet
@@ -263,4 +265,28 @@ fun getDateFromFormatOffset(dt: String, format: SimpleDateFormat, offset: String
     }
 
     return d
+}
+
+fun TenderPol.GetDates(s: String): TenderInfoPol {
+    var startD = Date(0L)
+    var endD = Date(0L)
+    var status = ""
+    val tmpSS = regExpTester(s, """^Дата публикации:\s(\d+\.\d+\.\d+)""")
+    startD = getDateFromFormat(tmpSS, formatterOnlyDate)
+    val tmpSE = regExpTester(s, """Прием заявок до:\s(\d+\.\d+\.\d+)""")
+    endD = getDateFromFormat(tmpSE, formatterOnlyDate)
+    return TenderInfoPol(startD, endD, status)
+}
+
+fun regExpTester(reg: String, s: String): String {
+    var st = ""
+    try {
+        val pattern: Pattern = Pattern.compile(reg)
+        val matcher: Matcher = pattern.matcher(s)
+        if (matcher.find()) {
+            st = matcher.group(1)
+        }
+    } catch (e: Exception) {
+    }
+    return st
 }

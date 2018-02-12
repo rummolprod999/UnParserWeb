@@ -8,7 +8,7 @@ import java.util.*
 import javax.xml.parsers.DocumentBuilderFactory
 
 val executePath: String = File(Class.forName("enterit.ApplicationKt").protectionDomain.codeSource.location.path).parentFile.toString()
-const val arguments = "etprf, gpn"
+const val arguments = "etprf, gpn, pol"
 lateinit var arg: Arguments
 var Database: String? = null
 var tempDirTenders: String? = null
@@ -17,6 +17,8 @@ var tempDirTendersEtpRf: String? = null
 var logDirTendersEtpRf: String? = null
 var tempDirTendersGpn: String? = null
 var logDirTendersGpn: String? = null
+var tempDirTendersPol: String? = null
+var logDirTendersPol: String? = null
 var Prefix: String? = null
 var UserDb: String? = null
 var PassDb: String? = null
@@ -26,6 +28,7 @@ var logPath: String? = null
 val DateNow = Date()
 var AddTenderEtpRf: Int = 0
 var AddTenderGpn: Int = 0
+var AddTenderPol: Int = 0
 var UrlConnect: String? = null
 var formatter: Format = SimpleDateFormat("dd.MM.yyyy kk:mm:ss")
 var formatterGpn: SimpleDateFormat = SimpleDateFormat("dd.MM.yyyy kk:mm")
@@ -52,6 +55,8 @@ fun getSettings() = try {
                     "logdir_tenders_etprf" -> logDirTendersEtpRf = executePath + File.separator + it.childNodes.item(0).textContent
                     "tempdir_tenders_gpn" -> tempDirTendersGpn = executePath + File.separator + it.childNodes.item(0).textContent
                     "logdir_tenders_gpn" -> logDirTendersGpn = executePath + File.separator + it.childNodes.item(0).textContent
+                    "tempdir_tenders_pol" -> tempDirTendersPol = executePath + File.separator + it.childNodes.item(0).textContent
+                    "logdir_tenders_pol" -> logDirTendersPol = executePath + File.separator + it.childNodes.item(0).textContent
                     "prefix" -> Prefix = try {
                         it.childNodes.item(0).textContent
                     } catch (e: Exception) {
@@ -77,6 +82,7 @@ fun init(args: Array<String>) {
         when (args[0]) {
             "etprf" -> arg = Arguments.ETPRF
             "gpn" -> arg = Arguments.GPN
+            "pol" -> arg = Arguments.POL
             else -> run { println("Неверно указаны аргументы, используйте $arguments, выходим из программы"); System.exit(0) }
 
         }
@@ -85,6 +91,7 @@ fun init(args: Array<String>) {
     when (arg) {
         Arguments.ETPRF -> run { tempDirTenders = tempDirTendersEtpRf; logDirTenders = logDirTendersEtpRf }
         Arguments.GPN -> run { tempDirTenders = tempDirTendersGpn; logDirTenders = logDirTendersGpn }
+        Arguments.POL -> run { tempDirTenders = tempDirTendersPol; logDirTenders = logDirTendersPol }
     }
     if (tempDirTenders == null || tempDirTenders == "") {
         println("Не задана папка для временных файлов, выходим из программы")
@@ -106,6 +113,6 @@ fun init(args: Array<String>) {
         log.mkdir()
     }
     val dateFormat = SimpleDateFormat("yyyy-MM-dd")
-    logPath = "${logDirTenders}${File.separator}log_parsing_etprf_${dateFormat.format(DateNow)}.log"
-    UrlConnect = "jdbc:mysql://${Server}:${Port}/${Database}?jdbcCompliantTruncation=false&useUnicode=true&characterEncoding=utf-8&useLegacyDatetimeCode=false&serverTimezone=Europe/Moscow&connectTimeout=5000&socketTimeout=30000"
+    logPath = "$logDirTenders${File.separator}log_parsing_${arg}_${dateFormat.format(DateNow)}.log"
+    UrlConnect = "jdbc:mysql://$Server:$Port/$Database?jdbcCompliantTruncation=false&useUnicode=true&characterEncoding=utf-8&useLegacyDatetimeCode=false&serverTimezone=Europe/Moscow&connectTimeout=5000&socketTimeout=30000"
 }

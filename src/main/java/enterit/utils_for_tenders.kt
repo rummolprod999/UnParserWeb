@@ -271,10 +271,12 @@ fun TenderPol.GetDates(s: String): TenderInfoPol {
     var startD = Date(0L)
     var endD = Date(0L)
     var status = ""
-    val tmpSS = regExpTester(s, """^Дата публикации:\s(\d+\.\d+\.\d+)""")
+    val tmpSS = regExpTester("""^Дата публикации:\s(\d+\.\d+\.\d+)""", s)
     startD = getDateFromFormat(tmpSS, formatterOnlyDate)
-    val tmpSE = regExpTester(s, """Прием заявок до:\s(\d+\.\d+\.\d+)""")
+    val tmpSE = regExpTester("""Прием заявок до:\s(\d+\.\d+\.\d+)""", s)
     endD = getDateFromFormat(tmpSE, formatterOnlyDate)
+    val tmpST = regExpTester("""Статус закупки:\s(\w+|\W+)${'$'}""", s)
+    status = tmpST
     return TenderInfoPol(startD, endD, status)
 }
 
@@ -288,5 +290,5 @@ fun regExpTester(reg: String, s: String): String {
         }
     } catch (e: Exception) {
     }
-    return st
+    return st.trim { it <= ' ' }
 }

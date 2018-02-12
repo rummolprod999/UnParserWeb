@@ -13,7 +13,7 @@ class ParserPol : Iparser {
 
     private val maxPage = 8
     private val baseUrl = "http://tenders.polyusgold.com/purchases/?&PAGEN_1="
-    override fun parser() = (1..maxPage)
+    override fun parser() = (maxPage downTo 1)
             .map { "$baseUrl$it" }
             .forEach {
                 try {

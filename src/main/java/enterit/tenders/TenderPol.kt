@@ -51,10 +51,9 @@ class TenderPol(val url: String) {
             r.close()
             stmt0.close()
             var cancelstatus = 0
-            val stmt = con.prepareStatement("SELECT id_tender, date_version FROM ${Prefix}tender WHERE purchase_number = ? AND cancel=0 AND type_fz = ? AND href = ?")
+            val stmt = con.prepareStatement("SELECT id_tender, date_version FROM ${Prefix}tender WHERE purchase_number = ? AND cancel=0 AND type_fz = ?")
             stmt.setString(1, purNum)
             stmt.setInt(2, typeFz)
-            stmt.setString(3, url)
             val rs = stmt.executeQuery()
             while (rs.next()) {
                 val idT = rs.getInt(1)

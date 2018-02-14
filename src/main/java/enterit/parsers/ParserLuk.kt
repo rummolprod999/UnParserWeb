@@ -10,7 +10,7 @@ import enterit.tenders.TenderLuk
 import java.util.logging.Level
 
 class ParserLuk : Iparser {
-    val BaseUrl = "http://www.lukoil.ru"
+
 
     init {
         java.util.logging.Logger.getLogger("com.gargoylesoftware").level = Level.OFF
@@ -31,7 +31,7 @@ class ParserLuk : Iparser {
     private fun parserPage(p: HtmlPage) {
         val page = Companion.getTendersPage(p)
         val ten = page.getByXPath<HtmlDivision>("//div[@class = 'panel-default panel-collapsible panel-tender']")
-        for (t: HtmlDivision in ten) {
+        ten.forEach { t: HtmlDivision ->
             try {
                 val luk = TenderLuk(t)
                 luk.parser()

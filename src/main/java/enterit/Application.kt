@@ -1,9 +1,6 @@
 package enterit
 
-import enterit.parsers.ParserEtpRf
-import enterit.parsers.ParserGpn
-import enterit.parsers.ParserLuk
-import enterit.parsers.ParserPol
+import enterit.parsers.*
 
 fun main(args: Array<String>) {
     init(args)
@@ -13,6 +10,7 @@ fun main(args: Array<String>) {
         Arguments.GPN -> parserGpn()
         Arguments.POL -> parserPol()
         Arguments.LUK -> parserLuk()
+        Arguments.TAT -> parserTat()
     }
 
 }
@@ -76,5 +74,28 @@ fun parserLuk() {
 
     }
     logger("Добавили тендеров $AddTenderLuk")
+    logger("Конец парсинга")
+}
+
+fun parserTat() {
+    logger("Начало парсинга")
+    val p = ParserTat()
+    var tr = 0
+    while (true) {
+        try {
+            p.parser()
+            break
+        } catch (e: Exception) {
+            tr++
+            if (tr > 4) {
+                logger("Количество попыток истекло, выходим из программы")
+                break
+            }
+            logger("Error in ParserTat function", e.stackTrace, e)
+            e.printStackTrace()
+        }
+
+    }
+    logger("Добавили тендеров $AddTenderTat")
     logger("Конец парсинга")
 }

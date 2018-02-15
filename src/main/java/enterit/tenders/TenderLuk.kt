@@ -121,7 +121,7 @@ class TenderLuk(private val p: HtmlDivision) {
             } catch (ignored: Exception) {
 
             }
-            var IdPlacingWay = 0
+            val IdPlacingWay = 0
             var idTender = 0
             var endDateTemp = ""
             val endDateT = p.getByXPath<HtmlSpan>(".//span[@data-bind = \"text: moment(DateFinish).format('L')\"]")

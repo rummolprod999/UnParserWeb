@@ -4,5 +4,6 @@ enum class Arguments {
     ETPRF,
     GPN,
     POL,
-    LUK
+    LUK,
+    TAT
 }

@@ -285,8 +285,8 @@ class TenderTat(val status: String, var purNum: String, val purObj: String, val 
     }
 
     private fun getRest(page: HtmlPage, con: Connection, idLot: Int) {
-        for (d in listOf("Требование к качеству", "Требования к участникам торгов")) {
-            val resT = page.getByXPath<HtmlTableRow>("//tr[td[div = '$d']]")
+        for (d in listOf("Требование к качеству", "Требования к участникам торгов", "Дополнительные условия")) {
+            val resT = page.getByXPath<HtmlTableRow>("//tr[td[. = '$d']]")
             var r1 = ""
             if (!resT.isEmpty()) {
                 r1 = resT[0].getCell(1).textContent.trim { it <= ' ' }

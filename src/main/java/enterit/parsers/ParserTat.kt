@@ -37,7 +37,7 @@ class ParserTat : Iparser {
             } catch (e: Exception) {
                 logger("Error in parser function", e.stackTrace, e)
             }
-            for (i in 1..PageNumEtpRf) {
+            for (i in 1..PageNumTat) {
                 val button = page.getByXPath<HtmlButton>("//button[@aria-label = '>']")
                 if (!button.isEmpty()) {
                     val b = button[0] as HtmlButton
@@ -79,9 +79,9 @@ class ParserTat : Iparser {
             url = "$BaseUrl${urlT[0].getAttribute("href")}"
         }
         val fullNameOrg = t.getCell(4).textContent.trim { it <= ' ' }
-        val nMck = t.getCell(5).textContent.trim { it <= ' ' }
-        val currencyT = t.getCell(6).textContent.trim { it <= ' ' }
-        val currency = returnPriceEtpRf(currencyT)
+        val nMckT = t.getCell(5).textContent.trim { it <= ' ' }
+        val currency = t.getCell(6).textContent.trim { it <= ' ' }
+        val nMck = returnPriceEtpRf(nMckT)
         val datePubTmp = t.getCell(7).textContent.trim { it <= ' ' }
         val dateEndTmp = t.getCell(9).textContent.trim { it <= ' ' }
         val datePub = getDateFromFormat(datePubTmp, formatterGpn)

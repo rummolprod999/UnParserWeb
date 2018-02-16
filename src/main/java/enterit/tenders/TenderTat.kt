@@ -1,18 +1,18 @@
 package enterit.tenders
 
+import com.gargoylesoftware.htmlunit.WebClient
 import com.gargoylesoftware.htmlunit.html.DomText
 import com.gargoylesoftware.htmlunit.html.HtmlPage
 import com.gargoylesoftware.htmlunit.html.HtmlTableCell
 import com.gargoylesoftware.htmlunit.html.HtmlTableRow
 import enterit.*
-import enterit.parsers.ParserTat
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.Statement
 import java.sql.Timestamp
 import java.util.*
 
-class TenderTat(val status: String, var purNum: String, val purObj: String, val nmck: String, val datePub: Date, val dateEnd: Date, val url: String, val fullnameOrg: String, val currency: String) {
+class TenderTat(val status: String, var purNum: String, val purObj: String, val nmck: String, val datePub: Date, val dateEnd: Date, val url: String, val fullnameOrg: String, val currency: String, val webClient: WebClient) {
     companion object O {
         const val typeFz = 16
     }
@@ -59,8 +59,8 @@ class TenderTat(val status: String, var purNum: String, val purObj: String, val 
             stmt.close()
             var page: HtmlPage? = null
             if (url != "") {
-                ParserTat.webClient.waitForBackgroundJavaScript(2000)
-                page = ParserTat.webClient.getPage(url)
+                webClient.waitForBackgroundJavaScript(2000)
+                page = webClient.getPage(url)
 
 
             }

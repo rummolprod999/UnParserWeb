@@ -86,11 +86,14 @@ class ParserTat : Iparser {
         val dateEndTmp = t.getCell(9).textContent.trim { it <= ' ' }
         val datePub = getDateFromFormat(datePubTmp, formatterGpn)
         val dateEnd = getDateFromFormat(dateEndTmp, formatterGpn)
-        val tt = TenderTat(status, purNum, purObj, nMck, datePub, dateEnd, url, fullNameOrg, currency)
+        val wb = WebClient(BrowserVersion.CHROME)
+        val tt = TenderTat(status, purNum, purObj, nMck, datePub, dateEnd, url, fullNameOrg, currency, wb)
         try {
             tt.parsing()
         } catch (e: Exception) {
             logger("Error in parserTender function", e.stackTrace, e)
+        } finally {
+            wb.close()
         }
 
     }

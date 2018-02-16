@@ -59,7 +59,7 @@ class TenderTat(val status: String, var purNum: String, val purObj: String, val 
             stmt.close()
             var page: HtmlPage? = null
             if (url != "") {
-                //webClient.waitForBackgroundJavaScript(2000)
+                webClient.waitForBackgroundJavaScript(2000)
                 page = webClient.getPage(url)
 
 

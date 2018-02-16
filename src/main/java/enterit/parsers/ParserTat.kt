@@ -12,7 +12,7 @@ import enterit.returnPriceEtpRf
 import enterit.tenders.TenderTat
 import java.util.logging.Level
 
-const val PageNumTat = 20
+const val PageNumTat = 10
 
 class ParserTat : Iparser {
     companion object WebCl {

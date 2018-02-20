@@ -5,5 +5,6 @@ enum class Arguments {
     GPN,
     POL,
     LUK,
-    TAT
+    TAT,
+    RTS
 }

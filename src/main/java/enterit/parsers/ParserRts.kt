@@ -24,7 +24,7 @@ class ParserRts : Iparser {
             return
         }
         val html = Jsoup.parse(stPage)
-        val tenders = html.select("table.result-table > tbody > tr:qt(0)")
+        val tenders = html.select("#Result table tbody tr:contains(Номер на площадке)")
         if (tenders.isEmpty()) {
             logger("Gets empty list tenders", url)
         }

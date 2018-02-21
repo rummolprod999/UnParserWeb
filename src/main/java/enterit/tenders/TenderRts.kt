@@ -175,7 +175,7 @@ class TenderRts(val urlTend: String, val purNum: String, val placingWay: String,
             val purObj = html.selectFirst("td:containsOwn(Наименование) + td")?.ownText()?.trim()
                     ?: ""
             var idTender = 0
-            val insertTender = con.prepareStatement("INSERT INTO ${Prefix}tender SET id_region = 0, id_xml = ?, purchase_number = ?, doc_publish_date = ?, href = ?, purchase_object_info = ?, type_fz = ?, id_organizer = ?, id_placing_way = ?, id_etp = ?, end_date = ?, cancel = ?, date_version = ?, num_version = ?, notice_version = ?, xml = ?, print_form = ?, id_region = ?", Statement.RETURN_GENERATED_KEYS)
+            val insertTender = con.prepareStatement("INSERT INTO ${Prefix}tender SET id_xml = ?, purchase_number = ?, doc_publish_date = ?, href = ?, purchase_object_info = ?, type_fz = ?, id_organizer = ?, id_placing_way = ?, id_etp = ?, end_date = ?, cancel = ?, date_version = ?, num_version = ?, notice_version = ?, xml = ?, print_form = ?, id_region = ?", Statement.RETURN_GENERATED_KEYS)
             insertTender.setString(1, purNum)
             insertTender.setString(2, purNum)
             insertTender.setTimestamp(3, Timestamp(datePub.time))

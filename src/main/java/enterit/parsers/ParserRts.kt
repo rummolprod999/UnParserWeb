@@ -27,7 +27,7 @@ class ParserRts : Iparser {
     private fun parserPage(url: String) {
         val stPage = downloadFromUrl(url)
         if (stPage == "") {
-            logger("Gets empty string ParserGpn", url)
+            logger("Gets empty string ParserRts", url)
             return
         }
         val html = Jsoup.parse(stPage)

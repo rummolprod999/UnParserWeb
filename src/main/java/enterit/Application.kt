@@ -12,6 +12,7 @@ fun main(args: Array<String>) {
         Arguments.LUK -> parserLuk()
         Arguments.TAT -> parserTat()
         Arguments.RTS -> parserRts()
+        Arguments.SIBUR -> parserSibur()
     }
 
 }
@@ -106,5 +107,13 @@ fun parserRts() {
     val p = ParserRts()
     p.parser()
     logger("Добавили тендеров $AddTenderRts")
+    logger("Конец парсинга")
+}
+
+fun parserSibur() {
+    logger("Начало парсинга")
+    val p = ParserSibur()
+    p.parser()
+    logger("Добавили тендеров $AddTenderSibur")
     logger("Конец парсинга")
 }

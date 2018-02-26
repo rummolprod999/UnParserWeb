@@ -6,5 +6,6 @@ enum class Arguments {
     POL,
     LUK,
     TAT,
-    RTS
+    RTS,
+    SIBUR
 }

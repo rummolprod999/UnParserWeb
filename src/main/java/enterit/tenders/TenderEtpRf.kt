@@ -3,7 +3,10 @@ package enterit.tenders
 import enterit.*
 import org.jsoup.Jsoup
 import org.jsoup.select.Elements
-import java.sql.*
+import java.sql.Connection
+import java.sql.DriverManager
+import java.sql.Statement
+import java.sql.Timestamp
 import java.util.Date
 
 class TenderEtpRf(val status: String, val entNum: String, var purNum: String, val purObj: String, val nmck: String, val placingWay: String, val datePub: Date, val dateEnd: Date, val url: String) {

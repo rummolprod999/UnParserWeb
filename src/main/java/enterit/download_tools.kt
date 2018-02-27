@@ -11,10 +11,10 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
 
-fun downloadFromUrl(urls: String): String {
+fun downloadFromUrl(urls: String, i: Int = 50): String {
     var count = 0
     while (true) {
-        val i = 50
+        //val i = 50
         if (count > i) {
             logger(String.format("Не скачали строку за %d попыток", count), urls)
             break

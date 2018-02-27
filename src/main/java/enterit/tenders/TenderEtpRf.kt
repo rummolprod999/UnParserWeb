@@ -37,7 +37,7 @@ class TenderEtpRf(val status: String, val entNum: String, var purNum: String, va
             }
             r.close()
             stmt0.close()
-            val stPage = downloadFromUrl(url)
+            val stPage = downloadFromUrl(url, i = 10)
             if (stPage == "") {
                 logger("Gets empty string TenderEtpRf", url)
                 return

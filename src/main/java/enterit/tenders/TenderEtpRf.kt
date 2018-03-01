@@ -9,7 +9,7 @@ import java.sql.Statement
 import java.sql.Timestamp
 import java.util.Date
 
-class TenderEtpRf(val status: String, val entNum: String, var purNum: String, val purObj: String, val nmck: String, val placingWay: String, val datePub: Date, val dateEnd: Date, val url: String) {
+class TenderEtpRf(val status: String, val entNum: String, var purNum: String, val purObj: String, val nmck: String, var placingWay: String, val datePub: Date, val dateEnd: Date, val url: String) {
     companion object TypeFz {
         val typeFz = 12
     }
@@ -146,6 +146,9 @@ class TenderEtpRf(val status: String, val entNum: String, var purNum: String, va
 
             }
             var IdPlacingWay = 0
+            if (placingWay == "") {
+                placingWay = html.selectFirst("td:containsOwn(Способ закупки) ~ td")?.ownText()?.trim() ?: ""
+            }
             if (placingWay != "") {
                 val stmto = con.prepareStatement("SELECT id_placing_way FROM ${Prefix}placing_way WHERE name = ? LIMIT 1")
                 stmto.setString(1, placingWay)
@@ -171,6 +174,7 @@ class TenderEtpRf(val status: String, val entNum: String, var purNum: String, va
 
                 }
             }
+            val printForm = url.replace("/id/", "/Print/id/")
             var idTender = 0
             val scoringDT = html.selectFirst("td:containsOwn(Дата и время рассмотрения заявок) ~ td")?.ownText()?.trim { it <= ' ' }
                     ?: ""
@@ -191,7 +195,7 @@ class TenderEtpRf(val status: String, val entNum: String, var purNum: String, va
             insertTender.setInt(13, 1)
             insertTender.setString(14, status)
             insertTender.setString(15, url)
-            insertTender.setString(16, url)
+            insertTender.setString(16, printForm)
             insertTender.setTimestamp(17, Timestamp(scoringDate.time))
             insertTender.executeUpdate()
             val rt = insertTender.generatedKeys

@@ -27,6 +27,7 @@ class ParserEtpRf : Iparser {
 
     override fun parser() {
         val webClient = WebClient(BrowserVersion.CHROME)
+        webClient.options.isThrowExceptionOnScriptError = false
         urlEtprf.forEach { i -> parserE(webClient, i) }
         webClient.close()
     }

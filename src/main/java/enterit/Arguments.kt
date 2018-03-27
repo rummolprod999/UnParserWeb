@@ -7,5 +7,6 @@ enum class Arguments {
     LUK,
     TAT,
     RTS,
-    SIBUR
+    SIBUR,
+    URAL
 }

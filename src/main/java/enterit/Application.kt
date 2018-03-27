@@ -13,6 +13,7 @@ fun main(args: Array<String>) {
         Arguments.TAT -> parserTat()
         Arguments.RTS -> parserRts()
         Arguments.SIBUR -> parserSibur()
+        Arguments.URAL -> parserUral()
     }
 
 }
@@ -115,5 +116,13 @@ fun parserSibur() {
     val p = ParserSibur()
     p.parser()
     logger("Добавили тендеров $AddTenderSibur")
+    logger("Конец парсинга")
+}
+
+fun parserUral() {
+    logger("Начало парсинга")
+    val p = ParserUral()
+    p.parser()
+    logger("Добавили тендеров $AddTenderUral")
     logger("Конец парсинга")
 }

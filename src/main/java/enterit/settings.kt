@@ -8,7 +8,7 @@ import java.util.*
 import javax.xml.parsers.DocumentBuilderFactory
 
 val executePath: String = File(Class.forName("enterit.ApplicationKt").protectionDomain.codeSource.location.path).parentFile.toString()
-const val arguments = "etprf, gpn, pol, luk, tat, rts, sibur"
+const val arguments = "etprf, gpn, pol, luk, tat, rts, sibur, ural"
 lateinit var arg: Arguments
 var Database: String? = null
 var tempDirTenders: String? = null
@@ -27,6 +27,8 @@ var tempDirTendersRts: String? = null
 var logDirTendersRts: String? = null
 var tempDirTendersSibur: String? = null
 var logDirTendersSibur: String? = null
+var tempDirTendersUral: String? = null
+var logDirTendersUral: String? = null
 var Prefix: String? = null
 var UserDb: String? = null
 var PassDb: String? = null
@@ -41,6 +43,7 @@ var AddTenderLuk: Int = 0
 var AddTenderTat: Int = 0
 var AddTenderRts: Int = 0
 var AddTenderSibur: Int = 0
+var AddTenderUral: Int = 0
 var UrlConnect: String? = null
 var formatter: Format = SimpleDateFormat("dd.MM.yyyy kk:mm:ss")
 var formatterGpn: SimpleDateFormat = SimpleDateFormat("dd.MM.yyyy kk:mm")
@@ -78,6 +81,8 @@ fun getSettings() = try {
                     "logdir_tenders_rts" -> logDirTendersRts = executePath + File.separator + it.childNodes.item(0).textContent
                     "tempdir_tenders_sibur" -> tempDirTendersSibur = executePath + File.separator + it.childNodes.item(0).textContent
                     "logdir_tenders_sibur" -> logDirTendersSibur = executePath + File.separator + it.childNodes.item(0).textContent
+                    "tempdir_tenders_ural" -> tempDirTendersUral = executePath + File.separator + it.childNodes.item(0).textContent
+                    "logdir_tenders_ural" -> logDirTendersUral = executePath + File.separator + it.childNodes.item(0).textContent
                     "prefix" -> Prefix = try {
                         it.childNodes.item(0).textContent
                     } catch (e: Exception) {
@@ -108,6 +113,7 @@ fun init(args: Array<String>) {
             "tat" -> arg = Arguments.TAT
             "rts" -> arg = Arguments.RTS
             "sibur" -> arg = Arguments.SIBUR
+            "ural" -> arg = Arguments.URAL
             else -> run { println("Неверно указаны аргументы, используйте $arguments, выходим из программы"); System.exit(0) }
 
         }
@@ -121,6 +127,7 @@ fun init(args: Array<String>) {
         Arguments.TAT -> run { tempDirTenders = tempDirTendersTat; logDirTenders = logDirTendersTat }
         Arguments.RTS -> run { tempDirTenders = tempDirTendersRts; logDirTenders = logDirTendersRts }
         Arguments.SIBUR -> run { tempDirTenders = tempDirTendersSibur; logDirTenders = logDirTendersSibur }
+        Arguments.URAL -> run { tempDirTenders = tempDirTendersUral; logDirTenders = logDirTendersUral }
     }
     if (tempDirTenders == null || tempDirTenders == "") {
         println("Не задана папка для временных файлов, выходим из программы")

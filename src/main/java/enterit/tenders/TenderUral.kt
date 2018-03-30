@@ -117,7 +117,7 @@ data class TenderUral(var purNum: String, val purObj: String, val datePub: Date,
             } catch (ignored: Exception) {
 
             }
-            var IdPlacingWay = 0
+            val IdPlacingWay = 0
             val stPage = downloadFromUrl1251(url)
             if (stPage == "") {
                 logger("Gets empty string ${this::class.simpleName}", url)

@@ -8,5 +8,6 @@ enum class Arguments {
     TAT,
     RTS,
     SIBUR,
-    URAL
+    URAL,
+    MIRATORG
 }

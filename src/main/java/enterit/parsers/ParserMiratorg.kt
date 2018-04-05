@@ -27,7 +27,7 @@ class ParserMiratorg : Iparser {
         try {
             parserPage(page)
         } catch (e: Exception) {
-            logger("error in ${this::class.simpleName}.parserTender()", e.stackTrace, e)
+            logger("error in ${this::class.simpleName}.parserPage()", e.stackTrace, e)
         }
         webClient.close()
     }

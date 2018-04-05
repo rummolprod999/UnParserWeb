@@ -9,5 +9,6 @@ enum class Arguments {
     RTS,
     SIBUR,
     URAL,
-    MIRATORG
+    MIRATORG,
+    STG
 }

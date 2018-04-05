@@ -172,6 +172,17 @@ fun getDateFromFormat(dt: String, format: Format): Date {
     return d
 }
 
+fun String.getDateFromString(format: Format): Date {
+    var d = Date(0L)
+    if (this == "") return d
+    try {
+        d = format.parseObject(this) as Date
+    } catch (e: Exception) {
+    }
+
+    return d
+}
+
 fun dateAddHours(dt: Date, h: Int): Date {
     val cal = Calendar.getInstance()
     cal.time = dt
@@ -285,6 +296,19 @@ fun regExpTester(reg: String, s: String): String {
     try {
         val pattern: Pattern = Pattern.compile(reg)
         val matcher: Matcher = pattern.matcher(s)
+        if (matcher.find()) {
+            st = matcher.group(1)
+        }
+    } catch (e: Exception) {
+    }
+    return st.trim { it <= ' ' }
+}
+
+fun String.regExpTest(reg: String): String {
+    var st = ""
+    try {
+        val pattern: Pattern = Pattern.compile(reg)
+        val matcher: Matcher = pattern.matcher(this)
         if (matcher.find()) {
             st = matcher.group(1)
         }

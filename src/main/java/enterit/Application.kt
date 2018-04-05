@@ -15,6 +15,7 @@ fun main(args: Array<String>) {
         Arguments.SIBUR -> parserSibur()
         Arguments.URAL -> parserUral()
         Arguments.MIRATORG -> parserMiratorg()
+        Arguments.STG -> parserStg()
     }
 
 }
@@ -133,5 +134,27 @@ fun parserMiratorg() {
     val p = ParserMiratorg()
     p.parser()
     logger("Добавили тендеров $AddTenderMiratorg")
+    logger("Конец парсинга")
+}
+
+fun parserStg() {
+    logger("Начало парсинга")
+    val p = ParserStg()
+    var tr = 0
+    while (true) {
+        try {
+            p.parser()
+            break
+        } catch (e: Exception) {
+            tr++
+            if (tr > 4) {
+                logger("Количество попыток истекло, выходим из программы")
+                break
+            }
+            logger("Error in parserStg function", e.stackTrace, e)
+            e.printStackTrace()
+        }
+    }
+    logger("Добавили тендеров $AddTenderStg")
     logger("Конец парсинга")
 }

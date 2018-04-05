@@ -8,7 +8,7 @@ import java.util.*
 import javax.xml.parsers.DocumentBuilderFactory
 
 val executePath: String = File(Class.forName("enterit.ApplicationKt").protectionDomain.codeSource.location.path).parentFile.toString()
-const val arguments = "etprf, gpn, pol, luk, tat, rts, sibur, ural, miratorg"
+const val arguments = "etprf, gpn, pol, luk, tat, rts, sibur, ural, miratorg, stg"
 lateinit var arg: Arguments
 var Database: String? = null
 var tempDirTenders: String? = null
@@ -31,6 +31,10 @@ var tempDirTendersUral: String? = null
 var logDirTendersUral: String? = null
 var tempDirTendersMiratorg: String? = null
 var logDirTendersMiratorg: String? = null
+var tempDirTendersStg: String? = null
+var logDirTendersStg: String? = null
+var UserStg: String? = null
+var PassStg: String? = null
 var Prefix: String? = null
 var UserDb: String? = null
 var PassDb: String? = null
@@ -47,6 +51,7 @@ var AddTenderRts: Int = 0
 var AddTenderSibur: Int = 0
 var AddTenderUral: Int = 0
 var AddTenderMiratorg: Int = 0
+var AddTenderStg: Int = 0
 var UrlConnect: String? = null
 var formatter: Format = SimpleDateFormat("dd.MM.yyyy kk:mm:ss")
 var formatterGpn: SimpleDateFormat = SimpleDateFormat("dd.MM.yyyy kk:mm")
@@ -88,12 +93,16 @@ fun getSettings() = try {
                     "logdir_tenders_ural" -> logDirTendersUral = executePath + File.separator + it.childNodes.item(0).textContent
                     "tempdir_tenders_miratorg" -> tempDirTendersMiratorg = executePath + File.separator + it.childNodes.item(0).textContent
                     "logdir_tenders_miratorg" -> logDirTendersMiratorg = executePath + File.separator + it.childNodes.item(0).textContent
+                    "tempdir_tenders_stg" -> tempDirTendersStg = executePath + File.separator + it.childNodes.item(0).textContent
+                    "logdir_tenders_stg" -> logDirTendersStg = executePath + File.separator + it.childNodes.item(0).textContent
                     "prefix" -> Prefix = try {
                         it.childNodes.item(0).textContent
                     } catch (e: Exception) {
                         ""
                     }
 
+                    "userstg" -> UserStg = it.childNodes.item(0).textContent
+                    "passstg" -> PassStg = it.childNodes.item(0).textContent
                     "userdb" -> UserDb = it.childNodes.item(0).textContent
                     "passdb" -> PassDb = it.childNodes.item(0).textContent
                     "server" -> Server = it.childNodes.item(0).textContent
@@ -120,6 +129,7 @@ fun init(args: Array<String>) {
             "sibur" -> arg = Arguments.SIBUR
             "ural" -> arg = Arguments.URAL
             "miratorg" -> arg = Arguments.MIRATORG
+            "stg" -> arg = Arguments.STG
             else -> run { println("Неверно указаны аргументы, используйте $arguments, выходим из программы"); System.exit(0) }
 
         }
@@ -135,6 +145,7 @@ fun init(args: Array<String>) {
         Arguments.SIBUR -> run { tempDirTenders = tempDirTendersSibur; logDirTenders = logDirTendersSibur }
         Arguments.URAL -> run { tempDirTenders = tempDirTendersUral; logDirTenders = logDirTendersUral }
         Arguments.MIRATORG -> run { tempDirTenders = tempDirTendersMiratorg; logDirTenders = logDirTendersMiratorg }
+        Arguments.STG -> run { tempDirTenders = tempDirTendersStg; logDirTenders = logDirTendersStg }
     }
     if (tempDirTenders == null || tempDirTenders == "") {
         println("Не задана папка для временных файлов, выходим из программы")

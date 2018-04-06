@@ -215,6 +215,23 @@ fun returnPriceEtpRf(s: String): String {
     return t
 }
 
+fun String.extractPrice(): String {
+    var nm = ""
+    try {
+        val pattern: Pattern = Pattern.compile("\\s+")
+        val tt = this.replace(',', '.')
+        val matcher: Matcher = pattern.matcher(tt)
+        val ss = matcher.replaceAll("")
+        val p = Pattern.compile("""(\d+\.*\d*)""")
+        val m = p.matcher(ss)
+        if (m.find()) {
+            nm = m.group(1)
+        }
+    } catch (e: Exception) {
+    }
+    return nm
+}
+
 fun getOkpd(s: String): Pair<Int, String> {
     var okpd2GroupCode = 0
     var okpd2GroupLevel1Code = ""

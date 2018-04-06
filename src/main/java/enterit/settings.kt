@@ -40,6 +40,7 @@ var UserDb: String? = null
 var PassDb: String? = null
 var Server: String? = null
 var Port: Int = 0
+var CountStg: Int = 0
 var logPath: String? = null
 val DateNow = Date()
 var AddTenderEtpRf: Int = 0
@@ -107,6 +108,7 @@ fun getSettings() = try {
                     "passdb" -> PassDb = it.childNodes.item(0).textContent
                     "server" -> Server = it.childNodes.item(0).textContent
                     "port" -> Port = Integer.valueOf(it.childNodes.item(0).textContent)
+                    "count_page_stg" -> CountStg = Integer.valueOf(it.childNodes.item(0).textContent)
                 }
             }
 } catch (e: Exception) {

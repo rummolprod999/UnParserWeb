@@ -2,6 +2,7 @@ package enterit.tenders
 
 import enterit.Prefix
 import enterit.getConformity
+import enterit.getRegion
 import java.sql.Connection
 import java.sql.Statement
 
@@ -61,5 +62,25 @@ abstract class TenderAbstract {
 
         }
         return idPlacingWay
+    }
+
+    fun getIdRegion(con: Connection, reg: String): Int {
+        var idReg = 0
+        val re = getRegion(reg)
+        if (re != "") {
+            val stmto = con.prepareStatement("SELECT id FROM region WHERE name LIKE ?")
+            stmto.setString(1, "%$re%")
+            val rso = stmto.executeQuery()
+            if (rso.next()) {
+                idReg = rso.getInt(1)
+                rso.close()
+                stmto.close()
+            } else {
+                rso.close()
+                stmto.close()
+            }
+        }
+        return idReg
+
     }
 }

@@ -3,6 +3,7 @@ package enterit.parsers
 import com.gargoylesoftware.htmlunit.BrowserVersion
 import com.gargoylesoftware.htmlunit.WebClient
 import com.gargoylesoftware.htmlunit.html.*
+import enterit.CountStg
 import enterit.PassStg
 import enterit.UserStg
 import enterit.logger
@@ -18,7 +19,6 @@ class ParserStg : Iparser {
     companion object WebCl {
         val webClient: WebClient = WebClient(BrowserVersion.FIREFOX_52)
         const val timeoutB = 20000L
-        const val PageNumStg = 1
         const val BaseUrl = "https://tender.stg.ru/main/sso/Login.aspx"
     }
 
@@ -57,7 +57,7 @@ class ParserStg : Iparser {
                 } catch (e: Exception) {
                     logger("Error in parserList function", e.stackTrace, e)
                 }
-                for (i in 1..PageNumStg) {
+                for (i in 1..CountStg) {
                     val button = pg.getFirstByXPath<HtmlSpan>("//a[contains(@class, 'k-pager-nav') and not(contains(@class, 'k-state-disabled'))]/span[contains(@class, 'k-i-arrow-e')]")
                     if (button is HtmlSpan) {
                         val y: HtmlPage = button.click()

@@ -24,6 +24,7 @@ class TenderStg(val status: String, val purNum: String, var urlT: String, val pu
     }
 
     override fun parsing() {
+        ParserStg.webClient.close()
         val page: HtmlPage = ParserStg.webClient.getPage(urlT)
         page.webClient.waitForBackgroundJavaScript(timeoutB)
         var pubDateT = page.getFirstByXPath<HtmlSpan>("//td[contains(preceding-sibling::td, 'Дата публикации')]/span")?.textContent?.trim { it <= ' ' }

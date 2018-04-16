@@ -139,6 +139,15 @@ class TenderBashneft(val status: String, val purNum: String, var urlT: String, v
                 println(pg.url)
             }*/
             val lots = page.getByXPath<HtmlTableRow>("//tr[contains(@id, 'ctl00_RootContentPlaceHolder_AuctionFormLayout_AuctionPageControl_LotsGridView_DXDataRow')]")
+            var p = page
+            val butLot = p.getFirstByXPath<HtmlAnchor>("//div[@class = 'dxgvPagerBottomPanel_BashneftTheme']//a[contains(@class, 'dxp-button dxp-bi')]")
+            butLot?.let {
+                p = it.click()
+                p.webClient.waitForBackgroundJavaScript(5000)
+                val lts = page.getByXPath<HtmlTableRow>("//tr[contains(@id, 'ctl00_RootContentPlaceHolder_AuctionFormLayout_AuctionPageControl_LotsGridView_DXDataRow')]")
+                lots.addAll(lts)
+
+            }
             lots.forEach {
                 if (it is HtmlTableRow) {
                     try {

@@ -22,7 +22,7 @@ class ParserBashneft : Iparser {
         val webClient: WebClient = WebClient(BrowserVersion.FIREFOX_52)
         const val timeoutB = 20000L
         const val BaseUrl = "http://etp.bashneft.ru/"
-        const val CountPage = 1
+        const val CountPage = 2
     }
 
     private val listTenders: MutableList<HtmlTableRow> = mutableListOf()

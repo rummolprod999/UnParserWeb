@@ -10,5 +10,6 @@ enum class Arguments {
     SIBUR,
     URAL,
     MIRATORG,
-    STG
+    STG,
+    BASHNEFT
 }

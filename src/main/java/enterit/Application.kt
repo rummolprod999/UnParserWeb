@@ -16,6 +16,7 @@ fun main(args: Array<String>) {
         Arguments.URAL -> parserUral()
         Arguments.MIRATORG -> parserMiratorg()
         Arguments.STG -> parserStg()
+        Arguments.BASHNEFT -> parserBashneft()
     }
 
 }
@@ -156,5 +157,27 @@ fun parserStg() {
         }
     }
     logger("Добавили тендеров $AddTenderStg")
+    logger("Конец парсинга")
+}
+
+fun parserBashneft() {
+    logger("Начало парсинга")
+    val p = ParserBashneft()
+    var tr = 0
+    while (true) {
+        try {
+            p.parser()
+            break
+        } catch (e: Exception) {
+            tr++
+            if (tr > 4) {
+                logger("Количество попыток истекло, выходим из программы")
+                break
+            }
+            logger("Error in parserBashneft function", e.stackTrace, e)
+            e.printStackTrace()
+        }
+    }
+    logger("Добавили тендеров $AddTenderBashneft")
     logger("Конец парсинга")
 }

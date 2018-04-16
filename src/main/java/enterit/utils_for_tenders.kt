@@ -49,8 +49,9 @@ fun addVNum(con: Connection, id: String, typeFz: Int) {
 }
 
 @Throws(SQLException::class, ClassNotFoundException::class, IllegalAccessException::class, InstantiationException::class)
-fun tenderKwords(idTender: Int, con: Connection) {
+fun tenderKwords(idTender: Int, con: Connection, addInfo: String = "") {
     val s = StringBuilder()
+    if (addInfo != "") with(s) { append(addInfo) }
     val p1: PreparedStatement = con.prepareStatement("SELECT DISTINCT po.name, po.okpd_name FROM ${Prefix}purchase_object AS po LEFT JOIN ${Prefix}lot AS l ON l.id_lot = po.id_lot WHERE l.id_tender = ?")
     p1.setInt(1, idTender)
     val r1: ResultSet = p1.executeQuery()

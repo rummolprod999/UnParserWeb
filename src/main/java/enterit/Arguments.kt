@@ -11,5 +11,6 @@ enum class Arguments {
     URAL,
     MIRATORG,
     STG,
-    BASHNEFT
+    BASHNEFT,
+    BUTB
 }

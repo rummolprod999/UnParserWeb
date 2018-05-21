@@ -12,5 +12,5 @@ enum class Arguments {
     MIRATORG,
     STG,
     BASHNEFT,
-    BUTB
+    SAFMARG
 }

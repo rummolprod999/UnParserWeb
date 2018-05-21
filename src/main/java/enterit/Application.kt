@@ -17,7 +17,7 @@ fun main(args: Array<String>) {
         Arguments.MIRATORG -> parserMiratorg()
         Arguments.STG -> parserStg()
         Arguments.BASHNEFT -> parserBashneft()
-        Arguments.BUTB -> parserButb()
+        Arguments.SAFMARG -> parserSafmarg()
     }
 
 }
@@ -183,9 +183,9 @@ fun parserBashneft() {
     logger("Конец парсинга")
 }
 
-fun parserButb() {
+fun parserSafmarg() {
     logger("Начало парсинга")
-    val p = ParserButb()
+    val p = ParserSafmarg()
     var tr = 0
     while (true) {
         try {
@@ -197,10 +197,10 @@ fun parserButb() {
                 logger("Количество попыток истекло, выходим из программы")
                 break
             }
-            logger("Error in parserBashneft function", e.stackTrace, e)
+            logger("Error in parserSafmarg function", e.stackTrace, e)
             e.printStackTrace()
         }
     }
-    logger("Добавили тендеров $AddTenderButb")
+    logger("Добавили тендеров $AddTenderSafmarg")
     logger("Конец парсинга")
 }

@@ -109,7 +109,7 @@ fun parserTat() {
 
 fun parserRts() {
     logger("Начало парсинга")
-    val p = ParserRts()
+    val p = ParserRtsNew()
     p.parser()
     logger("Добавили тендеров $AddTenderRts")
     logger("Конец парсинга")

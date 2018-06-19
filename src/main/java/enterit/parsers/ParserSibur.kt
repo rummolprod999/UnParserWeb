@@ -7,7 +7,7 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 
 class ParserSibur : Iparser {
-    private val maxPage = 20
+    private val maxPage = 50
 
     companion object BaseTen {
         const val BaseT = "http://b2b.sibur.ru/pages_new_ru/exchange/"

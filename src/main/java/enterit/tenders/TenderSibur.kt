@@ -30,7 +30,7 @@ class TenderSibur(val urlTend: String, val purNum: String, val currency: String)
         val endDateT = html.selectFirst("div:containsOwn(Дата вскрытия конвертов:) + div")?.ownText()?.trim { it <= ' ' }
                 ?: ""
         val dateEnd = getDateFromFormat(endDateT, formatterGpn)
-        val VerDateT = html.selectFirst("div:containsOwn(Конкурентная процедура объявлена:) + div")?.ownText()?.trim { it <= ' ' }
+        val VerDateT = html.selectFirst("div:containsOwn(Дата последнего редактирования:) + div")?.ownText()?.trim { it <= ' ' }
                 ?: ""
         var dateVer = getDateFromFormat(VerDateT, formatterGpn)
         if (dateVer == Date(0L)) {

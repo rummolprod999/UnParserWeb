@@ -12,5 +12,6 @@ enum class Arguments {
     MIRATORG,
     STG,
     BASHNEFT,
-    RFP
+    RFP,
+    ZAKUPKI
 }

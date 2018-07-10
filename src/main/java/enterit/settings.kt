@@ -8,7 +8,7 @@ import java.util.*
 import javax.xml.parsers.DocumentBuilderFactory
 
 val executePath: String = File(Class.forName("enterit.ApplicationKt").protectionDomain.codeSource.location.path).parentFile.toString()
-const val arguments = "etprf, gpn, pol, luk, tat, rts, sibur, ural, miratorg, stg, bashneft, mosreg"
+const val arguments = "etprf, gpn, pol, luk, tat, rts, sibur, ural, miratorg, stg, bashneft, mosreg, zakupki"
 lateinit var arg: Arguments
 var Database: String? = null
 var tempDirTenders: String? = null
@@ -37,6 +37,8 @@ var tempDirTendersBashneft: String? = null
 var logDirTendersBashneft: String? = null
 var tempDirTenderRfp: String? = null
 var logDirTendersRfp: String? = null
+var tempDirTenderZakupki: String? = null
+var logDirTendersZakupki: String? = null
 var UserStg: String? = null
 var PassStg: String? = null
 var Prefix: String? = null
@@ -59,10 +61,13 @@ var AddTenderMiratorg: Int = 0
 var AddTenderStg: Int = 0
 var AddTenderBashneft: Int = 0
 var AddTenderRfp: Int = 0
+var AddTenderZakupki: Int = 0
 var UrlConnect: String? = null
 var formatter: Format = SimpleDateFormat("dd.MM.yyyy kk:mm:ss")
 var formatterGpn: SimpleDateFormat = SimpleDateFormat("dd.MM.yyyy kk:mm")
 var formatterOnlyDate: Format = SimpleDateFormat("dd.MM.yyyy")
+var formatterZakupkiDate: Format = SimpleDateFormat("yyyy-MM-dd")
+var formatterZakupkiDateTime: Format = SimpleDateFormat("yyyy-MM-dd kk:mm:ss")
 var formatterEtpRf: Format = SimpleDateFormat("dd.MM.yyyy kk:mm:ss (XXX)")
 var formatterEtpRfN: Format = SimpleDateFormat("dd.MM.yyyy kk:mm (XXX)")
 
@@ -106,6 +111,8 @@ fun getSettings() = try {
                     "logdir_tenders_bashneft" -> logDirTendersBashneft = executePath + File.separator + it.childNodes.item(0).textContent
                     "tempdir_tenders_rfp" -> tempDirTenderRfp = executePath + File.separator + it.childNodes.item(0).textContent
                     "logdir_tenders_rfp" -> logDirTendersRfp = executePath + File.separator + it.childNodes.item(0).textContent
+                    "tempdir_tenders_zakupki" -> tempDirTenderZakupki = executePath + File.separator + it.childNodes.item(0).textContent
+                    "logdir_tenders_zakupki" -> logDirTendersZakupki = executePath + File.separator + it.childNodes.item(0).textContent
                     "prefix" -> Prefix = try {
                         it.childNodes.item(0).textContent
                     } catch (e: Exception) {
@@ -144,6 +151,7 @@ fun init(args: Array<String>) {
             "stg" -> arg = Arguments.STG
             "bashneft" -> arg = Arguments.BASHNEFT
             "rfp" -> arg = Arguments.RFP
+            "zakupki" -> arg = Arguments.ZAKUPKI
             else -> run { println("Неверно указаны аргументы, используйте $arguments, выходим из программы"); System.exit(0) }
 
         }
@@ -162,6 +170,7 @@ fun init(args: Array<String>) {
         Arguments.STG -> run { tempDirTenders = tempDirTendersStg; logDirTenders = logDirTendersStg }
         Arguments.BASHNEFT -> run { tempDirTenders = tempDirTendersBashneft; logDirTenders = logDirTendersBashneft }
         Arguments.RFP -> run { tempDirTenders = tempDirTenderRfp; logDirTenders = logDirTendersRfp }
+        Arguments.ZAKUPKI -> run { tempDirTenders = tempDirTenderZakupki; logDirTenders = logDirTendersZakupki }
     }
     if (tempDirTenders == null || tempDirTenders == "") {
         println("Не задана папка для временных файлов, выходим из программы")

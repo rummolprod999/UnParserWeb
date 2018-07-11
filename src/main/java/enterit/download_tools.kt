@@ -11,11 +11,11 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
 
-fun downloadFromUrl(urls: String, i: Int = 50): String {
+fun downloadFromUrl(urls: String, i: Int = 5): String {
     var count = 0
     while (true) {
         //val i = 50
-        if (count > i) {
+        if (count >= i) {
             logger(String.format("Не скачали строку за %d попыток", count), urls)
             break
         }
@@ -39,9 +39,9 @@ fun downloadFromUrl(urls: String, i: Int = 50): String {
             return s
 
         } catch (e: Exception) {
-            //logger(e, e.stackTrace)
+            logger(e, e.stackTrace)
             count++
-            sleep(5000)
+            sleep(3000)
         }
 
     }
@@ -93,11 +93,11 @@ fun downloadWaitWithRef(urls: String): String {
     return s.toString()
 }
 
-fun downloadFromUrl1251(urls: String, i: Int = 50): String {
+fun downloadFromUrl1251(urls: String, i: Int = 5): String {
     var count = 0
     while (true) {
         //val i = 50
-        if (count > i) {
+        if (count >= i) {
             logger(String.format("Не скачали строку за %d попыток", count), urls)
             break
         }
@@ -121,7 +121,7 @@ fun downloadFromUrl1251(urls: String, i: Int = 50): String {
             return s
 
         } catch (e: Exception) {
-            //logger(e, e.stackTrace)
+            logger(e, e.stackTrace)
             count++
             sleep(5000)
         }

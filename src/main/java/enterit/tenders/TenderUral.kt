@@ -34,11 +34,13 @@ data class TenderUral(var purNum: String, val purObj: String, val datePub: Date,
             r.close()
             stmt0.close()
             var cancelstatus = 0
+            var update = false
             val stmt = con.prepareStatement("SELECT id_tender, date_version FROM ${Prefix}tender WHERE purchase_number = ? AND cancel=0 AND type_fz = ?")
             stmt.setString(1, purNum)
             stmt.setInt(2, typeFz)
             val rs = stmt.executeQuery()
             while (rs.next()) {
+                update = true
                 val idT = rs.getInt(1)
                 val dateB: Timestamp = rs.getTimestamp(2)
                 if (dateVer.after(dateB) || dateB == Timestamp(dateVer.time)) {
@@ -152,7 +154,11 @@ data class TenderUral(var purNum: String, val purObj: String, val datePub: Date,
             }
             rt.close()
             insertTender.close()
-            AddTenderUral++
+            if (update) {
+                UpTenderUral++
+            } else {
+                AddTenderUral++
+            }
             var idLot = 0
             val LotNumber = 1
             val insertLot = con.prepareStatement("INSERT INTO ${Prefix}lot SET id_tender = ?, lot_number = ?", Statement.RETURN_GENERATED_KEYS)

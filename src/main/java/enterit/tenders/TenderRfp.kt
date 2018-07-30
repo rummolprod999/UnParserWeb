@@ -50,11 +50,13 @@ data class TenderRfp(val status: String, val datePub: Date, val dateEnd: Date, v
             stmt0.close()
             val dateVer = Date()
             var cancelstatus = 0
+            var update = false
             val stmt = con.prepareStatement("SELECT id_tender, date_version FROM ${Prefix}tender WHERE purchase_number = ? AND cancel=0 AND type_fz = ?")
             stmt.setString(1, purNum)
             stmt.setInt(2, typeFz)
             val rs = stmt.executeQuery()
             while (rs.next()) {
+                update = true
                 val idT = rs.getInt(1)
                 val dateB: Timestamp = rs.getTimestamp(2)
                 if (dateVer.after(dateB) || dateB == Timestamp(dateVer.time)) {
@@ -112,7 +114,11 @@ data class TenderRfp(val status: String, val datePub: Date, val dateEnd: Date, v
             }
             rt.close()
             insertTender.close()
-            AddTenderRfp++
+            if (update) {
+                UpTenderRfp++
+            } else {
+                AddTenderRfp++
+            }
             var idLot = 0
             val LotNumber = 1
             val insertLot = con.prepareStatement("INSERT INTO ${Prefix}lot SET id_tender = ?, lot_number = ?", Statement.RETURN_GENERATED_KEYS)

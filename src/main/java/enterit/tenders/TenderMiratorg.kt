@@ -60,11 +60,13 @@ class TenderMiratorg(val purNum: String, val url: String) : TenderAbstract() {
             r.close()
             stmt0.close()
             var cancelstatus = 0
+            var update = false
             val stmt = con.prepareStatement("SELECT id_tender, date_version FROM ${Prefix}tender WHERE purchase_number = ? AND cancel=0 AND type_fz = ?")
             stmt.setString(1, purNum)
             stmt.setInt(2, typeFz)
             val rs = stmt.executeQuery()
             while (rs.next()) {
+                update = true
                 val idT = rs.getInt(1)
                 val dateB: Timestamp = rs.getTimestamp(2)
                 if (dateVer.after(dateB) || dateB == Timestamp(dateVer.time)) {
@@ -140,7 +142,11 @@ class TenderMiratorg(val purNum: String, val url: String) : TenderAbstract() {
             }
             rt.close()
             insertTender.close()
-            AddTenderMiratorg++
+            if (update) {
+                UpTenderMiratorg++
+            } else {
+                AddTenderMiratorg++
+            }
             val hrefT = html.select("a:contains(Тендерная документация)")?.attr("href")?.trim { it <= ' ' } ?: ""
             val href = "$etpUrl$hrefT"
             val nameDoc = html.select("a:contains(Тендерная документация) span")?.text()?.trim { it <= ' ' } ?: ""

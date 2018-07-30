@@ -43,6 +43,7 @@ fun parserEtpRf() {
     }
 
     logger("Добавили тендеров $AddTenderEtpRf")
+    logger("Обновили тендеров $UpTenderEtpRf")
     logger("Конец парсинга")
 }
 
@@ -51,6 +52,7 @@ fun parserGpn() {
     val p = ParserGpn()
     p.parser()
     logger("Добавили тендеров $AddTenderGpn")
+    logger("Обновили тендеров $UpTenderGpn")
     logger("Конец парсинга")
 }
 
@@ -59,6 +61,7 @@ fun parserPol() {
     val p = ParserPol()
     p.parser()
     logger("Добавили тендеров $AddTenderPol")
+    logger("Обновили тендеров $UpTenderPol")
     logger("Конец парсинга")
 }
 
@@ -82,6 +85,7 @@ fun parserLuk() {
 
     }
     logger("Добавили тендеров $AddTenderLuk")
+    logger("Обновили тендеров $UpTenderLuk")
     logger("Конец парсинга")
 }
 
@@ -105,6 +109,7 @@ fun parserTat() {
 
     }
     logger("Добавили тендеров $AddTenderTat")
+    logger("Обновили тендеров $UpTenderTat")
     logger("Конец парсинга")
 }
 
@@ -113,6 +118,7 @@ fun parserRts() {
     val p = ParserRtsNew()
     p.parser()
     logger("Добавили тендеров $AddTenderRts")
+    logger("Обновили тендеров $UpTenderRts")
     logger("Конец парсинга")
 }
 
@@ -121,6 +127,7 @@ fun parserSibur() {
     val p = ParserSibur()
     p.parser()
     logger("Добавили тендеров $AddTenderSibur")
+    logger("Обновили тендеров $UpTenderSibur")
     logger("Конец парсинга")
 }
 
@@ -129,6 +136,7 @@ fun parserUral() {
     val p = ParserUral()
     p.parser()
     logger("Добавили тендеров $AddTenderUral")
+    logger("Обновили тендеров $UpTenderUral")
     logger("Конец парсинга")
 }
 
@@ -137,6 +145,7 @@ fun parserMiratorg() {
     val p = ParserMiratorg()
     p.parser()
     logger("Добавили тендеров $AddTenderMiratorg")
+    logger("Обновили тендеров $UpTenderMiratorg")
     logger("Конец парсинга")
 }
 
@@ -159,6 +168,7 @@ fun parserStg() {
         }
     }
     logger("Добавили тендеров $AddTenderStg")
+    logger("Обновили тендеров $UpTenderStg")
     logger("Конец парсинга")
 }
 
@@ -181,6 +191,7 @@ fun parserBashneft() {
         }
     }
     logger("Добавили тендеров $AddTenderBashneft")
+    logger("Обновили тендеров $UpTenderBashneft")
     logger("Конец парсинга")
 }
 
@@ -203,6 +214,7 @@ fun parserRfp() {
         }
     }
     logger("Добавили тендеров $AddTenderRfp")
+    logger("Обновили тендеров $UpTenderRfp")
     logger("Конец парсинга")
 }
 
@@ -211,5 +223,6 @@ fun parserZakupki() {
     val p = ParserZakupki()
     p.parser()
     logger("Добавили тендеров $AddTenderZakupki")
+    logger("Обновили тендеров $UpTenderZakupki")
     logger("Конец парсинга")
 }

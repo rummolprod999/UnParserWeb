@@ -52,11 +52,13 @@ class TenderEtpRf(val status: String, val entNum: String, var purNum: String, va
                 return
             }
             var cancelstatus = 0
+            var update = false
             val stmt = con.prepareStatement("SELECT id_tender, date_version FROM ${Prefix}tender WHERE purchase_number = ? AND cancel=0 AND type_fz = ?")
             stmt.setString(1, purNum)
             stmt.setInt(2, typeFz)
             val rs = stmt.executeQuery()
             while (rs.next()) {
+                update = true
                 val idT = rs.getInt(1)
                 val dateB: Timestamp = rs.getTimestamp(2)
                 if (datePub.after(dateB) || dateB == Timestamp(datePub.time)) {
@@ -204,7 +206,11 @@ class TenderEtpRf(val status: String, val entNum: String, var purNum: String, va
             }
             rt.close()
             insertTender.close()
-            AddTenderEtpRf++
+            if (update) {
+                UpTenderEtpRf++
+            } else {
+                AddTenderEtpRf++
+            }
             val documents: Elements = html.select("table[data-orm-table-id = DocumentMetas] tbody tr[style]")
             if (documents.count() > 0) {
                 documents.forEach { doc ->

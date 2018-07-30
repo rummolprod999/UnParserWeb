@@ -38,12 +38,14 @@ class TenderTat(val status: String, var purNum: String, val purObj: String, val 
             r.close()
             stmt0.close()
             var cancelstatus = 0
+            var update = false
             val startDate = datePub
             val stmt = con.prepareStatement("SELECT id_tender, date_version FROM ${Prefix}tender WHERE purchase_number = ? AND cancel=0 AND type_fz = ?")
             stmt.setString(1, purNum)
             stmt.setInt(2, typeFz)
             val rs = stmt.executeQuery()
             while (rs.next()) {
+                update = true
                 val idT = rs.getInt(1)
                 val dateB: Timestamp = rs.getTimestamp(2)
                 if (startDate.after(dateB) || dateB == Timestamp(startDate.time)) {
@@ -183,7 +185,11 @@ class TenderTat(val status: String, var purNum: String, val purObj: String, val 
             }
             rt.close()
             insertTender.close()
-            AddTenderTat++
+            if (update) {
+                UpTenderTat++
+            } else {
+                AddTenderTat++
+            }
             if (page != null) {
                 for (d in listOf("Приглашение", "Спецификация", "Заявка на формирование лота", "Договор", "ТТУ", "Гарантийное письмо", "Краткая анкета поставщика ", "Условия поставки", "Проект типового договора", "Чертеж")) {
                     val doc = page.getByXPath<HtmlTableCell>("//td[@colspan and preceding-sibling::td = '$d']")

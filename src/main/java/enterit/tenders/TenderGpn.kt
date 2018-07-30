@@ -55,11 +55,13 @@ class TenderGpn(val status: String, val url: String) {
             r.close()
             stmt0.close()
             var cancelstatus = 0
+            var update = false
             val stmt = con.prepareStatement("SELECT id_tender, date_version FROM ${Prefix}tender WHERE purchase_number = ? AND cancel=0 AND type_fz = ?")
             stmt.setString(1, purNum)
             stmt.setInt(2, typeFz)
             val rs = stmt.executeQuery()
             while (rs.next()) {
+                update = true
                 val idT = rs.getInt(1)
                 val dateB: Timestamp = rs.getTimestamp(2)
                 if (startDate.after(dateB) || dateB == Timestamp(startDate.time)) {
@@ -191,7 +193,11 @@ class TenderGpn(val status: String, val url: String) {
             }
             rt.close()
             insertTender.close()
-            AddTenderGpn++
+            if (update) {
+                UpTenderGpn++
+            } else {
+                AddTenderGpn++
+            }
             val documents: Elements = html.select("table#files tbody tr")
             documents.forEach { doc ->
                 val hrefT = doc.select("tr > td > a[href]")?.attr("href")?.trim { it <= ' ' } ?: ""

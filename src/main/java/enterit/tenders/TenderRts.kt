@@ -53,12 +53,14 @@ class TenderRts(val urlTend: String, val purNum: String, val placingWay: String,
             r.close()
             stmt0.close()
             var cancelstatus = 0
+            var update = false
             val startDate = datePub
             val stmt = con.prepareStatement("SELECT id_tender, date_version FROM ${Prefix}tender WHERE purchase_number = ? AND cancel=0 AND type_fz = ?")
             stmt.setString(1, purNum)
             stmt.setInt(2, typeFz)
             val rs = stmt.executeQuery()
             while (rs.next()) {
+                update = true
                 val idT = rs.getInt(1)
                 val dateB: Timestamp = rs.getTimestamp(2)
                 if (startDate.after(dateB) || dateB == Timestamp(startDate.time)) {
@@ -200,7 +202,11 @@ class TenderRts(val urlTend: String, val purNum: String, val placingWay: String,
             }
             rt.close()
             insertTender.close()
-            AddTenderRts++
+            if (update) {
+                UpTenderRts++
+            } else {
+                AddTenderRts++
+            }
             val documents: Elements = html.select("div:containsOwn(Документы) + div table.table-carts tbody tr")
             documents.forEach { doc ->
                 var href = doc.select("td a[href]")?.attr("href")?.trim { it <= ' ' } ?: ""

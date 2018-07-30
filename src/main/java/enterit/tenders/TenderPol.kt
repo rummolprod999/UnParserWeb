@@ -51,11 +51,13 @@ class TenderPol(val url: String) {
             r.close()
             stmt0.close()
             var cancelstatus = 0
+            var update = false
             val stmt = con.prepareStatement("SELECT id_tender, date_version FROM ${Prefix}tender WHERE purchase_number = ? AND cancel=0 AND type_fz = ?")
             stmt.setString(1, purNum)
             stmt.setInt(2, typeFz)
             val rs = stmt.executeQuery()
             while (rs.next()) {
+                update = true
                 val idT = rs.getInt(1)
                 val dateB: Timestamp = rs.getTimestamp(2)
                 if (startDate.after(dateB) || dateB == Timestamp(startDate.time)) {
@@ -157,7 +159,11 @@ class TenderPol(val url: String) {
             }
             rt.close()
             insertTender.close()
-            AddTenderPol++
+            if (update) {
+                UpTenderPol++
+            } else {
+                AddTenderPol++
+            }
             val documents: Elements = html.select("div.purchase-single-docs > ul > li")
             documents.forEach { doc ->
                 val hrefT = doc.select("li > a[href]")?.attr("href")?.trim { it <= ' ' } ?: ""

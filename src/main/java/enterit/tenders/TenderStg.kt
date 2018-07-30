@@ -59,11 +59,13 @@ class TenderStg(val status: String, val purNum: String, var urlT: String, val pu
             r.close()
             stmt0.close()
             var cancelstatus = 0
+            var update = false
             val stmt = con.prepareStatement("SELECT id_tender, date_version FROM ${Prefix}tender WHERE purchase_number = ? AND cancel=0 AND type_fz = ?")
             stmt.setString(1, purNum)
             stmt.setInt(2, typeFz)
             val rs = stmt.executeQuery()
             while (rs.next()) {
+                update = true
                 val idT = rs.getInt(1)
                 val dateB: Timestamp = rs.getTimestamp(2)
                 if (dateVer.after(dateB) || dateB == Timestamp(dateVer.time)) {
@@ -149,7 +151,11 @@ class TenderStg(val status: String, val purNum: String, var urlT: String, val pu
             }
             rt.close()
             insertTender.close()
-            AddTenderStg++
+            if (update) {
+                UpTenderStg++
+            } else {
+                AddTenderStg++
+            }
             val documents = page.getByXPath<HtmlAnchor>("//td[contains(preceding-sibling::td, 'Прочие документы')]//a")
             documents.forEach {
                 if (it is HtmlAnchor) {

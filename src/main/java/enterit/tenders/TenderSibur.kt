@@ -50,11 +50,13 @@ class TenderSibur(val urlTend: String, val purNum: String, val currency: String)
             r.close()
             stmt0.close()
             var cancelstatus = 0
+            var update = false
             val stmt = con.prepareStatement("SELECT id_tender, date_version FROM ${Prefix}tender WHERE purchase_number = ? AND cancel=0 AND type_fz = ?")
             stmt.setString(1, purNum)
             stmt.setInt(2, typeFz)
             val rs = stmt.executeQuery()
             while (rs.next()) {
+                update = true
                 val idT = rs.getInt(1)
                 val dateB: Timestamp = rs.getTimestamp(2)
                 if (dateVer.after(dateB) || dateB == Timestamp(dateVer.time)) {
@@ -193,7 +195,11 @@ class TenderSibur(val urlTend: String, val purNum: String, val currency: String)
             }
             rt.close()
             insertTender.close()
-            AddTenderSibur++
+            if (update) {
+                UpTenderSibur++
+            } else {
+                AddTenderSibur++
+            }
             var idLot = 0
             val LotNumber = 1
             val insertLot = con.prepareStatement("INSERT INTO ${Prefix}lot SET id_tender = ?, lot_number = ?, currency = ?", Statement.RETURN_GENERATED_KEYS)

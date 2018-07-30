@@ -36,11 +36,13 @@ data class TenderZakupki(val purNum: String, var urlT: String, val purObj: Strin
             r.close()
             stmt0.close()
             var cancelstatus = 0
+            var update = false
             val stmt = con.prepareStatement("SELECT id_tender, date_version FROM ${Prefix}tender WHERE purchase_number = ? AND cancel=0 AND type_fz = ?")
             stmt.setString(1, purNum)
             stmt.setInt(2, typeFz)
             val rs = stmt.executeQuery()
             while (rs.next()) {
+                update = true
                 val idT = rs.getInt(1)
                 val dateB: Timestamp = rs.getTimestamp(2)
                 if (dateVer.after(dateB) || dateB == Timestamp(dateVer.time)) {
@@ -131,7 +133,11 @@ data class TenderZakupki(val purNum: String, var urlT: String, val purObj: Strin
             }
             rt.close()
             insertTender.close()
-            AddTenderZakupki++
+            if (update) {
+                UpTenderZakupki++
+            } else {
+                AddTenderZakupki++
+            }
             var idCustomer = 0
             if (orgFullName != "" && !orgFullName.contains("Информация скрыта")) {
                 val stmtoc = con.prepareStatement("SELECT id_customer FROM ${Prefix}customer WHERE full_name = ? LIMIT 1")

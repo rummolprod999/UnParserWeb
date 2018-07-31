@@ -49,8 +49,11 @@ class ParserZakupki : Iparser {
     }
 
     private fun parserTender(el: Element) {
+        if (el.text().contains("Дата публикации")) return
         val purNum = el.selectFirst("td:eq(0) a")?.ownText()?.trim { it <= ' ' } ?: ""
-        if (purNum == "") run { logger("get empty purNum"); return }
+        if (purNum == "") {
+            run { logger("get empty purNum"); return }
+        }
         val urlT = el.selectFirst("td a")?.attr("href")?.trim { it <= ' ' }
                 ?: ""
         if (urlT == "") run { logger("get empty urlT"); return }

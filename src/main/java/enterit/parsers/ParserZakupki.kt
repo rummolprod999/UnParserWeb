@@ -34,7 +34,7 @@ class ParserZakupki : Iparser {
             return
         }
         val html = Jsoup.parse(stPage)
-        val tenders = html.select("#table_grafik_auk  tbody  tr")
+        val tenders = html.select("table.lk_isupply_table  tbody  tr")
         tenders.remove(tenders.last())
         if (tenders.isEmpty()) {
             //logger("Gets empty list tenders", url)

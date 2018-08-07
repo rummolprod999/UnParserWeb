@@ -22,7 +22,7 @@ object RandomUserAgent {
             }
 
             val userAgents: Array<String> = uaMap[browser]
-                    ?: arrayOf("Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_8; en-US) AppleWebKit/532.5 (KHTML, like Gecko) Chrome/4.0.249.0 Safari/532.5")
+                    ?: arrayOf("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.183 Safari/537.36 Vivaldi/1.96.1147.55")
             return userAgents[Math.floor(Math.random() * userAgents.size).toInt()]
         }
 

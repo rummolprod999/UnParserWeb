@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
 
-fun downloadFromUrl(urls: String, i: Int = 5): String {
+fun downloadFromUrl(urls: String, i: Int = 5, wt: Long = 3000): String {
     var count = 0
     while (true) {
         //val i = 50
@@ -41,7 +41,7 @@ fun downloadFromUrl(urls: String, i: Int = 5): String {
         } catch (e: Exception) {
             logger(e, e.stackTrace)
             count++
-            sleep(3000)
+            sleep(wt)
         }
 
     }

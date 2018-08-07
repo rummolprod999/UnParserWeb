@@ -24,7 +24,7 @@ class ParserSibur : Iparser {
             }
 
     private fun parserPage(url: String) {
-        val stPage = downloadFromUrl(url)
+        val stPage = downloadFromUrl(url, wt = 10000)
         if (stPage == "") {
             logger("Gets empty string ParserSibur", url)
             return

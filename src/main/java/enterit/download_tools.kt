@@ -32,6 +32,8 @@ fun downloadFromUrl(urls: String, i: Int = 5, wt: Long = 3000): String {
                 throw ex
             } catch (ex: ExecutionException) {
                 throw ex
+            } catch (ex: Exception) {
+                throw ex
             } finally {
                 future.cancel(true)
                 executor.shutdown()
@@ -73,7 +75,8 @@ fun downloadWaitWithRef(urls: String): String {
     val s = StringBuilder()
     val url = URL(urls)
     val uc = url.openConnection()
-    uc.connectTimeout = 30000
+    uc.connectTimeout = 30_000
+    uc.readTimeout = 600_000
     uc.addRequestProperty("User-Agent", RandomUserAgent.randomUserAgent)
     uc.connect()
     val `is`: InputStream = uc.getInputStream()
@@ -115,6 +118,8 @@ fun downloadFromUrl1251(urls: String, i: Int = 5): String {
                 throw ex
             } catch (ex: ExecutionException) {
                 throw ex
+            } catch (ex: Exception) {
+                throw ex
             } finally {
                 future.cancel(true)
                 executor.shutdown()
@@ -135,7 +140,8 @@ fun downloadWaitWithRef1251(urls: String): String {
     val s = StringBuilder()
     val url = URL(urls)
     val uc = url.openConnection()
-    uc.connectTimeout = 30000
+    uc.connectTimeout = 30_000
+    uc.readTimeout = 600_000
     uc.addRequestProperty("User-Agent", "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.6) Gecko/20070802 SeaMonkey/1.1.4")
     uc.connect()
     val `is`: InputStream = uc.getInputStream()

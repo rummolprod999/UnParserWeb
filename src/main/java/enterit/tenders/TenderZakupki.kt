@@ -95,7 +95,7 @@ data class TenderZakupki(val purNum: String, var urlT: String, val purObj: Strin
                 }
             }
             val idEtp = getEtp(con)
-            var idPlacingWay = 0
+            val idPlacingWay = 0
             var idRegion = 0
             if (region != "") {
                 idRegion = getIdRegion(con, region)

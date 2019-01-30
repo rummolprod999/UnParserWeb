@@ -19,6 +19,7 @@ fun main(args: Array<String>) {
         Arguments.BASHNEFT -> parserBashneft()
         Arguments.RFP -> parserRfp()
         Arguments.ZAKUPKI -> parserZakupki()
+        Arguments.RTSRZD -> parserRtsRzd()
     }
 
 }
@@ -224,5 +225,14 @@ fun parserZakupki() {
     p.parser()
     logger("Добавили тендеров $AddTenderZakupki")
     logger("Обновили тендеров $UpTenderZakupki")
+    logger("Конец парсинга")
+}
+
+fun parserRtsRzd() {
+    logger("Начало парсинга")
+    val p = ParserRzdRts()
+    p.parser()
+    logger("Добавили тендеров $AddTenderRtsRzd")
+    logger("Обновили тендеров $UpTenderRtsRzd")
     logger("Конец парсинга")
 }

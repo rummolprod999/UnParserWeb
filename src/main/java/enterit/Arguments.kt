@@ -13,5 +13,6 @@ enum class Arguments {
     STG,
     BASHNEFT,
     RFP,
-    ZAKUPKI
+    ZAKUPKI,
+    RTSRZD
 }

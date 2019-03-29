@@ -40,7 +40,7 @@ class TenderEtpRf(val status: String, val entNum: String, var purNum: String, va
             }
             r.close()
             stmt0.close()
-            val stPage = downloadFromUrl(url, i = 3)
+            val stPage = downloadFromUrlEtpRf(url, i = 2)
             if (stPage == "") {
                 logger("Gets empty string TenderEtpRf", url)
                 return
@@ -89,7 +89,8 @@ class TenderEtpRf(val status: String, val entNum: String, var purNum: String, va
                 } else {
                     rso.close()
                     stmto.close()
-                    fullNameOrg = html.selectFirst("td:containsOwn(Наименование организации, размещающей заказ) ~ td")?.ownText()?.trim() ?: ""
+                    fullNameOrg = html.selectFirst("td:containsOwn(Наименование организации, размещающей заказ) ~ td")?.ownText()?.trim()
+                            ?: ""
                     val postalAdr = html.selectFirst("td:containsOwn(Почтовый адрес организации) ~ td")?.ownText()?.trim()
                             ?: ""
                     val email = html.selectFirst("td:containsOwn(e-mail адрес контактного лица) ~ td")?.ownText()?.trim()
@@ -280,7 +281,8 @@ class TenderEtpRf(val status: String, val entNum: String, var purNum: String, va
                     var namePO = html.selectFirst("td:containsOwn(Полное наименование (предмет договора)) ~ td")?.ownText()?.trim { it <= ' ' }
                             ?: ""
                     if (namePO == "") {
-                        namePO = html.selectFirst("td:containsOwn(Предмет договора) ~ td")?.ownText()?.trim { it <= ' ' } ?: ""
+                        namePO = html.selectFirst("td:containsOwn(Предмет договора) ~ td")?.ownText()?.trim { it <= ' ' }
+                                ?: ""
                     }
                     if (namePO == "") {
                         namePO = okpd2Name

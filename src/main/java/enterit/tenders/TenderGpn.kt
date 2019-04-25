@@ -24,9 +24,9 @@ class TenderGpn(val status: String, val url: String) {
         val html = Jsoup.parse(stPage)
         val uTC = html.selectFirst("div:contains(Местное время:) + div")?.ownText()?.trim { it <= ' ' } ?: ""
         val offset = getOffset(uTC)
-        val startDateT = html.selectFirst("div:contains(Дата и время начала приёма предложений:) + div")?.ownText()?.trim { it <= ' ' }
+        val startDateT = html.selectFirst("div:contains(Дата и время начала приёма предложений:) + div")?.ownText()?.replace(",", "")?.trim { it <= ' ' }
                 ?: ""
-        val endDateT = html.selectFirst("div:contains(Дата и время окончания приёма предложений:) + div")?.ownText()?.trim { it <= ' ' }
+        val endDateT = html.selectFirst("div:contains(Дата и время окончания приёма предложений:) + div")?.ownText()?.replace(",", "")?.trim { it <= ' ' }
                 ?: ""
         val startDate = getDateFromFormatOffset(startDateT, formatterGpn, offset)
         val endDate = getDateFromFormatOffset(endDateT, formatterGpn, offset)

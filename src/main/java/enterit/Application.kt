@@ -59,7 +59,7 @@ fun parserGpn() {
 
 fun parserPol() {
     logger("Начало парсинга")
-    val p = ParserPol()
+    val p = ParserPolNew()
     p.parser()
     logger("Добавили тендеров $AddTenderPol")
     logger("Обновили тендеров $UpTenderPol")

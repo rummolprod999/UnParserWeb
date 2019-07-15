@@ -6,8 +6,8 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 
 class ParserUral : Iparser {
-    val BaseUrl = "http://www.uralkali.com"
-    private val baseUrl = "http://www.uralkali.com/ru/tenders/?PAGEN_1=7"
+    val BaseUrl = "https://www.uralkali.com"
+    private val baseUrl = "https://www.uralkali.com/ru/tenders/?PAGEN_1=8"
     override fun parser() {
         try {
             parserPage(baseUrl)

@@ -222,7 +222,11 @@ fun parserRfp() {
 fun parserZakupki() {
     logger("Начало парсинга")
     val p = ParserZakupki()
-    p.parser()
+    try {
+        p.parser()
+    } catch (e: Exception) {
+        logger(e, e.stackTrace)
+    }
     logger("Добавили тендеров $AddTenderZakupki")
     logger("Обновили тендеров $UpTenderZakupki")
     logger("Конец парсинга")

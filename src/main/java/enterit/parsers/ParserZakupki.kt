@@ -18,7 +18,7 @@ class ParserZakupki : Iparser {
     private val _baseUrl = "https://www.zakupki.ru"
 
     companion object WebCl {
-        val webClient: WebClient = WebClient(BrowserVersion.FIREFOX_52)
+        val webClient: WebClient = WebClient(BrowserVersion.FIREFOX_60)
         const val numPage = 50
     }
 
@@ -29,6 +29,7 @@ class ParserZakupki : Iparser {
 
     override fun parser() {
         webClient.waitForBackgroundJavaScript(10000)
+        webClient.options.isThrowExceptionOnScriptError = false
         val page: HtmlPage = webClient.getPage(_baseUrl)
         Thread.sleep(5000)
         try {

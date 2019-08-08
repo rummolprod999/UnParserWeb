@@ -31,14 +31,14 @@ class ParserGpn : Iparser {
             return
         }
         val html = Jsoup.parse(stPage)
-        val tenders = html.select("article[id]")
+        val tenders = html.select("div.purchase-container")
         if (tenders.isEmpty()) {
             logger("Gets empty list tenders", url)
         }
         tenders.forEach<Element> { t ->
             try {
-                val status = t.selectFirst("span:contains(Статус:) ~ span")?.ownText()?.trim { it <= ' ' } ?: ""
-                val urlT = t.selectFirst("a:containsOwn(Подробнее)")?.attr("href")?.trim { it <= ' ' } ?: ""
+                val status = t.selectFirst("div.purchase-status")?.ownText()?.trim { it <= ' ' } ?: ""
+                val urlT = t.selectFirst("div.purchase-number a")?.attr("href")?.trim { it <= ' ' } ?: ""
                 val urlTend = "$BaseT$urlT"
                 val tt = TenderGpn(status, urlTend)
                 tt.parsing()

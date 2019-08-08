@@ -24,9 +24,9 @@ class TenderGpn(val status: String, val url: String) {
         val html = Jsoup.parse(stPage)
         val uTC = html.selectFirst("div:contains(Местное время:) + div")?.ownText()?.trim { it <= ' ' } ?: ""
         val offset = getOffset(uTC)
-        val startDateT = html.selectFirst("div:contains(Дата и время начала приёма предложений:) + div")?.ownText()?.replace(",", "")?.trim { it <= ' ' }
+        val startDateT = html.selectFirst("div:contains(Дата начала приема:) + div")?.ownText()?.replace(",", "")?.trim { it <= ' ' }
                 ?: ""
-        val endDateT = html.selectFirst("div:contains(Дата и время окончания приёма предложений:) + div")?.ownText()?.replace(",", "")?.trim { it <= ' ' }
+        val endDateT = html.selectFirst("div:contains(Дата окончания приема:) + div")?.ownText()?.replace(",", "")?.trim { it <= ' ' }
                 ?: ""
         val startDate = getDateFromFormatOffset(startDateT, formatterGpn, offset)
         val endDate = getDateFromFormatOffset(endDateT, formatterGpn, offset)
@@ -34,7 +34,7 @@ class TenderGpn(val status: String, val url: String) {
             logger("Empty start date in $url")
             return
         }
-        val purNum = html.selectFirst("div:contains(Реестровый номер:) + div")?.ownText()?.trim { it <= ' ' } ?: ""
+        val purNum = html.selectFirst("div.info-number span")?.ownText()?.replace("№", "")?.trim { it <= ' ' } ?: ""
         if (purNum == "") {
             logger("Empty purchase number in $url")
             return
@@ -89,9 +89,9 @@ class TenderGpn(val status: String, val url: String) {
                 } else {
                     rso.close()
                     stmto.close()
-                    val phone = html.selectFirst("div:contains(Контактный телефон:) + div")?.text()?.trim { it <= ' ' }
+                    val phone = html.selectFirst("div:contains(Контактная информация:) + div > div:contains(Тел:)")?.text()?.trim { it <= ' ' }
                             ?: ""
-                    val email = html.selectFirst("div:contains(Контактный e-mail:) + div")?.text()?.trim { it <= ' ' }
+                    val email = html.selectFirst("div:contains(Контактная информация:) + div > div:contains(E-mail:)")?.text()?.trim { it <= ' ' }
                             ?: ""
                     val stmtins = con.prepareStatement("INSERT INTO ${Prefix}organizer SET full_name = ?, contact_email = ?, contact_phone = ?", Statement.RETURN_GENERATED_KEYS)
                     stmtins.setString(1, fullnameOrg)
@@ -163,7 +163,7 @@ class TenderGpn(val status: String, val url: String) {
 
                 }
             }
-            val purObj = html.selectFirst("div:contains(Наименование закупки:) + div")?.ownText()?.trim { it <= ' ' }
+            val purObj = html.selectFirst("div.info-title")?.ownText()?.trim { it <= ' ' }
                     ?: ""
             var idTender = 0
             val scoringDT = html.selectFirst("div:contains(Дата вскрытия:) + div")?.ownText()?.trim { it <= ' ' } ?: ""
@@ -213,7 +213,7 @@ class TenderGpn(val status: String, val url: String) {
                 }
             }
             var idLot = 0
-            val lots: Elements = html.select("table#table_spec tbody tr")
+            val lots: Elements = html.select("div.purchase-lots table tbody tr")
             lots.forEach { lot ->
                 val noLots = lot.selectFirst("tr > td:contains(лотов нет)")
                 if (noLots != null) return@forEach

@@ -10,7 +10,7 @@ import java.util.logging.Level
 
 class ParserRtsNew : Iparser {
     companion object BaseTen {
-        const val BaseT = "http://corp.rts-tender.ru"
+        const val BaseT = "https://corp.rts-tender.ru"
         val webClient: WebClient = WebClient(BrowserVersion.CHROME)
     }
 
@@ -19,13 +19,14 @@ class ParserRtsNew : Iparser {
         System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog")
     }
 
-    private val baseUrl = "http://corp.rts-tender.ru/?FilterData.PageSize=100&FilterData.PageIndex=1&FilterData.PageCount=1"
+    private val baseUrl = "https://corp.rts-tender.ru/?fl=True&SearchForm.State=1&SearchForm.TenderRuleIds=4&SearchForm.MarketPlaceIds=5&SearchForm.CurrencyCode=undefined&&FilterData.PageCount=2&FilterData.PageIndex=1"
     private val maxPage = 2
     override fun parser() {
+        webClient.options.isThrowExceptionOnScriptError = false
         webClient.waitForBackgroundJavaScript(15000)
         try {
             (1..maxPage)
-                    .map { "http://corp.rts-tender.ru/?FilterData.PageSize=100&FilterData.PageIndex=$it&FilterData.PageCount=1" }
+                    .map { "https://corp.rts-tender.ru/?fl=True&SearchForm.State=1&SearchForm.TenderRuleIds=4&SearchForm.MarketPlaceIds=5&SearchForm.CurrencyCode=undefined&&FilterData.PageCount=$it&FilterData.PageIndex=1" }
                     .forEach {
                         try {
                             val page: HtmlPage = webClient.getPage(it)

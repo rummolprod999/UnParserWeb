@@ -118,7 +118,7 @@ fun tenderKwords(idTender: Int, con: Connection, addInfo: String = "") {
         p4.close()
     }
     val p5: PreparedStatement = con.prepareStatement("SELECT DISTINCT cus.inn, cus.full_name FROM ${Prefix}customer AS cus LEFT JOIN ${Prefix}purchase_object AS po ON cus.id_customer = po.id_customer LEFT JOIN ${Prefix}lot AS l ON l.id_lot = po.id_lot WHERE l.id_tender = ?")
-    p5.setInt(1, idOrg)
+    p5.setInt(1, idTender)
     val r5: ResultSet = p5.executeQuery()
     while (r5.next()) {
         var fullNameC: String?

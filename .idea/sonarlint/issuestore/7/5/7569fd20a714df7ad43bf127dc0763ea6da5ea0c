@@ -1,0 +1,5 @@
+
+„kotlin:S1192 "gDefine a constant instead of duplicating this literal """^(\d{2}\.\d{2}\.\d{4} \d{2}:\d{2})""" 3 times.(ùÐ©Ëùÿÿÿÿ
+jkotlin:S3776"RRefactor this method to reduce its Cognitive Complexity from 48 to the 15 allowed.(çÃŸþ
+ikotlin:S117R"RRename this local variable to match the regular expression "^[_a-z][a-zA-Z0-9]*$".(‘ŠÏ•
+pkotlin:S3776È"RRefactor this method to reduce its Cognitive Complexity from 18 to the 15 allowed.(ÙàŸßýÿÿÿÿ

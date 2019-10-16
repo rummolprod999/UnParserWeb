@@ -7,10 +7,10 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 
 class ParserGpn : Iparser {
-    private val baseUrl = "http://zakupki.gazprom-neft.ru/tenderix/?PAGE="
+    private val baseUrl = "https://zakupki.gazprom-neft.ru/tenderix/?PAGE="
 
     companion object BaseTen {
-        const val BaseT = "http://zakupki.gazprom-neft.ru"
+        const val BaseT = "https://zakupki.gazprom-neft.ru"
     }
 
     private val maxPage = 15

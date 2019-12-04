@@ -13,7 +13,7 @@ class ParserRts : Iparser {
     }
 
     private val baseUrl = "https://corp.rts-tender.ru/?fl=True&SearchForm.State=1&SearchForm.TenderRuleIds=4&SearchForm.MarketPlaceIds=5&SearchForm.CurrencyCode=undefined&&FilterData.PageCount=2&FilterData.PageIndex=1"
-    private val maxPage = 2
+    private val maxPage = 5
     override fun parser() = (1..maxPage)
             .map { "https://corp.rts-tender.ru/?fl=True&SearchForm.State=1&SearchForm.TenderRuleIds=4&SearchForm.MarketPlaceIds=5&SearchForm.CurrencyCode=undefined&&FilterData.PageCount=$it&FilterData.PageIndex=1" }
             .forEach {

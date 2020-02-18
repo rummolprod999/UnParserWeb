@@ -25,19 +25,19 @@ class ParserPolNew : Iparser {
     }
 
     private fun parsingTender(e: Element) {
-        val purName = e.selectFirst("td:eq(1)  p > a")?.text()?.trim { it <= ' ' }
+        val purName = e.selectFirst("td:eq(2) p > a")?.text()?.trim { it <= ' ' }
                 ?: run { logger("purName not found"); return }
-        val urlT = e.selectFirst("td:eq(1)  p > a")?.attr("href")?.trim { it <= ' ' }
+        val urlT = e.selectFirst("td:eq(2) p > a")?.attr("href")?.trim { it <= ' ' }
                 ?: run { logger("urlT not found on $purName"); return }
         val urlTend = "http://tenders.polyusgold.com$urlT"
-        val purNum = purName.regExpTest("""^(\[.+\])\s""")
+        val purNum = purName.regExpTest("""^\[(.+)\]\s""")
         if (purNum == "") {
             logger("purNum not found in $purName")
         }
-        val status = e.selectFirst("td:eq(2) > a")?.text()?.trim { it <= ' ' }
+        val status = e.selectFirst("td:eq(3) > a")?.text()?.trim { it <= ' ' }
                 ?: run { logger("status not found in $purNum"); return }
-        val orgName = e.selectFirst("td:eq(1)  div > a")?.text()?.trim { it <= ' ' }
-                ?: run { logger("purName not found"); "" }
+        val orgName = e.selectFirst("td:eq(2) div > a")?.text()?.trim { it <= ' ' }
+                ?: run { logger("orgName not found"); "" }
         val t = TenderPolNew(urlTend, purName, purNum, status, orgName)
         t.parsing()
     }

@@ -27,20 +27,6 @@ Z
 *src/main/java/enterit/utils_for_tenders.kt,8/e/8e5badc755980dd05432b384c642d616ca106f3c
 ]
 -src/main/java/enterit/tenders/TenderPolNew.kt,3/e/3e184d4e93762e535e74e7f1958f4ff937f197b2
-u
-E.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_reflect_1_3_41.xml,0/c/0cbeae5cbefbf61b84019c655147027f9f313960
-t
-D.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_stdlib_1_3_41.xml,2/a/2a3b99ccf7b3fd17726f1d6b52ca5473d05718fd
-{
-K.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_stdlib_common_1_3_41.xml,8/3/8379bfd87525030811089e77b907cd2ba3cbc4a9
-y
-I.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_stdlib_jdk7_1_3_41.xml,9/8/98990701b2e7ecadfed09aa4ab506b0a0b932226
-y
-I.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_stdlib_jdk8_1_3_41.xml,4/5/45c9a7cb1fae50950182b54813fa11b99c23bca3
-r
-B.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_test_1_3_41.xml,b/2/b2c3d7f506b32037601a3d2199d4288e36f2221e
-y
-I.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_test_common_1_3_41.xml,0/d/0da41aaa0cea570ec564cfdd5c906925a06623d0
 [
 +src/main/java/enterit/parsers/ParserUral.kt,a/6/a6fa6e96839eb2da8d368dbc4b1eac3c1334bad6
 ^
@@ -121,3 +107,5 @@ Z
 *src/main/java/enterit/tenders/TenderTat.kt,7/d/7d9ac63477e4c1320cfe73f3ecb5aefea7427a6d
 [
 +src/main/java/enterit/tenders/TenderUral.kt,c/4/c429f4dc98a4aa17eb920625c098b494e256e47d
+j
+:.idea/dataSources/9f628663-5b32-41db-b784-94655cad7aed.xml,b/d/bd18ee2d565598f89ea842bb27ec95a1aa001cda

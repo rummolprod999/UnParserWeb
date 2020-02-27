@@ -3,6 +3,11 @@
   <component name="issues">
     <option name="index">
       <map>
+        <entry key="/Dummy.txt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../UnParserSelen/src/main/java/enterit/parsers/ParserZmo.kt">
           <value>
             <set />
@@ -28,12 +33,22 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/enterit/parsers/ParserRtsNew.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/enterit/parsers/ParserUral.kt">
           <value>
             <set />
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/main/java/enterit/tenders/TenderPolNew.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/enterit/tenders/TenderRzdRts.kt">
           <value>
             <set />
           </value>

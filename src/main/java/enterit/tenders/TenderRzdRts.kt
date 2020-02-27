@@ -207,7 +207,7 @@ class TenderRzdRts(val urlTend: String, val purNum: String, val placingWay: Stri
             } else {
                 AddTenderRtsRzd++
             }
-            val documents: Elements = html.select("div:containsOwn(Документы) + div table.table-carts tbody tr")
+            val documents: Elements = html.select("div:containsOwn(Документы) + div table.table-carts2 tbody tr")
             documents.forEach { doc ->
                 var href = doc.select("td a[href]")?.attr("href")?.trim { it <= ' ' } ?: ""
                 if (href == "") {

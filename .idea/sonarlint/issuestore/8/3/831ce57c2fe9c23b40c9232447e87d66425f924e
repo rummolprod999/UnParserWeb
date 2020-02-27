@@ -1,6 +1,6 @@
 
-jkotlin:S3776"RRefactor this method to reduce its Cognitive Complexity from 54 to the 15 allowed.(à÷ﬁÈ
-hkotlin:S117i"RRename this local variable to match the regular expression "^[_a-z][a-zA-Z0-9]*$".(ò«…m
 Akotlin:S108É")Either remove or fill this block of code.(™≥ëê
 okotlin:S117Ü"RRename this local variable to match the regular expression "^[_a-z][a-zA-Z0-9]*$".(ª∞âó˙ˇˇˇˇ
 ikotlin:S117J"RRename this local variable to match the regular expression "^[_a-z][a-zA-Z0-9]*$".(ëäœï
+jkotlin:S3776"RRefactor this method to reduce its Cognitive Complexity from 54 to the 15 allowed.(à÷ﬁÈ
+hkotlin:S117i"RRename this local variable to match the regular expression "^[_a-z][a-zA-Z0-9]*$".(ò«…m

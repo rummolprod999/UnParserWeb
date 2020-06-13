@@ -14,7 +14,7 @@ import java.util.logging.Level
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-const val PageNumEtpRf = 30
+const val PageNumEtpRf = 50
 
 class ParserEtpRf : Iparser {
     val BaseUrl = "http://etprf.ru"

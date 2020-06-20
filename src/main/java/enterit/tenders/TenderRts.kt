@@ -20,7 +20,7 @@ class TenderRts(val urlTend: String, val purNum: String, val placingWay: String,
         }
         val stPage = downloadFromUrl(urlTend)
         if (stPage == "") {
-            logger("Gets empty string TenderEtpRf", urlTend)
+            logger("Gets empty string TenderRts", urlTend)
             return
         }
         val html = Jsoup.parse(stPage)

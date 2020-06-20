@@ -56,15 +56,15 @@ class ParserRtsNew : Iparser {
 
     private fun parserTender(t: HtmlTable) {
         val urlT = t.getFirstByXPath<HtmlAnchor>("./tbody/tr[2]/td//span[@class = 'spoiler']/a").getAttribute("href")
-        val urlTend = "$BaseT$urlT"
+        val urlTend = "$urlT"
         val purNum = t.getFirstByXPath<HtmlParagraph>("./tbody/tr[1]//li[contains(., 'Номер на площадке')]//p").textContent.trim { it <= ' ' }
         val plType = t.getFirstByXPath<HtmlParagraph>("./tbody/tr[3]//li[contains(@class, 'tag')][3]/p").textContent.trim { it <= ' ' }
         val applGuaranteeT = t.getFirstByXPath<HtmlStrong>("./tbody/tr[1]//td[@class = 'column-aside']//div[contains(., 'Обеспечение заявки:')]//p//strong").textContent.trim { it <= ' ' }
         val applGuarantee = returnPriceEtpRf(applGuaranteeT)
-        val currency = t.getFirstByXPath<HtmlSpan>("./tbody/tr[1]//td[@class = 'column-aside']//div[contains(., 'Обеспечение заявки:')]//p//span").textContent.trim { it <= ' ' }
+        val currency = t.getFirstByXPath<HtmlSpan>(".//h5[contains(., 'Начальная максимальная цена')]/following-sibling::p/span").textContent.trim { it <= ' ' }
         val contrGuaranteeT = t.getFirstByXPath<HtmlStrong>("./tbody/tr[1]//td[@class = 'column-aside']//div[contains(., 'Обеспечение контракта:')]//p//strong").textContent.trim { it <= ' ' }
         val contrGuarantee = returnPriceEtpRf(contrGuaranteeT)
-        val nmckT = t.getFirstByXPath<HtmlStrong>("./tbody/tr[1]//td[@class = 'column-aside']//div[contains(., 'Начальная максимальная цена')]//p//strong")?.textContent?.trim { it <= ' ' }
+        val nmckT = t.getFirstByXPath<HtmlStrong>(".//h5[contains(., 'Начальная максимальная цена')]/following-sibling::p/strong")?.textContent?.trim { it <= ' ' }
                 ?: ""
         val nmck = returnPriceEtpRf(nmckT)
         val tt = TenderRts(urlTend, purNum, plType, applGuarantee, currency, contrGuarantee, nmck)

@@ -2,8 +2,8 @@ package enterit.parsers
 
 import com.gargoylesoftware.htmlunit.BrowserVersion
 import com.gargoylesoftware.htmlunit.WebClient
+import com.gargoylesoftware.htmlunit.html.HtmlAnchor
 import com.gargoylesoftware.htmlunit.html.HtmlPage
-import com.gargoylesoftware.htmlunit.html.HtmlSpan
 import com.gargoylesoftware.htmlunit.html.HtmlTableRow
 import enterit.formatterEtpRf
 import enterit.formatterEtpRfN
@@ -14,11 +14,11 @@ import java.util.logging.Level
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-const val PageNumEtpRf = 50
+const val PageNumEtpRf = 100
 
 class ParserEtpRf : Iparser {
     val BaseUrl = "http://etprf.ru"
-    val urlEtprf = listOf("http://etprf.ru/NotificationEX", "http://etprf.ru/BRNotification")
+    val urlEtprf = listOf("http://etprf.ru/NotificationEX", "http://etprf.ru/BRNotification", "http://etprf.ru/NotificationCR")
 
     init {
         java.util.logging.Logger.getLogger("com.gargoylesoftware").level = Level.OFF
@@ -48,10 +48,10 @@ class ParserEtpRf : Iparser {
             }
         }
         for (i in 1..PageNumEtpRf) {
-            val button = page.getByXPath<HtmlSpan>("//span[@class = 'ui-button-text' and . = 'Вперед']")
-            val b = button[0] as HtmlSpan
+            val button = page.getByXPath<HtmlAnchor>("//a[span[@class = 'ui-button-text' and . = 'Вперед']]")
+            val b = button[0] as HtmlAnchor
             val y: HtmlPage = b.click()
-            if (pg == "http://etprf.ru/BRNotification") {
+            if (pg == "http://etprf.ru/BRNotification" || pg == "http://etprf.ru/NotificationCR") {
                 try {
                     parserPage(y)
                 } catch (e: Exception) {
@@ -94,7 +94,13 @@ class ParserEtpRf : Iparser {
             val datePub = getDateFromFormat(datePubTmp, formatterEtpRf)
             val dateEnd = getDateFromFormat(dateEndTmp, formatterEtpRf)
             val urlT = t.getCell(11).getElementsByTagName("a")[0].getAttribute("href")
-            val url = "$BaseUrl$urlT"
+            if (urlT.contains("www.zakupki.butb.by")) return
+
+            val url = if (urlT.startsWith("http://sale.etprf.ru")) {
+                urlT
+            } else {
+                "$BaseUrl$urlT"
+            }
             val tt = TenderEtpRf(status, entNum, purNum, purObj, nmck, placingWay, datePub, dateEnd, url)
             tt.parsing()
         } catch (e: Exception) {

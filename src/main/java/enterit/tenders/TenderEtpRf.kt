@@ -270,7 +270,7 @@ class TenderEtpRf(val status: String, val entNum: String, var purNum: String, va
                     stmtins.close()
                 }
             }
-            val purObj: Elements = html.select("table[data-orm-table-id = Lot_LotItems] tbody tr[style]")
+            val purObj: Elements = html.select("table[data-orm-table-id = LotItems] tbody tr[style]")
             if (purObj.count() > 0) {
                 purObj.forEach { po ->
                     val okpd2Code = po.select("td:eq(1)")?.text()?.trim { it <= ' ' } ?: ""

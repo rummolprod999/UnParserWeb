@@ -10,11 +10,12 @@ import enterit.formatterEtpRfN
 import enterit.getDateFromFormat
 import enterit.logger
 import enterit.tenders.TenderEtpRf
+import java.lang.Thread.sleep
 import java.util.logging.Level
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-const val PageNumEtpRf = 100
+const val PageNumEtpRf = 200
 
 class ParserEtpRf : Iparser {
     val BaseUrl = "http://etprf.ru"
@@ -51,6 +52,7 @@ class ParserEtpRf : Iparser {
             val button = page.getByXPath<HtmlAnchor>("//a[span[@class = 'ui-button-text' and . = 'Вперед']]")
             val b = button[0] as HtmlAnchor
             val y: HtmlPage = b.click()
+            sleep(2000)
             if (pg == "http://etprf.ru/BRNotification" || pg == "http://etprf.ru/NotificationCR") {
                 try {
                     parserPage(y)

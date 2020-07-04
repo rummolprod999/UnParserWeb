@@ -15,11 +15,14 @@ class ParserLuk : Iparser {
     init {
         java.util.logging.Logger.getLogger("com.gargoylesoftware").level = Level.OFF
         System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog")
+        System.setProperty("jsse.enableSNIExtension", "false");
     }
 
     override fun parser() {
-        val webClient = WebClient(BrowserVersion.CHROME)
-        val page: HtmlPage = webClient.getPage("http://www.lukoil.ru/Company/Tendersandauctions/Tenders")
+        val webClient = WebClient(BrowserVersion.FIREFOX_68)
+        webClient.options.isUseInsecureSSL = true
+        webClient.options.isThrowExceptionOnScriptError = false
+        val page: HtmlPage = webClient.getPage("https://lukoil.ru/Company/Tendersandauctions/Tenders")
         page.webClient.waitForBackgroundJavaScript(5000)
         try {
             parserPage(page)

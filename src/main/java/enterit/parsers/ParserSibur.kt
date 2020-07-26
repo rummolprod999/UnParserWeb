@@ -10,11 +10,11 @@ class ParserSibur : Iparser {
     private val maxPage = 50
 
     companion object BaseTen {
-        const val BaseT = "http://b2b.sibur.ru/pages_new_ru/exchange/"
+        const val BaseT = "https://b2b.sibur.ru/pages_new_ru/exchange/"
     }
 
     override fun parser() = (1..maxPage)
-            .map { "http://b2b.sibur.ru/pages_new_ru/exchange/exchange.jsp?page=$it&disp_status=0" }
+            .map { "https://b2b.sibur.ru/pages_new_ru/exchange/exchange.jsp?page=$it&disp_status=0" }
             .forEach {
                 try {
                     parserPage(it)

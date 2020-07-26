@@ -5,13 +5,42 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import java.lang.Thread.sleep
 import java.net.URL
+import java.security.SecureRandom
+import java.security.cert.X509Certificate
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
+import javax.net.ssl.HttpsURLConnection
+import javax.net.ssl.SSLContext
+import javax.net.ssl.TrustManager
+import javax.net.ssl.X509TrustManager
 
+
+var trustAllCerts: Array<TrustManager> = arrayOf<TrustManager>(
+        object : X509TrustManager {
+
+            override fun checkClientTrusted(
+                    certs: Array<X509Certificate?>?, authType: String?) {
+            }
+
+            override fun checkServerTrusted(
+                    certs: Array<X509Certificate?>?, authType: String?) {
+            }
+
+            override fun getAcceptedIssuers(): Array<X509Certificate>? {
+                return null
+            }
+        }
+)
 
 fun downloadFromUrl(urls: String, i: Int = 5, wt: Long = 3000): String {
+    try {
+        val sc: SSLContext = SSLContext.getInstance("SSL")
+        sc.init(null, trustAllCerts, SecureRandom())
+        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory())
+    } catch (e: Exception) {
+    }
     var count = 0
     while (true) {
         //val i = 50

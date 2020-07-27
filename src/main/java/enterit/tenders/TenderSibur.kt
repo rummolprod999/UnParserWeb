@@ -18,7 +18,7 @@ class TenderSibur(val urlTend: String, val purNum: String, val currency: String)
             logger("Empty purchase number in $urlTend")
             return
         }
-        val stPage = downloadFromUrl(urlTend, wt = 10000)
+        val stPage = downloadFromUrl(urlTend, wt = 25000)
         if (stPage == "") {
             logger("Gets empty string TenderEtpRf", urlTend)
             return

@@ -39,7 +39,7 @@ class ParserZakupki : Iparser {
                 logger("Error in parser function", e.stackTrace, e)
             }
             for (i in 1..numPage) {
-                val button = page.getByXPath<HtmlAnchor>("//a[. = 'Следущая']")
+                val button = page.getByXPath<HtmlAnchor>("//a[@style= 'color: #003366;'][last()]")
                 if (!button.isEmpty()) {
                     val b = button[0] as HtmlAnchor
                     val y: HtmlPage = b.click()

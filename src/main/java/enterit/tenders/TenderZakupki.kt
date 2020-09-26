@@ -138,6 +138,16 @@ data class TenderZakupki(val purNum: String, var urlT: String, val purObj: Strin
             } else {
                 AddTenderZakupki++
             }
+            var tehDoc = stPage.regExpTest("location\\.href = '(/prices/[_\\w.]+)'; ")
+            if (tehDoc != "") {
+                tehDoc = "https://zakupki.ru$tehDoc"
+                val insertDoc = con.prepareStatement("INSERT INTO ${Prefix}attachment SET id_tender = ?, file_name = ?, url = ?")
+                insertDoc.setInt(1, idTender)
+                insertDoc.setString(2, "Документация")
+                insertDoc.setString(3, tehDoc)
+                insertDoc.executeUpdate()
+                insertDoc.close()
+            }
             var idCustomer = 0
             if (orgFullName != "" && !orgFullName.contains("Информация скрыта")) {
                 val stmtoc = con.prepareStatement("SELECT id_customer FROM ${Prefix}customer WHERE full_name = ? LIMIT 1")

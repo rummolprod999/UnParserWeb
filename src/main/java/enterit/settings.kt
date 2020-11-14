@@ -82,6 +82,7 @@ var UpTenderRtsRzd: Int = 0
 var UrlConnect: String? = null
 var formatter: Format = SimpleDateFormat("dd.MM.yyyy kk:mm:ss")
 var formatterGpn: SimpleDateFormat = SimpleDateFormat("dd.MM.yyyy kk:mm")
+var formatterGpnN: SimpleDateFormat = SimpleDateFormat("dd.MM.yyyy, kk:mm")
 var formatterOnlyDate: Format = SimpleDateFormat("dd.MM.yyyy")
 var formatterZakupkiDate: Format = SimpleDateFormat("yyyy-MM-dd")
 var formatterZakupkiDateTime: Format = SimpleDateFormat("yyyy-MM-dd kk:mm:ss")

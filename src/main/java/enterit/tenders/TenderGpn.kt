@@ -212,11 +212,73 @@ class TenderGpn(val status: String, val url: String) {
                     insertDoc.close()
                 }
             }
+            var idCustomer = 0
+            if (fullnameOrg != "") {
+                val stmto = con.prepareStatement("SELECT id_customer FROM ${Prefix}customer WHERE full_name = ? LIMIT 1")
+                stmto.setString(1, fullnameOrg)
+                val rso = stmto.executeQuery()
+                if (rso.next()) {
+                    idCustomer = rso.getInt(1)
+                    rso.close()
+                    stmto.close()
+                } else {
+                    rso.close()
+                    stmto.close()
+                    val stmtins = con.prepareStatement("INSERT INTO ${Prefix}customer SET full_name = ?, is223=1, reg_num = ?", Statement.RETURN_GENERATED_KEYS)
+                    stmtins.setString(1, fullnameOrg)
+                    stmtins.setString(2, java.util.UUID.randomUUID().toString())
+                    stmtins.executeUpdate()
+                    val rsoi = stmtins.generatedKeys
+                    if (rsoi.next()) {
+                        idCustomer = rsoi.getInt(1)
+                    }
+                    rsoi.close()
+                    stmtins.close()
+                }
+            }
             var idLot = 0
             val lots: Elements = html.select("div.purchase-lots table tbody tr")
             lots.forEach { lot ->
                 val noLots = lot.selectFirst("tr > td:contains(лотов нет)")
-                if (noLots != null) return@forEach
+                if (noLots != null) {
+                    val insertLot = con.prepareStatement("INSERT INTO ${Prefix}lot SET id_tender = ?, lot_number = ?", Statement.RETURN_GENERATED_KEYS)
+                    insertLot.setInt(1, idTender)
+                    insertLot.setInt(2, 1)
+                    insertLot.executeUpdate()
+                    val rl = insertLot.generatedKeys
+                    if (rl.next()) {
+                        idLot = rl.getInt(1)
+                    }
+                    rl.close()
+                    insertLot.close()
+                    val insertPurObj = con.prepareStatement("INSERT INTO ${Prefix}purchase_object SET id_lot = ?, id_customer = ?, name = ?, quantity_value = ?, customer_quantity_value = ?")
+                    insertPurObj.setInt(1, idLot)
+                    insertPurObj.setInt(2, idCustomer)
+                    insertPurObj.setString(3, purObj)
+                    insertPurObj.setString(4, "")
+                    insertPurObj.setString(5, "")
+                    insertPurObj.executeUpdate()
+                    insertPurObj.close()
+                    val delivPlace = html.selectFirst("div:contains(Место оказания работ/услуг:) + div")?.ownText()?.trim { it <= ' ' }
+                            ?: ""
+                    val delivTermT = lot.selectFirst("tr > td:eq(2)")?.text()?.trim { it <= ' ' } ?: ""
+                    val delivTerm = "Срок выполнения: $delivTermT"
+                    if (delivPlace != "") {
+                        val insertCusRec = con.prepareStatement("INSERT INTO ${Prefix}customer_requirement SET id_lot = ?, id_customer = ?, delivery_term = ?, delivery_place = ?")
+                        insertCusRec.setInt(1, idLot)
+                        insertCusRec.setInt(2, idCustomer)
+                        insertCusRec.setString(3, if (delivTermT == "") {
+                            ""
+                        } else {
+                            delivTerm
+                        })
+                        insertCusRec.setString(4, delivPlace)
+                        insertCusRec.executeUpdate()
+                        insertCusRec.close()
+                    }
+                    return@forEach
+                }
+
                 val lotNumT = lot.selectFirst("tr > td:eq(0)")?.text()?.trim { it <= ' ' } ?: ""
                 val lotNum = if (lotNumT.tryParseInt()) Integer.parseInt(lotNumT) else 1
                 val insertLot = con.prepareStatement("INSERT INTO ${Prefix}lot SET id_tender = ?, lot_number = ?", Statement.RETURN_GENERATED_KEYS)
@@ -229,30 +291,6 @@ class TenderGpn(val status: String, val url: String) {
                 }
                 rl.close()
                 insertLot.close()
-                var idCustomer = 0
-                if (fullnameOrg != "") {
-                    val stmto = con.prepareStatement("SELECT id_customer FROM ${Prefix}customer WHERE full_name = ? LIMIT 1")
-                    stmto.setString(1, fullnameOrg)
-                    val rso = stmto.executeQuery()
-                    if (rso.next()) {
-                        idCustomer = rso.getInt(1)
-                        rso.close()
-                        stmto.close()
-                    } else {
-                        rso.close()
-                        stmto.close()
-                        val stmtins = con.prepareStatement("INSERT INTO ${Prefix}customer SET full_name = ?, is223=1, reg_num = ?", Statement.RETURN_GENERATED_KEYS)
-                        stmtins.setString(1, fullnameOrg)
-                        stmtins.setString(2, java.util.UUID.randomUUID().toString())
-                        stmtins.executeUpdate()
-                        val rsoi = stmtins.generatedKeys
-                        if (rsoi.next()) {
-                            idCustomer = rsoi.getInt(1)
-                        }
-                        rsoi.close()
-                        stmtins.close()
-                    }
-                }
                 val lotName = lot.selectFirst("tr > td:eq(1)")?.text()?.trim { it <= ' ' } ?: ""
                 val lotObj = lot.selectFirst("tr > td:eq(4)")?.text()?.trim { it <= ' ' } ?: ""
                 val quantityValue = lot.selectFirst("tr > td:eq(3)")?.text()?.trim { it <= ' ' } ?: ""
@@ -273,7 +311,11 @@ class TenderGpn(val status: String, val url: String) {
                     val insertCusRec = con.prepareStatement("INSERT INTO ${Prefix}customer_requirement SET id_lot = ?, id_customer = ?, delivery_term = ?, delivery_place = ?")
                     insertCusRec.setInt(1, idLot)
                     insertCusRec.setInt(2, idCustomer)
-                    insertCusRec.setString(3, delivTerm)
+                    insertCusRec.setString(3, if (delivTermT == "") {
+                        ""
+                    } else {
+                        delivTerm
+                    })
                     insertCusRec.setString(4, delivPlace)
                     insertCusRec.executeUpdate()
                     insertCusRec.close()

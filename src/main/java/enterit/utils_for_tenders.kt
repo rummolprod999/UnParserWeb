@@ -26,10 +26,16 @@ fun getConformity(conf: String): Int {
     }
 }
 
-@Throws(SQLException::class, ClassNotFoundException::class, IllegalAccessException::class, InstantiationException::class)
+@Throws(
+    SQLException::class,
+    ClassNotFoundException::class,
+    IllegalAccessException::class,
+    InstantiationException::class
+)
 fun addVNum(con: Connection, id: String, typeFz: Int) {
     var verNum = 1
-    val p1: PreparedStatement = con.prepareStatement("SELECT id_tender FROM ${Prefix}tender WHERE purchase_number = ? AND type_fz = ? ORDER BY UNIX_TIMESTAMP(date_version) ASC")
+    val p1: PreparedStatement =
+        con.prepareStatement("SELECT id_tender FROM ${Prefix}tender WHERE purchase_number = ? AND type_fz = ? ORDER BY UNIX_TIMESTAMP(date_version) ASC")
     p1.setString(1, id)
     p1.setInt(2, typeFz)
     val r1: ResultSet = p1.executeQuery()
@@ -49,11 +55,17 @@ fun addVNum(con: Connection, id: String, typeFz: Int) {
 
 }
 
-@Throws(SQLException::class, ClassNotFoundException::class, IllegalAccessException::class, InstantiationException::class)
+@Throws(
+    SQLException::class,
+    ClassNotFoundException::class,
+    IllegalAccessException::class,
+    InstantiationException::class
+)
 fun tenderKwords(idTender: Int, con: Connection, addInfo: String = "") {
     val s = StringBuilder()
     if (addInfo != "") with(s) { append(addInfo) }
-    val p1: PreparedStatement = con.prepareStatement("SELECT DISTINCT po.name, po.okpd_name FROM ${Prefix}purchase_object AS po LEFT JOIN ${Prefix}lot AS l ON l.id_lot = po.id_lot WHERE l.id_tender = ?")
+    val p1: PreparedStatement =
+        con.prepareStatement("SELECT DISTINCT po.name, po.okpd_name FROM ${Prefix}purchase_object AS po LEFT JOIN ${Prefix}lot AS l ON l.id_lot = po.id_lot WHERE l.id_tender = ?")
     p1.setInt(1, idTender)
     val r1: ResultSet = p1.executeQuery()
     while (r1.next()) {
@@ -72,7 +84,8 @@ fun tenderKwords(idTender: Int, con: Connection, addInfo: String = "") {
     }
     r1.close()
     p1.close()
-    val p2: PreparedStatement = con.prepareStatement("SELECT DISTINCT file_name FROM ${Prefix}attachment WHERE id_tender = ?")
+    val p2: PreparedStatement =
+        con.prepareStatement("SELECT DISTINCT file_name FROM ${Prefix}attachment WHERE id_tender = ?")
     p2.setInt(1, idTender)
     val r2: ResultSet = p2.executeQuery()
     while (r2.next()) {
@@ -85,7 +98,8 @@ fun tenderKwords(idTender: Int, con: Connection, addInfo: String = "") {
     r2.close()
     p2.close()
     var idOrg = 0
-    val p3: PreparedStatement = con.prepareStatement("SELECT purchase_object_info, id_organizer FROM ${Prefix}tender WHERE id_tender = ?")
+    val p3: PreparedStatement =
+        con.prepareStatement("SELECT purchase_object_info, id_organizer FROM ${Prefix}tender WHERE id_tender = ?")
     p3.setInt(1, idTender)
     val r3: ResultSet = p3.executeQuery()
     while (r3.next()) {
@@ -96,7 +110,8 @@ fun tenderKwords(idTender: Int, con: Connection, addInfo: String = "") {
     r3.close()
     p3.close()
     if (idOrg != 0) {
-        val p4: PreparedStatement = con.prepareStatement("SELECT full_name, inn FROM ${Prefix}organizer WHERE id_organizer = ?")
+        val p4: PreparedStatement =
+            con.prepareStatement("SELECT full_name, inn FROM ${Prefix}organizer WHERE id_organizer = ?")
         p4.setInt(1, idOrg)
         val r4: ResultSet = p4.executeQuery()
         while (r4.next()) {
@@ -117,7 +132,8 @@ fun tenderKwords(idTender: Int, con: Connection, addInfo: String = "") {
         r4.close()
         p4.close()
     }
-    val p5: PreparedStatement = con.prepareStatement("SELECT DISTINCT cus.inn, cus.full_name FROM ${Prefix}customer AS cus LEFT JOIN ${Prefix}purchase_object AS po ON cus.id_customer = po.id_customer LEFT JOIN ${Prefix}lot AS l ON l.id_lot = po.id_lot WHERE l.id_tender = ?")
+    val p5: PreparedStatement =
+        con.prepareStatement("SELECT DISTINCT cus.inn, cus.full_name FROM ${Prefix}customer AS cus LEFT JOIN ${Prefix}purchase_object AS po ON cus.id_customer = po.id_customer LEFT JOIN ${Prefix}lot AS l ON l.id_lot = po.id_lot WHERE l.id_tender = ?")
     p5.setInt(1, idTender)
     val r5: ResultSet = p5.executeQuery()
     while (r5.next()) {
@@ -442,4 +458,22 @@ fun getRegion(sp: String): String {
         else -> ""
     }
 
+}
+
+fun String.replaceDatePolis(): String {
+    when {
+        this.contains("Января") -> return this.replace("Января", "01")
+        this.contains("Февраля") -> return this.replace("Февраля", "02")
+        this.contains("Марта") -> return this.replace("Марта", "03")
+        this.contains("Апреля") -> return this.replace("Апреля", "04")
+        this.contains("Мая") -> return this.replace("Мая", "05")
+        this.contains("Июня") -> return this.replace("Июня", "06")
+        this.contains("Июля") -> return this.replace("Июля", "07")
+        this.contains("Августа") -> return this.replace("Августа", "08")
+        this.contains("Сентября") -> return this.replace("Сентября", "09")
+        this.contains("Октября") -> return this.replace("Октября", "10")
+        this.contains("Ноября") -> return this.replace("Ноября", "11")
+        this.contains("Декабря") -> return this.replace("Декабря", "12")
+    }
+    return this
 }

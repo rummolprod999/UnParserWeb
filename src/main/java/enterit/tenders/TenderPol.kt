@@ -10,7 +10,7 @@ import java.sql.Timestamp
 import java.util.*
 
 data class TenderInfoPol(val startDate: Date, val endDate: Date, val status: String)
-class TenderPol(val url: String) {
+class TenderPol(val url: String, val purNum: String) {
     companion object TypeFz {
         val typeFz = 14
     }
@@ -29,13 +29,14 @@ class TenderPol(val url: String) {
             return
         }
         val purNum = (html.selectFirst("div.purchase-single-head > h2 > span")?.ownText()?.trim { it <= ' ' }
-                ?: "").removeSurrounding("[", "]")
+            ?: "").removeSurrounding("[", "]")
         if (purNum == "") {
             logger("Empty purchase number in $url")
             return
         }
         DriverManager.getConnection(UrlConnect, UserDb, PassDb).use(fun(con: Connection) {
-            val stmt0 = con.prepareStatement("SELECT id_tender FROM ${Prefix}tender WHERE purchase_number = ? AND date_version = ? AND type_fz = ? AND notice_version = ? AND end_date = ? AND href = ?")
+            val stmt0 =
+                con.prepareStatement("SELECT id_tender FROM ${Prefix}tender WHERE purchase_number = ? AND date_version = ? AND type_fz = ? AND notice_version = ? AND end_date = ? AND href = ?")
             stmt0.setString(1, purNum)
             stmt0.setTimestamp(2, Timestamp(startDate.time))
             stmt0.setInt(3, typeFz)
@@ -52,7 +53,8 @@ class TenderPol(val url: String) {
             stmt0.close()
             var cancelstatus = 0
             var update = false
-            val stmt = con.prepareStatement("SELECT id_tender, date_version FROM ${Prefix}tender WHERE purchase_number = ? AND cancel=0 AND type_fz = ?")
+            val stmt =
+                con.prepareStatement("SELECT id_tender, date_version FROM ${Prefix}tender WHERE purchase_number = ? AND cancel=0 AND type_fz = ?")
             stmt.setString(1, purNum)
             stmt.setInt(2, typeFz)
             val rs = stmt.executeQuery()
@@ -61,7 +63,8 @@ class TenderPol(val url: String) {
                 val idT = rs.getInt(1)
                 val dateB: Timestamp = rs.getTimestamp(2)
                 if (startDate.after(dateB) || dateB == Timestamp(startDate.time)) {
-                    val preparedStatement = con.prepareStatement("UPDATE ${Prefix}tender SET cancel=1 WHERE id_tender = ?")
+                    val preparedStatement =
+                        con.prepareStatement("UPDATE ${Prefix}tender SET cancel=1 WHERE id_tender = ?")
                     preparedStatement.setInt(1, idT)
                     preparedStatement.execute()
                     preparedStatement.close()
@@ -85,11 +88,14 @@ class TenderPol(val url: String) {
                     rso.close()
                     stmto.close()
                     val contactPT = html.selectFirst("div.entry > p")?.text()?.trim { it <= ' ' }
-                            ?: ""
+                        ?: ""
                     val contactP = regExpTester("""Контактное лицо:\s(\w+|\W+)""", contactPT)
                     val phone = html.selectFirst("div.entry > p:eq(1)")?.text()?.trim { it <= ' ' }
-                            ?: ""
-                    val stmtins = con.prepareStatement("INSERT INTO ${Prefix}organizer SET full_name = ?, contact_phone = ?, contact_person = ?", Statement.RETURN_GENERATED_KEYS)
+                        ?: ""
+                    val stmtins = con.prepareStatement(
+                        "INSERT INTO ${Prefix}organizer SET full_name = ?, contact_phone = ?, contact_person = ?",
+                        Statement.RETURN_GENERATED_KEYS
+                    )
                     stmtins.setString(1, fullnameOrg)
                     stmtins.setString(2, phone)
                     stmtins.setString(3, contactP)
@@ -117,7 +123,10 @@ class TenderPol(val url: String) {
                 } else {
                     rso.close()
                     stmto.close()
-                    val stmtins = con.prepareStatement("INSERT INTO ${Prefix}etp SET name = ?, url = ?, conf=0", Statement.RETURN_GENERATED_KEYS)
+                    val stmtins = con.prepareStatement(
+                        "INSERT INTO ${Prefix}etp SET name = ?, url = ?, conf=0",
+                        Statement.RETURN_GENERATED_KEYS
+                    )
                     stmtins.setString(1, etpName)
                     stmtins.setString(2, etpUrl)
                     stmtins.executeUpdate()
@@ -133,9 +142,12 @@ class TenderPol(val url: String) {
             }
             var IdPlacingWay = 0
             val purObj = html.selectFirst("div.purchase-single-head > h2")?.ownText()?.trim { it <= ' ' }
-                    ?: ""
+                ?: ""
             var idTender = 0
-            val insertTender = con.prepareStatement("INSERT INTO ${Prefix}tender SET id_region = 0, id_xml = ?, purchase_number = ?, doc_publish_date = ?, href = ?, purchase_object_info = ?, type_fz = ?, id_organizer = ?, id_placing_way = ?, id_etp = ?, end_date = ?, cancel = ?, date_version = ?, num_version = ?, notice_version = ?, xml = ?, print_form = ?", Statement.RETURN_GENERATED_KEYS)
+            val insertTender = con.prepareStatement(
+                "INSERT INTO ${Prefix}tender SET id_region = 0, id_xml = ?, purchase_number = ?, doc_publish_date = ?, href = ?, purchase_object_info = ?, type_fz = ?, id_organizer = ?, id_placing_way = ?, id_etp = ?, end_date = ?, cancel = ?, date_version = ?, num_version = ?, notice_version = ?, xml = ?, print_form = ?",
+                Statement.RETURN_GENERATED_KEYS
+            )
             insertTender.setString(1, purNum)
             insertTender.setString(2, purNum)
             insertTender.setTimestamp(3, Timestamp(startDate.time))
@@ -170,7 +182,8 @@ class TenderPol(val url: String) {
                 val href = "http://tenders.polyusgold.com$hrefT"
                 val nameDoc = doc.select("li > a[href]")?.text()?.trim { it <= ' ' } ?: ""
                 if (href != "") {
-                    val insertDoc = con.prepareStatement("INSERT INTO ${Prefix}attachment SET id_tender = ?, file_name = ?, url = ?")
+                    val insertDoc =
+                        con.prepareStatement("INSERT INTO ${Prefix}attachment SET id_tender = ?, file_name = ?, url = ?")
                     insertDoc.setInt(1, idTender)
                     insertDoc.setString(2, nameDoc)
                     insertDoc.setString(3, href)
@@ -180,7 +193,10 @@ class TenderPol(val url: String) {
             }
             var idLot = 0
             val lotNum = 1
-            val insertLot = con.prepareStatement("INSERT INTO ${Prefix}lot SET id_tender = ?, lot_number = ?", Statement.RETURN_GENERATED_KEYS)
+            val insertLot = con.prepareStatement(
+                "INSERT INTO ${Prefix}lot SET id_tender = ?, lot_number = ?",
+                Statement.RETURN_GENERATED_KEYS
+            )
             insertLot.setInt(1, idTender)
             insertLot.setInt(2, lotNum)
             insertLot.executeUpdate()
@@ -192,7 +208,8 @@ class TenderPol(val url: String) {
             insertLot.close()
             var idCustomer = 0
             if (fullnameOrg != "") {
-                val stmto = con.prepareStatement("SELECT id_customer FROM ${Prefix}customer WHERE full_name = ? LIMIT 1")
+                val stmto =
+                    con.prepareStatement("SELECT id_customer FROM ${Prefix}customer WHERE full_name = ? LIMIT 1")
                 stmto.setString(1, fullnameOrg)
                 val rso = stmto.executeQuery()
                 if (rso.next()) {
@@ -202,7 +219,10 @@ class TenderPol(val url: String) {
                 } else {
                     rso.close()
                     stmto.close()
-                    val stmtins = con.prepareStatement("INSERT INTO ${Prefix}customer SET full_name = ?, is223=1, reg_num = ?", Statement.RETURN_GENERATED_KEYS)
+                    val stmtins = con.prepareStatement(
+                        "INSERT INTO ${Prefix}customer SET full_name = ?, is223=1, reg_num = ?",
+                        Statement.RETURN_GENERATED_KEYS
+                    )
                     stmtins.setString(1, fullnameOrg)
                     stmtins.setString(2, java.util.UUID.randomUUID().toString())
                     stmtins.executeUpdate()
@@ -214,7 +234,8 @@ class TenderPol(val url: String) {
                     stmtins.close()
                 }
             }
-            val insertPurObj = con.prepareStatement("INSERT INTO ${Prefix}purchase_object SET id_lot = ?, id_customer = ?, name = ?")
+            val insertPurObj =
+                con.prepareStatement("INSERT INTO ${Prefix}purchase_object SET id_lot = ?, id_customer = ?, name = ?")
             insertPurObj.setInt(1, idLot)
             insertPurObj.setInt(2, idCustomer)
             insertPurObj.setString(3, purObj)

@@ -7,7 +7,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.xml.parsers.DocumentBuilderFactory
 
-val executePath: String = File(Class.forName("enterit.ApplicationKt").protectionDomain.codeSource.location.path).parentFile.toString()
+val executePath: String =
+    File(Class.forName("enterit.ApplicationKt").protectionDomain.codeSource.location.path).parentFile.toString()
 const val arguments = "etprf, gpn, pol, luk, tat, rts, sibur, ural, miratorg, stg, bashneft, mosreg, zakupki, rtsrzd"
 lateinit var arg: Arguments
 var Database: String? = null
@@ -84,6 +85,7 @@ var formatter: Format = SimpleDateFormat("dd.MM.yyyy kk:mm:ss")
 var formatterGpn: SimpleDateFormat = SimpleDateFormat("dd.MM.yyyy kk:mm")
 var formatterGpnN: SimpleDateFormat = SimpleDateFormat("dd.MM.yyyy, kk:mm")
 var formatterOnlyDate: Format = SimpleDateFormat("dd.MM.yyyy")
+var formatterPolis: Format = SimpleDateFormat("dd MM yyyy")
 var formatterZakupkiDate: Format = SimpleDateFormat("yyyy-MM-dd")
 var formatterZakupkiDateTime: Format = SimpleDateFormat("yyyy-MM-dd kk:mm:ss")
 var formatterEtpRf: Format = SimpleDateFormat("dd.MM.yyyy kk:mm:ss (XXX)")
@@ -96,58 +98,86 @@ fun getSettings() = try {
     val root = document.documentElement
     val settings = root.childNodes
     (0 until settings.length)
-            .asSequence()
-            .map { settings.item(it) }
-            .filter {
-                @Suppress("DEPRECATED_IDENTITY_EQUALS")
-                it.nodeType !== Node.TEXT_NODE
-            }
-            .forEach {
-                when (it.nodeName) {
-                    "database" -> Database = it.childNodes.item(0).textContent
-                    "tempdir_tenders_etprf" -> tempDirTendersEtpRf = executePath + File.separator + it.childNodes.item(0).textContent
-                    "logdir_tenders_etprf" -> logDirTendersEtpRf = executePath + File.separator + it.childNodes.item(0).textContent
-                    "tempdir_tenders_gpn" -> tempDirTendersGpn = executePath + File.separator + it.childNodes.item(0).textContent
-                    "logdir_tenders_gpn" -> logDirTendersGpn = executePath + File.separator + it.childNodes.item(0).textContent
-                    "tempdir_tenders_pol" -> tempDirTendersPol = executePath + File.separator + it.childNodes.item(0).textContent
-                    "logdir_tenders_pol" -> logDirTendersPol = executePath + File.separator + it.childNodes.item(0).textContent
-                    "tempdir_tenders_luk" -> tempDirTendersLuk = executePath + File.separator + it.childNodes.item(0).textContent
-                    "logdir_tenders_luk" -> logDirTendersLuk = executePath + File.separator + it.childNodes.item(0).textContent
-                    "tempdir_tenders_tat" -> tempDirTendersTat = executePath + File.separator + it.childNodes.item(0).textContent
-                    "logdir_tenders_tat" -> logDirTendersTat = executePath + File.separator + it.childNodes.item(0).textContent
-                    "tempdir_tenders_rts" -> tempDirTendersRts = executePath + File.separator + it.childNodes.item(0).textContent
-                    "logdir_tenders_rts" -> logDirTendersRts = executePath + File.separator + it.childNodes.item(0).textContent
-                    "tempdir_tenders_sibur" -> tempDirTendersSibur = executePath + File.separator + it.childNodes.item(0).textContent
-                    "logdir_tenders_sibur" -> logDirTendersSibur = executePath + File.separator + it.childNodes.item(0).textContent
-                    "tempdir_tenders_ural" -> tempDirTendersUral = executePath + File.separator + it.childNodes.item(0).textContent
-                    "logdir_tenders_ural" -> logDirTendersUral = executePath + File.separator + it.childNodes.item(0).textContent
-                    "tempdir_tenders_miratorg" -> tempDirTendersMiratorg = executePath + File.separator + it.childNodes.item(0).textContent
-                    "logdir_tenders_miratorg" -> logDirTendersMiratorg = executePath + File.separator + it.childNodes.item(0).textContent
-                    "tempdir_tenders_stg" -> tempDirTendersStg = executePath + File.separator + it.childNodes.item(0).textContent
-                    "logdir_tenders_stg" -> logDirTendersStg = executePath + File.separator + it.childNodes.item(0).textContent
-                    "tempdir_tenders_bashneft" -> tempDirTendersBashneft = executePath + File.separator + it.childNodes.item(0).textContent
-                    "logdir_tenders_bashneft" -> logDirTendersBashneft = executePath + File.separator + it.childNodes.item(0).textContent
-                    "tempdir_tenders_rfp" -> tempDirTenderRfp = executePath + File.separator + it.childNodes.item(0).textContent
-                    "logdir_tenders_rfp" -> logDirTendersRfp = executePath + File.separator + it.childNodes.item(0).textContent
-                    "tempdir_tenders_zakupki" -> tempDirTenderZakupki = executePath + File.separator + it.childNodes.item(0).textContent
-                    "logdir_tenders_zakupki" -> logDirTendersZakupki = executePath + File.separator + it.childNodes.item(0).textContent
-                    "tempdir_tenders_rtsrzd" -> tempDirTenderRtsRzd = executePath + File.separator + it.childNodes.item(0).textContent
-                    "logdir_tenders_rtsrzd" -> logDirTendersRtsRzd = executePath + File.separator + it.childNodes.item(0).textContent
-                    "prefix" -> Prefix = try {
-                        it.childNodes.item(0).textContent
-                    } catch (e: Exception) {
-                        ""
-                    }
-
-                    "userstg" -> UserStg = it.childNodes.item(0).textContent
-                    "passstg" -> PassStg = it.childNodes.item(0).textContent
-                    "userdb" -> UserDb = it.childNodes.item(0).textContent
-                    "passdb" -> PassDb = it.childNodes.item(0).textContent
-                    "server" -> Server = it.childNodes.item(0).textContent
-                    "port" -> Port = Integer.valueOf(it.childNodes.item(0).textContent)
-                    "count_page_stg" -> CountStg = Integer.valueOf(it.childNodes.item(0).textContent)
+        .asSequence()
+        .map { settings.item(it) }
+        .filter {
+            @Suppress("DEPRECATED_IDENTITY_EQUALS")
+            it.nodeType !== Node.TEXT_NODE
+        }
+        .forEach {
+            when (it.nodeName) {
+                "database" -> Database = it.childNodes.item(0).textContent
+                "tempdir_tenders_etprf" -> tempDirTendersEtpRf =
+                    executePath + File.separator + it.childNodes.item(0).textContent
+                "logdir_tenders_etprf" -> logDirTendersEtpRf =
+                    executePath + File.separator + it.childNodes.item(0).textContent
+                "tempdir_tenders_gpn" -> tempDirTendersGpn =
+                    executePath + File.separator + it.childNodes.item(0).textContent
+                "logdir_tenders_gpn" -> logDirTendersGpn =
+                    executePath + File.separator + it.childNodes.item(0).textContent
+                "tempdir_tenders_pol" -> tempDirTendersPol =
+                    executePath + File.separator + it.childNodes.item(0).textContent
+                "logdir_tenders_pol" -> logDirTendersPol =
+                    executePath + File.separator + it.childNodes.item(0).textContent
+                "tempdir_tenders_luk" -> tempDirTendersLuk =
+                    executePath + File.separator + it.childNodes.item(0).textContent
+                "logdir_tenders_luk" -> logDirTendersLuk =
+                    executePath + File.separator + it.childNodes.item(0).textContent
+                "tempdir_tenders_tat" -> tempDirTendersTat =
+                    executePath + File.separator + it.childNodes.item(0).textContent
+                "logdir_tenders_tat" -> logDirTendersTat =
+                    executePath + File.separator + it.childNodes.item(0).textContent
+                "tempdir_tenders_rts" -> tempDirTendersRts =
+                    executePath + File.separator + it.childNodes.item(0).textContent
+                "logdir_tenders_rts" -> logDirTendersRts =
+                    executePath + File.separator + it.childNodes.item(0).textContent
+                "tempdir_tenders_sibur" -> tempDirTendersSibur =
+                    executePath + File.separator + it.childNodes.item(0).textContent
+                "logdir_tenders_sibur" -> logDirTendersSibur =
+                    executePath + File.separator + it.childNodes.item(0).textContent
+                "tempdir_tenders_ural" -> tempDirTendersUral =
+                    executePath + File.separator + it.childNodes.item(0).textContent
+                "logdir_tenders_ural" -> logDirTendersUral =
+                    executePath + File.separator + it.childNodes.item(0).textContent
+                "tempdir_tenders_miratorg" -> tempDirTendersMiratorg =
+                    executePath + File.separator + it.childNodes.item(0).textContent
+                "logdir_tenders_miratorg" -> logDirTendersMiratorg =
+                    executePath + File.separator + it.childNodes.item(0).textContent
+                "tempdir_tenders_stg" -> tempDirTendersStg =
+                    executePath + File.separator + it.childNodes.item(0).textContent
+                "logdir_tenders_stg" -> logDirTendersStg =
+                    executePath + File.separator + it.childNodes.item(0).textContent
+                "tempdir_tenders_bashneft" -> tempDirTendersBashneft =
+                    executePath + File.separator + it.childNodes.item(0).textContent
+                "logdir_tenders_bashneft" -> logDirTendersBashneft =
+                    executePath + File.separator + it.childNodes.item(0).textContent
+                "tempdir_tenders_rfp" -> tempDirTenderRfp =
+                    executePath + File.separator + it.childNodes.item(0).textContent
+                "logdir_tenders_rfp" -> logDirTendersRfp =
+                    executePath + File.separator + it.childNodes.item(0).textContent
+                "tempdir_tenders_zakupki" -> tempDirTenderZakupki =
+                    executePath + File.separator + it.childNodes.item(0).textContent
+                "logdir_tenders_zakupki" -> logDirTendersZakupki =
+                    executePath + File.separator + it.childNodes.item(0).textContent
+                "tempdir_tenders_rtsrzd" -> tempDirTenderRtsRzd =
+                    executePath + File.separator + it.childNodes.item(0).textContent
+                "logdir_tenders_rtsrzd" -> logDirTendersRtsRzd =
+                    executePath + File.separator + it.childNodes.item(0).textContent
+                "prefix" -> Prefix = try {
+                    it.childNodes.item(0).textContent
+                } catch (e: Exception) {
+                    ""
                 }
+
+                "userstg" -> UserStg = it.childNodes.item(0).textContent
+                "passstg" -> PassStg = it.childNodes.item(0).textContent
+                "userdb" -> UserDb = it.childNodes.item(0).textContent
+                "passdb" -> PassDb = it.childNodes.item(0).textContent
+                "server" -> Server = it.childNodes.item(0).textContent
+                "port" -> Port = Integer.valueOf(it.childNodes.item(0).textContent)
+                "count_page_stg" -> CountStg = Integer.valueOf(it.childNodes.item(0).textContent)
             }
+        }
 } catch (e: Exception) {
     e.printStackTrace()
     System.exit(1)
@@ -173,7 +203,11 @@ fun init(args: Array<String>) {
             "rfp" -> arg = Arguments.RFP
             "zakupki" -> arg = Arguments.ZAKUPKI
             "rtsrzd" -> arg = Arguments.RTSRZD
-            else -> run { println("Неверно указаны аргументы, используйте $arguments, выходим из программы"); System.exit(0) }
+            else -> run {
+                println("Неверно указаны аргументы, используйте $arguments, выходим из программы"); System.exit(
+                0
+            )
+            }
 
         }
     }
@@ -215,5 +249,6 @@ fun init(args: Array<String>) {
     }
     val dateFormat = SimpleDateFormat("yyyy-MM-dd")
     logPath = "$logDirTenders${File.separator}log_parsing_${arg}_${dateFormat.format(DateNow)}.log"
-    UrlConnect = "jdbc:mysql://$Server:$Port/$Database?jdbcCompliantTruncation=false&useUnicode=true&characterEncoding=utf-8&useLegacyDatetimeCode=false&serverTimezone=Europe/Moscow&connectTimeout=5000&socketTimeout=30000"
+    UrlConnect =
+        "jdbc:mysql://$Server:$Port/$Database?jdbcCompliantTruncation=false&useUnicode=true&characterEncoding=utf-8&useLegacyDatetimeCode=false&serverTimezone=Europe/Moscow&connectTimeout=5000&socketTimeout=30000"
 }

@@ -14,14 +14,14 @@ class ParserSibur : Iparser {
     }
 
     override fun parser() = (1..maxPage)
-            .map { "https://b2b.sibur.ru/pages_new_ru/exchange/exchange.jsp?page=$it&disp_status=0" }
-            .forEach {
-                try {
-                    parserPage(it)
-                } catch (e: Exception) {
-                    logger("Error in ParserSibur.parser function", e.stackTrace, e)
-                }
+        .map { "https://b2b.sibur.ru/pages_new_ru/exchange/exchange.jsp?page=$it&disp_status=0" }
+        .forEach {
+            try {
+                parserPage(it)
+            } catch (e: Exception) {
+                logger("Error in ParserSibur.parser function", e.stackTrace, e)
             }
+        }
 
     private fun parserPage(url: String) {
         val stPage = downloadFromUrl(url, wt = 10000)
@@ -37,12 +37,12 @@ class ParserSibur : Iparser {
         tenders.forEach<Element> { t ->
             try {
                 val urlT = t.selectFirst("a.big")?.attr("href")?.trim { it <= ' ' }
-                        ?: ""
+                    ?: ""
                 val urlTend = "$BaseT$urlT"
                 val currency = t.selectFirst("div.drei div.red")?.ownText()?.trim { it <= ' ' }
-                        ?: ""
+                    ?: ""
                 val purNum = t.selectFirst("div.ein")?.ownText()?.trim { it <= ' ' }
-                        ?: ""
+                    ?: ""
                 val tt = TenderSibur(urlTend, purNum, currency)
                 tt.parsing()
             } catch (e: Exception) {

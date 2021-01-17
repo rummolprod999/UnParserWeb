@@ -47,7 +47,8 @@ class ParserBashneft : Iparser {
         addTenderToList(p)
         var p = p
         (1..CountPage).map {
-            val button = p.getFirstByXPath<HtmlAnchor>("//div[@class = 'dxgvPagerBottomPanel_BashneftTheme']//a[contains(@class, 'dxp-button dxp-bi')]")
+            val button =
+                p.getFirstByXPath<HtmlAnchor>("//div[@class = 'dxgvPagerBottomPanel_BashneftTheme']//a[contains(@class, 'dxp-button dxp-bi')]")
             button?.let {
                 p = it.click()
                 p.webClient.waitForBackgroundJavaScript(5000)
@@ -97,7 +98,8 @@ class ParserBashneft : Iparser {
     }
 
     private fun addTenderToList(p: HtmlPage) {
-        val tenders: MutableList<HtmlTableRow> = p.getByXPath<HtmlTableRow>("//div[@class = 'dxtc-content']//table[@class = 'dxgvTable_BashneftTheme']//tr[contains(@class, 'dxgvDataRow_BashneftTheme')]")
+        val tenders: MutableList<HtmlTableRow> =
+            p.getByXPath<HtmlTableRow>("//div[@class = 'dxtc-content']//table[@class = 'dxgvTable_BashneftTheme']//tr[contains(@class, 'dxgvDataRow_BashneftTheme')]")
         listTenders.addAll(tenders)
 
     }

@@ -58,7 +58,8 @@ class ParserStg : Iparser {
                     logger("Error in parserList function", e.stackTrace, e)
                 }
                 for (i in 1..CountStg) {
-                    val button = pg.getFirstByXPath<HtmlSpan>("//a[contains(@class, 'k-pager-nav') and not(contains(@class, 'k-state-disabled'))]/span[contains(@class, 'k-i-arrow-e')]")
+                    val button =
+                        pg.getFirstByXPath<HtmlSpan>("//a[contains(@class, 'k-pager-nav') and not(contains(@class, 'k-state-disabled'))]/span[contains(@class, 'k-i-arrow-e')]")
                     if (button is HtmlSpan) {
                         val y: HtmlPage = button.click()
                         y.webClient.waitForBackgroundJavaScript(timeoutB)
@@ -111,7 +112,8 @@ class ParserStg : Iparser {
     }
 
     private fun parserList(p: HtmlPage) {
-        val tenders = p.getByXPath<HtmlTableRow>("//div[@class = 'last']//div[@class = 'k-grid-content']//tbody[@role = 'rowgroup']/tr")
+        val tenders =
+            p.getByXPath<HtmlTableRow>("//div[@class = 'last']//div[@class = 'k-grid-content']//tbody[@role = 'rowgroup']/tr")
         if (tenders is List<HtmlTableRow>) {
             tenders.forEach {
                 try {

@@ -8,7 +8,15 @@ import java.sql.DriverManager
 import java.sql.Statement
 import java.sql.Timestamp
 
-class TenderRts(val urlTend: String, val purNum: String, val placingWay: String, val applGuarantee: String, val currency: String, val contrGuarantee: String, val nmck: String) {
+class TenderRts(
+    val urlTend: String,
+    val purNum: String,
+    val placingWay: String,
+    val applGuarantee: String,
+    val currency: String,
+    val contrGuarantee: String,
+    val nmck: String
+) {
     companion object O {
         const val typeFz = 17
     }
@@ -30,15 +38,16 @@ class TenderRts(val urlTend: String, val purNum: String, val placingWay: String,
         }
         val datePub = getDateFromFormat(startDateT, formatterGpn)
         var endDateT = html.selectFirst("td:containsOwn(Дата окончания подачи заявок) + td > span")?.ownText()?.trim()
-                ?: ""
+            ?: ""
         if (endDateT == "") {
             endDateT = html.selectFirst("td:containsOwn(Дата окончания подачи заявок) + td")?.ownText()?.trim() ?: ""
         }
         val dateEnd = getDateFromFormat(endDateT, formatterGpn)
         val status = html.selectFirst("td:containsOwn(Статус на площадке) + td")?.ownText()?.trim()
-                ?: ""
+            ?: ""
         DriverManager.getConnection(UrlConnect, UserDb, PassDb).use(fun(con: Connection) {
-            val stmt0 = con.prepareStatement("SELECT id_tender FROM ${Prefix}tender WHERE purchase_number = ? AND date_version = ? AND type_fz = ? AND notice_version = ? AND end_date = ?")
+            val stmt0 =
+                con.prepareStatement("SELECT id_tender FROM ${Prefix}tender WHERE purchase_number = ? AND date_version = ? AND type_fz = ? AND notice_version = ? AND end_date = ?")
             stmt0.setString(1, purNum)
             stmt0.setTimestamp(2, Timestamp(datePub.time))
             stmt0.setInt(3, typeFz)
@@ -55,7 +64,8 @@ class TenderRts(val urlTend: String, val purNum: String, val placingWay: String,
             var cancelstatus = 0
             var update = false
             val startDate = datePub
-            val stmt = con.prepareStatement("SELECT id_tender, date_version FROM ${Prefix}tender WHERE purchase_number = ? AND cancel=0 AND type_fz = ?")
+            val stmt =
+                con.prepareStatement("SELECT id_tender, date_version FROM ${Prefix}tender WHERE purchase_number = ? AND cancel=0 AND type_fz = ?")
             stmt.setString(1, purNum)
             stmt.setInt(2, typeFz)
             val rs = stmt.executeQuery()
@@ -64,7 +74,8 @@ class TenderRts(val urlTend: String, val purNum: String, val placingWay: String,
                 val idT = rs.getInt(1)
                 val dateB: Timestamp = rs.getTimestamp(2)
                 if (startDate.after(dateB) || dateB == Timestamp(startDate.time)) {
-                    val preparedStatement = con.prepareStatement("UPDATE ${Prefix}tender SET cancel=1 WHERE id_tender = ?")
+                    val preparedStatement =
+                        con.prepareStatement("UPDATE ${Prefix}tender SET cancel=1 WHERE id_tender = ?")
                     preparedStatement.setInt(1, idT)
                     preparedStatement.execute()
                     preparedStatement.close()
@@ -76,7 +87,7 @@ class TenderRts(val urlTend: String, val purNum: String, val placingWay: String,
             stmt.close()
             var IdOrganizer = 0
             val fullnameOrg = html.selectFirst("td:containsOwn(Организатор) + td a span")?.ownText()?.trim()
-                    ?: ""
+                ?: ""
             if (fullnameOrg != "") {
                 val stmto = con.prepareStatement("SELECT id_organizer FROM ${Prefix}organizer WHERE full_name = ?")
                 stmto.setString(1, fullnameOrg)
@@ -89,7 +100,10 @@ class TenderRts(val urlTend: String, val purNum: String, val placingWay: String,
                     rso.close()
                     stmto.close()
 
-                    val stmtins = con.prepareStatement("INSERT INTO ${Prefix}organizer SET full_name = ?", Statement.RETURN_GENERATED_KEYS)
+                    val stmtins = con.prepareStatement(
+                        "INSERT INTO ${Prefix}organizer SET full_name = ?",
+                        Statement.RETURN_GENERATED_KEYS
+                    )
                     stmtins.setString(1, fullnameOrg)
                     stmtins.executeUpdate()
                     val rsoi = stmtins.generatedKeys
@@ -115,7 +129,10 @@ class TenderRts(val urlTend: String, val purNum: String, val placingWay: String,
                 } else {
                     rso.close()
                     stmto.close()
-                    val stmtins = con.prepareStatement("INSERT INTO ${Prefix}etp SET name = ?, url = ?, conf=0", Statement.RETURN_GENERATED_KEYS)
+                    val stmtins = con.prepareStatement(
+                        "INSERT INTO ${Prefix}etp SET name = ?, url = ?, conf=0",
+                        Statement.RETURN_GENERATED_KEYS
+                    )
                     stmtins.setString(1, etpName)
                     stmtins.setString(2, etpUrl)
                     stmtins.executeUpdate()
@@ -131,7 +148,8 @@ class TenderRts(val urlTend: String, val purNum: String, val placingWay: String,
             }
             var IdPlacingWay = 0
             if (placingWay != "") {
-                val stmto = con.prepareStatement("SELECT id_placing_way FROM ${Prefix}placing_way WHERE name = ? LIMIT 1")
+                val stmto =
+                    con.prepareStatement("SELECT id_placing_way FROM ${Prefix}placing_way WHERE name = ? LIMIT 1")
                 stmto.setString(1, placingWay)
                 val rso = stmto.executeQuery()
                 if (rso.next()) {
@@ -142,7 +160,10 @@ class TenderRts(val urlTend: String, val purNum: String, val placingWay: String,
                     rso.close()
                     stmto.close()
                     val conf = getConformity(placingWay)
-                    val stmtins = con.prepareStatement("INSERT INTO ${Prefix}placing_way SET name = ?, conformity = ?", Statement.RETURN_GENERATED_KEYS)
+                    val stmtins = con.prepareStatement(
+                        "INSERT INTO ${Prefix}placing_way SET name = ?, conformity = ?",
+                        Statement.RETURN_GENERATED_KEYS
+                    )
                     stmtins.setString(1, placingWay)
                     stmtins.setInt(2, conf)
                     stmtins.executeUpdate()
@@ -157,7 +178,7 @@ class TenderRts(val urlTend: String, val purNum: String, val placingWay: String,
             }
             var idReg = 0
             val reg = html.selectFirst("td:containsOwn(Регион) + td a span")?.ownText()?.trim()
-                    ?: ""
+                ?: ""
             if (reg != "") {
                 val re = getRegion(reg)
                 if (re != "") {
@@ -175,9 +196,12 @@ class TenderRts(val urlTend: String, val purNum: String, val placingWay: String,
                 }
             }
             val purObj = html.selectFirst("td:containsOwn(Наименование) + td")?.ownText()?.trim()
-                    ?: ""
+                ?: ""
             var idTender = 0
-            val insertTender = con.prepareStatement("INSERT INTO ${Prefix}tender SET id_xml = ?, purchase_number = ?, doc_publish_date = ?, href = ?, purchase_object_info = ?, type_fz = ?, id_organizer = ?, id_placing_way = ?, id_etp = ?, end_date = ?, cancel = ?, date_version = ?, num_version = ?, notice_version = ?, xml = ?, print_form = ?, id_region = ?", Statement.RETURN_GENERATED_KEYS)
+            val insertTender = con.prepareStatement(
+                "INSERT INTO ${Prefix}tender SET id_xml = ?, purchase_number = ?, doc_publish_date = ?, href = ?, purchase_object_info = ?, type_fz = ?, id_organizer = ?, id_placing_way = ?, id_etp = ?, end_date = ?, cancel = ?, date_version = ?, num_version = ?, notice_version = ?, xml = ?, print_form = ?, id_region = ?",
+                Statement.RETURN_GENERATED_KEYS
+            )
             insertTender.setString(1, purNum)
             insertTender.setString(2, purNum)
             insertTender.setTimestamp(3, Timestamp(datePub.time))
@@ -215,7 +239,8 @@ class TenderRts(val urlTend: String, val purNum: String, val placingWay: String,
                 }
                 val nameDoc = doc.select("td:eq(0)")?.text()?.trim { it <= ' ' } ?: ""
                 if (href != "") {
-                    val insertDoc = con.prepareStatement("INSERT INTO ${Prefix}attachment SET id_tender = ?, file_name = ?, url = ?")
+                    val insertDoc =
+                        con.prepareStatement("INSERT INTO ${Prefix}attachment SET id_tender = ?, file_name = ?, url = ?")
                     insertDoc.setInt(1, idTender)
                     insertDoc.setString(2, nameDoc)
                     insertDoc.setString(3, href)
@@ -225,7 +250,10 @@ class TenderRts(val urlTend: String, val purNum: String, val placingWay: String,
             }
             var idLot = 0
             val LotNumber = 1
-            val insertLot = con.prepareStatement("INSERT INTO ${Prefix}lot SET id_tender = ?, lot_number = ?, currency = ?, max_price = ?", Statement.RETURN_GENERATED_KEYS)
+            val insertLot = con.prepareStatement(
+                "INSERT INTO ${Prefix}lot SET id_tender = ?, lot_number = ?, currency = ?, max_price = ?",
+                Statement.RETURN_GENERATED_KEYS
+            )
             insertLot.setInt(1, idTender)
             insertLot.setInt(2, LotNumber)
             insertLot.setString(3, currency)
@@ -239,9 +267,10 @@ class TenderRts(val urlTend: String, val purNum: String, val placingWay: String,
             insertLot.close()
             var idCustomer = 0
             val fullnameCus = html.selectFirst("td:containsOwn(Заказчик) + td a span")?.ownText()?.trim()
-                    ?: ""
+                ?: ""
             if (fullnameCus != "") {
-                val stmto = con.prepareStatement("SELECT id_customer FROM ${Prefix}customer WHERE full_name = ? LIMIT 1")
+                val stmto =
+                    con.prepareStatement("SELECT id_customer FROM ${Prefix}customer WHERE full_name = ? LIMIT 1")
                 stmto.setString(1, fullnameCus)
                 val rso = stmto.executeQuery()
                 if (rso.next()) {
@@ -251,7 +280,10 @@ class TenderRts(val urlTend: String, val purNum: String, val placingWay: String,
                 } else {
                     rso.close()
                     stmto.close()
-                    val stmtins = con.prepareStatement("INSERT INTO ${Prefix}customer SET full_name = ?, is223=1, reg_num = ?", Statement.RETURN_GENERATED_KEYS)
+                    val stmtins = con.prepareStatement(
+                        "INSERT INTO ${Prefix}customer SET full_name = ?, is223=1, reg_num = ?",
+                        Statement.RETURN_GENERATED_KEYS
+                    )
                     stmtins.setString(1, fullnameCus)
                     stmtins.setString(2, java.util.UUID.randomUUID().toString())
                     stmtins.executeUpdate()
@@ -263,7 +295,8 @@ class TenderRts(val urlTend: String, val purNum: String, val placingWay: String,
                     stmtins.close()
                 }
             }
-            val purchObj: Elements = html.select("div:containsOwn(Информация об объектах) + div table.table-carts tbody tr")
+            val purchObj: Elements =
+                html.select("div:containsOwn(Информация об объектах) + div table.table-carts tbody tr")
             purchObj.forEach { po ->
                 val okpd2Code = po.select("td:eq(1)")?.text()?.trim { it <= ' ' } ?: ""
                 val namePO = po.select("td:eq(0)")?.text()?.trim { it <= ' ' } ?: ""
@@ -272,7 +305,8 @@ class TenderRts(val urlTend: String, val purNum: String, val placingWay: String,
                 val quantityValue = po.select("td:eq(3)")?.text()?.trim { it <= ' ' } ?: ""
                 val priceT = po.select("td:eq(4)")?.text()?.trim { it <= ' ' } ?: ""
                 val price = returnPriceEtpRf(priceT)
-                val insertPurObj = con.prepareStatement("INSERT INTO ${Prefix}purchase_object SET id_lot = ?, id_customer = ?, name = ?, quantity_value = ?, okei = ?, customer_quantity_value = ?, okpd2_code = ?, okpd2_group_code = ?, okpd2_group_level1_code = ?, price = ?")
+                val insertPurObj =
+                    con.prepareStatement("INSERT INTO ${Prefix}purchase_object SET id_lot = ?, id_customer = ?, name = ?, quantity_value = ?, okei = ?, customer_quantity_value = ?, okpd2_code = ?, okpd2_group_code = ?, okpd2_group_level1_code = ?, price = ?")
                 insertPurObj.setInt(1, idLot)
                 insertPurObj.setInt(2, idCustomer)
                 insertPurObj.setString(3, namePO)
@@ -287,9 +321,10 @@ class TenderRts(val urlTend: String, val purNum: String, val placingWay: String,
                 insertPurObj.close()
             }
             val delivPlace = html.selectFirst("td:containsOwn(Место поставки) + td div")?.text()?.trim()
-                    ?: ""
+                ?: ""
             if (delivPlace != "") {
-                val insertCusRec = con.prepareStatement("INSERT INTO ${Prefix}customer_requirement SET id_lot = ?, id_customer = ?, delivery_place = ?, application_guarantee_amount = ?, max_price = ?, contract_guarantee_amount = ?")
+                val insertCusRec =
+                    con.prepareStatement("INSERT INTO ${Prefix}customer_requirement SET id_lot = ?, id_customer = ?, delivery_place = ?, application_guarantee_amount = ?, max_price = ?, contract_guarantee_amount = ?")
                 insertCusRec.setInt(1, idLot)
                 insertCusRec.setInt(2, idCustomer)
                 insertCusRec.setString(3, delivPlace)

@@ -18,20 +18,22 @@ import javax.net.ssl.X509TrustManager
 
 
 var trustAllCerts: Array<TrustManager> = arrayOf<TrustManager>(
-        object : X509TrustManager {
+    object : X509TrustManager {
 
-            override fun checkClientTrusted(
-                    certs: Array<X509Certificate?>?, authType: String?) {
-            }
-
-            override fun checkServerTrusted(
-                    certs: Array<X509Certificate?>?, authType: String?) {
-            }
-
-            override fun getAcceptedIssuers(): Array<X509Certificate>? {
-                return null
-            }
+        override fun checkClientTrusted(
+            certs: Array<X509Certificate?>?, authType: String?
+        ) {
         }
+
+        override fun checkServerTrusted(
+            certs: Array<X509Certificate?>?, authType: String?
+        ) {
+        }
+
+        override fun getAcceptedIssuers(): Array<X509Certificate>? {
+            return null
+        }
+    }
 )
 
 fun downloadFromUrl(urls: String, i: Int = 5, wt: Long = 3000): String {
@@ -210,7 +212,10 @@ fun downloadWaitWithRef1251(urls: String): String {
     val uc = url.openConnection()
     uc.connectTimeout = 30_000
     uc.readTimeout = 600_000
-    uc.addRequestProperty("User-Agent", "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.6) Gecko/20070802 SeaMonkey/1.1.4")
+    uc.addRequestProperty(
+        "User-Agent",
+        "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.6) Gecko/20070802 SeaMonkey/1.1.4"
+    )
     uc.connect()
     val `is`: InputStream = uc.getInputStream()
     val br = BufferedReader(InputStreamReader(`is`, "windows-1251"))

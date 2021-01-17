@@ -61,7 +61,8 @@ class ParserZakupki : Iparser {
 
     private fun parserPage(page: HtmlPage) {
         //println(page.asXml())
-        val tends: MutableList<HtmlTableRow> = page.getByXPath<HtmlTableRow>("//table[@class = 'lk_isupply_table']/tbody[2]/tr")
+        val tends: MutableList<HtmlTableRow> =
+            page.getByXPath<HtmlTableRow>("//table[@class = 'lk_isupply_table']/tbody[2]/tr")
         for (i in tends) {
             try {
                 parserTender(i)
@@ -104,22 +105,22 @@ class ParserZakupki : Iparser {
             run { logger("get empty purNum"); return }
         }
         val urlT = el.selectFirst("td a")?.attr("href")?.trim { it <= ' ' }
-                ?: ""
+            ?: ""
         if (urlT == "") run { logger("get empty urlT"); return }
         val urlTend = "$_baseUrl$urlT"
         val datePubTmp = el.selectFirst("td:eq(3)")?.ownText()?.trim { it <= ' ' }
-                ?: ""
+            ?: ""
         val dateEndTmp = el.selectFirst("td:eq(4)")?.ownText()?.trim { it <= ' ' }
-                ?: ""
+            ?: ""
         if (datePubTmp == "" || dateEndTmp == "") run { logger("get empty datePubTmp or dateEndTmp", urlTend); return }
         val datePub = getDateFromFormat(datePubTmp, formatterZakupkiDate)
         if (datePub == Date(0L)) run { logger("get empty datePub", urlTend); return }
         val dateEnd = getDateFromFormat(dateEndTmp, formatterZakupkiDateTime)
         if (dateEnd == Date(0L)) run { logger("get empty dateEnd", urlTend); return }
         val purObj = el.selectFirst("td:eq(1) a")?.ownText()?.trim { it <= ' ' }
-                ?: ""
+            ?: ""
         val region = el.selectFirst("td:eq(2)")?.ownText()?.trim { it <= ' ' }
-                ?: ""
+            ?: ""
         val tt = TenderZakupki(purNum, urlTend, purObj, region, datePub, dateEnd)
         tt.parsing()
 

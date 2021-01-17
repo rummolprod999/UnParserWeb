@@ -1,15 +1,17 @@
 
-Fkotlin:S108Î")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ
-Fkotlin:S108«")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ
-Fkotlin:S108 ")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ
-Fkotlin:S108ö")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ
-jkotlin:S37765"RRefactor this method to reduce its Cognitive Complexity from 24 to the 15 allowed.(­ˆï–
-Fkotlin:S108¦")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ
-^kotlin:S1479â"9Reduce the number of when branches from 88 to at most 30.(ê¥°ˆùÿÿÿÿ8ÁÌ˜ÊÒ-
-Fkotlin:S108Û")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ
-Hkotlin:S1172„"*Remove this unused function parameter "d".(ì¯¢üÿÿÿÿ
-Fkotlin:S108¶")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ
-Fkotlin:S108è")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ
-Fkotlin:S108œ")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ
-Fkotlin:S108Î")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ
-hkotlin:S117%"RRename this local variable to match the regular expression "^[_a-z][a-zA-Z0-9]*$".(§¢\
+Fkotlin:S108Æ")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ
+lkotlin:S117+"VRename this local variable to match the regular expression "^`?[_a-z][a-zA-Z0-9]*`?$".(§¢\
+Fkotlin:S108»")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ
+Hkotlin:S1172”"*Remove this unused function parameter "d".(ì¯¢üÿÿÿÿ
+Fkotlin:S108†")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ
+Fkotlin:S108¬")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ
+jkotlin:S3776@"RRefactor this method to reduce its Cognitive Complexity from 24 to the 15 allowed.(­ˆï–
+Fkotlin:S108°")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ
+Fkotlin:S108¶")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ
+Fkotlin:S108Ş")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ
+^kotlin:S1479ò"9Reduce the number of when branches from 88 to at most 30.(ê¥°ˆùÿÿÿÿ8ÁÌ˜ÊÒ-
+kotlin:S138@"oThis function has 102 lines of code, which is greater than the 100 authorized. Split it into smaller functions.(­ˆï–8Ÿˆ“äï.
+jkotlin:S103ˆ"KSplit this 251 characters long line (which is greater than 200 authorized).(µˆÙ8Ÿˆ“äï.
+Fkotlin:S108ø")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ
+Fkotlin:S108Ş")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ
+Fkotlin:S108ë")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ

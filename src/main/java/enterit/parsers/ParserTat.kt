@@ -19,7 +19,8 @@ class ParserTat : Iparser {
         val webClient: WebClient = WebClient(BrowserVersion.CHROME)
     }
 
-    val Url = "https://etp.tatneft.ru/pls/tzp/f?p=220:562:14617926409515::::P562_OPEN_MODE,GLB_NAV_ROOT_ID,GLB_NAV_ID:,12920020,12920020"
+    val Url =
+        "https://etp.tatneft.ru/pls/tzp/f?p=220:562:14617926409515::::P562_OPEN_MODE,GLB_NAV_ROOT_ID,GLB_NAV_ID:,12920020,12920020"
     val BaseUrl = "https://etp.tatneft.ru/pls/tzp/"
 
     init {
@@ -59,7 +60,8 @@ class ParserTat : Iparser {
     }
 
     private fun parserPage(p: HtmlPage) {
-        val tends: MutableList<HtmlTableRow> = p.getByXPath<HtmlTableRow>("//div[@class = 'a-IRR-tableContainer']/table/tbody/tr[position() > 1]")
+        val tends: MutableList<HtmlTableRow> =
+            p.getByXPath<HtmlTableRow>("//div[@class = 'a-IRR-tableContainer']/table/tbody/tr[position() > 1]")
         for (i in tends) {
             try {
                 parserTender(i)

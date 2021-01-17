@@ -8,7 +8,8 @@ import java.sql.Statement
 import java.sql.Timestamp
 import java.util.*
 
-data class TenderRfp(val status: String, val datePub: Date, val dateEnd: Date, val url: String) : TenderAbstract(), ITender {
+data class TenderRfp(val status: String, val datePub: Date, val dateEnd: Date, val url: String) : TenderAbstract(),
+    ITender {
     companion object TypeFz {
         val typeFz = 54
     }
@@ -25,7 +26,8 @@ data class TenderRfp(val status: String, val datePub: Date, val dateEnd: Date, v
             return
         }
         val html = Jsoup.parse(stPage)
-        var purNum = html.selectFirst("div.podlojka div.row div:contains(№ лота:) + p > span")?.ownText()?.trim { it <= ' ' }
+        var purNum =
+            html.selectFirst("div.podlojka div.row div:contains(№ лота:) + p > span")?.ownText()?.trim { it <= ' ' }
                 ?: ""
         if (purNum == "") {
             logger("Empty purchase number in $url")
@@ -33,13 +35,15 @@ data class TenderRfp(val status: String, val datePub: Date, val dateEnd: Date, v
         }
         purNum = purNum.replace("""\s+""".toRegex(), "")
         DriverManager.getConnection(UrlConnect, UserDb, PassDb).use(fun(con: Connection) {
-            val stmt0 = con.prepareStatement("SELECT id_tender FROM ${Prefix}tender WHERE purchase_number = ? AND doc_publish_date = ? AND type_fz = ? AND notice_version = ? AND end_date = ?").apply {
-                setString(1, purNum)
-                setTimestamp(2, Timestamp(datePub.time))
-                setInt(3, typeFz)
-                setString(4, status)
-                setTimestamp(5, Timestamp(dateEnd.time))
-            }
+            val stmt0 =
+                con.prepareStatement("SELECT id_tender FROM ${Prefix}tender WHERE purchase_number = ? AND doc_publish_date = ? AND type_fz = ? AND notice_version = ? AND end_date = ?")
+                    .apply {
+                        setString(1, purNum)
+                        setTimestamp(2, Timestamp(datePub.time))
+                        setInt(3, typeFz)
+                        setString(4, status)
+                        setTimestamp(5, Timestamp(dateEnd.time))
+                    }
             val r = stmt0.executeQuery()
             if (r.next()) {
                 r.close()
@@ -51,7 +55,8 @@ data class TenderRfp(val status: String, val datePub: Date, val dateEnd: Date, v
             val dateVer = Date()
             var cancelstatus = 0
             var update = false
-            val stmt = con.prepareStatement("SELECT id_tender, date_version FROM ${Prefix}tender WHERE purchase_number = ? AND cancel=0 AND type_fz = ?")
+            val stmt =
+                con.prepareStatement("SELECT id_tender, date_version FROM ${Prefix}tender WHERE purchase_number = ? AND cancel=0 AND type_fz = ?")
             stmt.setString(1, purNum)
             stmt.setInt(2, typeFz)
             val rs = stmt.executeQuery()
@@ -60,7 +65,8 @@ data class TenderRfp(val status: String, val datePub: Date, val dateEnd: Date, v
                 val idT = rs.getInt(1)
                 val dateB: Timestamp = rs.getTimestamp(2)
                 if (dateVer.after(dateB) || dateB == Timestamp(dateVer.time)) {
-                    val preparedStatement = con.prepareStatement("UPDATE ${Prefix}tender SET cancel=1 WHERE id_tender = ?")
+                    val preparedStatement =
+                        con.prepareStatement("UPDATE ${Prefix}tender SET cancel=1 WHERE id_tender = ?")
                     preparedStatement.setInt(1, idT)
                     preparedStatement.execute()
                     preparedStatement.close()
@@ -74,21 +80,26 @@ data class TenderRfp(val status: String, val datePub: Date, val dateEnd: Date, v
             var IdOrganizer = 0
             val idEtp = getEtp(con)
             var idPlacingWay = 0
-            val placingWayName = html.selectFirst("div.podlojka div.row div:contains(Вид запроса:) + p")?.text()?.trim { it <= ' ' }
+            val placingWayName =
+                html.selectFirst("div.podlojka div.row div:contains(Вид запроса:) + p")?.text()?.trim { it <= ' ' }
                     ?: ""
             if (placingWayName != "") {
                 idPlacingWay = getPlacingWay(con, placingWayName)
             }
             var idRegion = 0
-            val regionName = html.selectFirst("div.podlojka div.row div:contains(Субъект:) + p")?.text()?.trim { it <= ' ' }
+            val regionName =
+                html.selectFirst("div.podlojka div.row div:contains(Субъект:) + p")?.text()?.trim { it <= ' ' }
                     ?: ""
             if (regionName != "") {
                 idRegion = getIdRegion(con, regionName)
             }
             var idTender = 0
             val purObj = html.selectFirst("h1")?.ownText()?.trim { it <= ' ' }
-                    ?: ""
-            val insertTender = con.prepareStatement("INSERT INTO ${Prefix}tender SET id_xml = ?, purchase_number = ?, doc_publish_date = ?, href = ?, purchase_object_info = ?, type_fz = ?, id_organizer = ?, id_placing_way = ?, id_etp = ?, end_date = ?, cancel = ?, date_version = ?, num_version = ?, notice_version = ?, xml = ?, print_form = ?, id_region = ?, scoring_date = ?", Statement.RETURN_GENERATED_KEYS)
+                ?: ""
+            val insertTender = con.prepareStatement(
+                "INSERT INTO ${Prefix}tender SET id_xml = ?, purchase_number = ?, doc_publish_date = ?, href = ?, purchase_object_info = ?, type_fz = ?, id_organizer = ?, id_placing_way = ?, id_etp = ?, end_date = ?, cancel = ?, date_version = ?, num_version = ?, notice_version = ?, xml = ?, print_form = ?, id_region = ?, scoring_date = ?",
+                Statement.RETURN_GENERATED_KEYS
+            )
             insertTender.setString(1, purNum)
             insertTender.setString(2, purNum)
             insertTender.setTimestamp(3, Timestamp(datePub.time))
@@ -121,7 +132,10 @@ data class TenderRfp(val status: String, val datePub: Date, val dateEnd: Date, v
             }
             var idLot = 0
             val LotNumber = 1
-            val insertLot = con.prepareStatement("INSERT INTO ${Prefix}lot SET id_tender = ?, lot_number = ?", Statement.RETURN_GENERATED_KEYS)
+            val insertLot = con.prepareStatement(
+                "INSERT INTO ${Prefix}lot SET id_tender = ?, lot_number = ?",
+                Statement.RETURN_GENERATED_KEYS
+            )
             insertLot.setInt(1, idTender)
             insertLot.setInt(2, LotNumber)
             insertLot.executeUpdate()
@@ -132,18 +146,21 @@ data class TenderRfp(val status: String, val datePub: Date, val dateEnd: Date, v
             rl.close()
             insertLot.close()
             val lotObj = html.selectFirst("div.podlojka div.row div:contains(Отрасль:) + p")?.text()?.trim { it <= ' ' }
-                    ?: ""
+                ?: ""
             val purName = "$purObj $lotObj"
-            val insertPurObj = con.prepareStatement("INSERT INTO ${Prefix}purchase_object SET id_lot = ?, id_customer = ?, name = ?")
+            val insertPurObj =
+                con.prepareStatement("INSERT INTO ${Prefix}purchase_object SET id_lot = ?, id_customer = ?, name = ?")
             insertPurObj.setInt(1, idLot)
             insertPurObj.setInt(2, 0)
             insertPurObj.setString(3, purName)
             insertPurObj.executeUpdate()
             insertPurObj.close()
-            val delivPlace = html.selectFirst("div.podlojka div.row div:contains(Место поставки:) + p")?.text()?.trim { it <= ' ' }
+            val delivPlace =
+                html.selectFirst("div.podlojka div.row div:contains(Место поставки:) + p")?.text()?.trim { it <= ' ' }
                     ?: ""
             if (delivPlace != "") {
-                val insertCusRec = con.prepareStatement("INSERT INTO ${Prefix}customer_requirement SET id_lot = ?, id_customer = ?, delivery_term = ?, delivery_place = ?")
+                val insertCusRec =
+                    con.prepareStatement("INSERT INTO ${Prefix}customer_requirement SET id_lot = ?, id_customer = ?, delivery_term = ?, delivery_place = ?")
                 insertCusRec.setInt(1, idLot)
                 insertCusRec.setInt(2, 0)
                 insertCusRec.setString(3, "")

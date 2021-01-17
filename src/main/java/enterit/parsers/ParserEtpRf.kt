@@ -19,7 +19,8 @@ const val PageNumEtpRf = 200
 
 class ParserEtpRf : Iparser {
     val BaseUrl = "http://etprf.ru"
-    val urlEtprf = listOf("http://etprf.ru/NotificationEX", "http://etprf.ru/BRNotification", "http://etprf.ru/NotificationCR")
+    val urlEtprf =
+        listOf("http://etprf.ru/NotificationEX", "http://etprf.ru/BRNotification", "http://etprf.ru/NotificationCR")
 
     init {
         java.util.logging.Logger.getLogger("com.gargoylesoftware").level = Level.OFF
@@ -71,12 +72,14 @@ class ParserEtpRf : Iparser {
     }
 
     private fun parserPage(p: HtmlPage) {
-        val tends: MutableList<HtmlTableRow> = p.getByXPath<HtmlTableRow>("//table[@class = 'reporttable']/tbody/tr[@id]")
+        val tends: MutableList<HtmlTableRow> =
+            p.getByXPath<HtmlTableRow>("//table[@class = 'reporttable']/tbody/tr[@id]")
         for (i in tends) parserTender(i)
     }
 
     private fun parserPageN(p: HtmlPage) {
-        val tends: MutableList<HtmlTableRow> = p.getByXPath<HtmlTableRow>("//table[@class = 'reporttable']/tbody/tr[@id]")
+        val tends: MutableList<HtmlTableRow> =
+            p.getByXPath<HtmlTableRow>("//table[@class = 'reporttable']/tbody/tr[@id]")
         for (i in tends) parserTenderN(i)
     }
 
@@ -96,7 +99,7 @@ class ParserEtpRf : Iparser {
             val datePub = getDateFromFormat(datePubTmp, formatterEtpRf)
             val dateEnd = getDateFromFormat(dateEndTmp, formatterEtpRf)
             val urlT = t.getCell(11).getElementsByTagName("a")[0].getAttribute("href")
-            if (urlT.contains("www.zakupki.butb.by")) return
+            if (urlT.contains("zakupki.butb.by")) return
 
             val url = if (urlT.startsWith("http://sale.etprf.ru")) {
                 urlT
@@ -130,6 +133,7 @@ class ParserEtpRf : Iparser {
             val datePub = getDateFromFormat(datePubTmp, formatterEtpRfN)
             val dateEnd = getDateFromFormat(dateEndTmp, formatterEtpRfN)
             val urlT = t.getCell(9).getElementsByTagName("a")[0].getAttribute("href")
+            if (urlT.contains("zakupki.butb.by")) return
             val url = "$BaseUrl$urlT"
             val tt = TenderEtpRf(status, entNum, purNum, purObj, nmck, placingWay, datePub, dateEnd, url)
             tt.parsing()

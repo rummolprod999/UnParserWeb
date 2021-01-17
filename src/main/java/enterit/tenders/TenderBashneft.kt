@@ -9,7 +9,15 @@ import java.sql.Statement
 import java.sql.Timestamp
 import java.util.*
 
-class TenderBashneft(val status: String, val purNum: String, var urlT: String, val purObj: String, var placingWayName: String, private val pubDate: Date, private val endDate: Date) : TenderAbstract(), ITender {
+class TenderBashneft(
+    val status: String,
+    val purNum: String,
+    var urlT: String,
+    val purObj: String,
+    var placingWayName: String,
+    private val pubDate: Date,
+    private val endDate: Date
+) : TenderAbstract(), ITender {
     companion object TypeFz {
         val typeFz = 31
         const val timeoutB = 5000L
@@ -24,7 +32,8 @@ class TenderBashneft(val status: String, val purNum: String, var urlT: String, v
         ParserBashneft.webClient.close()
         val dateVer = Date()
         DriverManager.getConnection(UrlConnect, UserDb, PassDb).use(fun(con: Connection) {
-            val stmt0 = con.prepareStatement("SELECT id_tender FROM ${Prefix}tender WHERE purchase_number = ? AND doc_publish_date = ? AND type_fz = ? AND notice_version = ? AND end_date = ?")
+            val stmt0 =
+                con.prepareStatement("SELECT id_tender FROM ${Prefix}tender WHERE purchase_number = ? AND doc_publish_date = ? AND type_fz = ? AND notice_version = ? AND end_date = ?")
             stmt0.setString(1, purNum)
             stmt0.setTimestamp(2, Timestamp(pubDate.time))
             stmt0.setInt(3, typeFz)
@@ -40,7 +49,8 @@ class TenderBashneft(val status: String, val purNum: String, var urlT: String, v
             stmt0.close()
             var cancelstatus = 0
             var update = false
-            val stmt = con.prepareStatement("SELECT id_tender, date_version FROM ${Prefix}tender WHERE purchase_number = ? AND cancel=0 AND type_fz = ?")
+            val stmt =
+                con.prepareStatement("SELECT id_tender, date_version FROM ${Prefix}tender WHERE purchase_number = ? AND cancel=0 AND type_fz = ?")
             stmt.setString(1, purNum)
             stmt.setInt(2, typeFz)
             val rs = stmt.executeQuery()
@@ -49,7 +59,8 @@ class TenderBashneft(val status: String, val purNum: String, var urlT: String, v
                 val idT = rs.getInt(1)
                 val dateB: Timestamp = rs.getTimestamp(2)
                 if (dateVer.after(dateB) || dateB == Timestamp(dateVer.time)) {
-                    val preparedStatement = con.prepareStatement("UPDATE ${Prefix}tender SET cancel=1 WHERE id_tender = ?")
+                    val preparedStatement =
+                        con.prepareStatement("UPDATE ${Prefix}tender SET cancel=1 WHERE id_tender = ?")
                     preparedStatement.setInt(1, idT)
                     preparedStatement.execute()
                     preparedStatement.close()
@@ -61,7 +72,9 @@ class TenderBashneft(val status: String, val purNum: String, var urlT: String, v
             stmt.close()
             var IdOrganizer = 0
             val page: HtmlPage = ParserBashneft.webClient.getPage(urlT)
-            val orgFullName = page.getFirstByXPath<HtmlInput>("//input[@id = 'ctl00_RootContentPlaceHolder_AuctionFormLayout_EnterpriseComboBox_I']")?.getAttribute("value")?.trim { it <= ' ' }
+            val orgFullName =
+                page.getFirstByXPath<HtmlInput>("//input[@id = 'ctl00_RootContentPlaceHolder_AuctionFormLayout_EnterpriseComboBox_I']")
+                    ?.getAttribute("value")?.trim { it <= ' ' }
                     ?: ""
             if (orgFullName != "") {
                 val stmto = con.prepareStatement("SELECT id_organizer FROM ${Prefix}organizer WHERE full_name = ?")
@@ -76,9 +89,13 @@ class TenderBashneft(val status: String, val purNum: String, var urlT: String, v
                     stmto.close()
                     val email = ""
                     val phone = ""
-                    val contactPerson = page.getFirstByXPath<HtmlSpan>("//td[contains(preceding-sibling::td, 'Ответственное лицо:')]/span")?.textContent?.trim { it <= ' ' }
+                    val contactPerson =
+                        page.getFirstByXPath<HtmlSpan>("//td[contains(preceding-sibling::td, 'Ответственное лицо:')]/span")?.textContent?.trim { it <= ' ' }
                             ?: ""
-                    val stmtins = con.prepareStatement("INSERT INTO ${Prefix}organizer SET full_name = ?, contact_email = ?, contact_phone = ?, contact_person = ?", Statement.RETURN_GENERATED_KEYS)
+                    val stmtins = con.prepareStatement(
+                        "INSERT INTO ${Prefix}organizer SET full_name = ?, contact_email = ?, contact_phone = ?, contact_person = ?",
+                        Statement.RETURN_GENERATED_KEYS
+                    )
                     stmtins.setString(1, orgFullName)
                     stmtins.setString(2, email)
                     stmtins.setString(3, phone)
@@ -100,7 +117,9 @@ class TenderBashneft(val status: String, val purNum: String, var urlT: String, v
             }
             val html = Jsoup.parse(stPage)
             val addinfo1 = html.selectFirst("#ctl00_RootContentPlaceHolder_AuctionFormLayout_AuctionPageControl_C2")?.text()?.trim { it <= ' ' }*/
-            val addInfo = page.getFirstByXPath<HtmlDivision>("//div[@id = 'ctl00_RootContentPlaceHolder_AuctionFormLayout_AuctionPageControl_C2']")?.asText()?.trim { it <= ' ' }
+            val addInfo =
+                page.getFirstByXPath<HtmlDivision>("//div[@id = 'ctl00_RootContentPlaceHolder_AuctionFormLayout_AuctionPageControl_C2']")
+                    ?.asText()?.trim { it <= ' ' }
                     ?: ""
             val idEtp = getEtp(con)
             var idPlacingWay = 0
@@ -108,7 +127,10 @@ class TenderBashneft(val status: String, val purNum: String, var urlT: String, v
                 idPlacingWay = getPlacingWay(con, placingWayName)
             }
             var idRegion = 0
-            val insertTender = con.prepareStatement("INSERT INTO ${Prefix}tender SET id_xml = ?, purchase_number = ?, doc_publish_date = ?, href = ?, purchase_object_info = ?, type_fz = ?, id_organizer = ?, id_placing_way = ?, id_etp = ?, end_date = ?, cancel = ?, date_version = ?, num_version = ?, notice_version = ?, xml = ?, print_form = ?, id_region = ?", Statement.RETURN_GENERATED_KEYS)
+            val insertTender = con.prepareStatement(
+                "INSERT INTO ${Prefix}tender SET id_xml = ?, purchase_number = ?, doc_publish_date = ?, href = ?, purchase_object_info = ?, type_fz = ?, id_organizer = ?, id_placing_way = ?, id_etp = ?, end_date = ?, cancel = ?, date_version = ?, num_version = ?, notice_version = ?, xml = ?, print_form = ?, id_region = ?",
+                Statement.RETURN_GENERATED_KEYS
+            )
             insertTender.setString(1, purNum)
             insertTender.setString(2, purNum)
             insertTender.setTimestamp(3, Timestamp(pubDate.time))
@@ -144,13 +166,16 @@ class TenderBashneft(val status: String, val purNum: String, var urlT: String, v
                 val pg = hrefT.click<Page>()
                 println(pg.url)
             }*/
-            val lots = page.getByXPath<HtmlTableRow>("//tr[contains(@id, 'ctl00_RootContentPlaceHolder_AuctionFormLayout_AuctionPageControl_LotsGridView_DXDataRow')]")
+            val lots =
+                page.getByXPath<HtmlTableRow>("//tr[contains(@id, 'ctl00_RootContentPlaceHolder_AuctionFormLayout_AuctionPageControl_LotsGridView_DXDataRow')]")
             var p = page
-            val butLot = p.getFirstByXPath<HtmlAnchor>("//div[@class = 'dxgvPagerBottomPanel_BashneftTheme']//a[contains(@class, 'dxp-button dxp-bi')]")
+            val butLot =
+                p.getFirstByXPath<HtmlAnchor>("//div[@class = 'dxgvPagerBottomPanel_BashneftTheme']//a[contains(@class, 'dxp-button dxp-bi')]")
             butLot?.let {
                 p = it.click()
                 p.webClient.waitForBackgroundJavaScript(5000)
-                val lts = page.getByXPath<HtmlTableRow>("//tr[contains(@id, 'ctl00_RootContentPlaceHolder_AuctionFormLayout_AuctionPageControl_LotsGridView_DXDataRow')]")
+                val lts =
+                    page.getByXPath<HtmlTableRow>("//tr[contains(@id, 'ctl00_RootContentPlaceHolder_AuctionFormLayout_AuctionPageControl_LotsGridView_DXDataRow')]")
                 lots.addAll(lts)
 
             }
@@ -183,7 +208,10 @@ class TenderBashneft(val status: String, val purNum: String, var urlT: String, v
         var lotNumT = it.getCell(1)?.textContent?.trim { it <= ' ' } ?: ""
         lotNumT = lotNumT.regExpTest("""(\d+)${'$'}""")
         val lotNum = Integer.valueOf(lotNumT) ?: 1
-        val insertLot = con.prepareStatement("INSERT INTO ${Prefix}lot SET id_tender = ?, lot_number = ?", Statement.RETURN_GENERATED_KEYS)
+        val insertLot = con.prepareStatement(
+            "INSERT INTO ${Prefix}lot SET id_tender = ?, lot_number = ?",
+            Statement.RETURN_GENERATED_KEYS
+        )
         insertLot.setInt(1, idTender)
         insertLot.setInt(2, lotNum)
         insertLot.executeUpdate()
@@ -205,7 +233,10 @@ class TenderBashneft(val status: String, val purNum: String, var urlT: String, v
             } else {
                 rsoc.close()
                 stmtoc.close()
-                val stmtins = con.prepareStatement("INSERT INTO ${Prefix}customer SET full_name = ?, is223=1, reg_num = ?", Statement.RETURN_GENERATED_KEYS)
+                val stmtins = con.prepareStatement(
+                    "INSERT INTO ${Prefix}customer SET full_name = ?, is223=1, reg_num = ?",
+                    Statement.RETURN_GENERATED_KEYS
+                )
                 stmtins.setString(1, fullnameOrg)
                 stmtins.setString(2, java.util.UUID.randomUUID().toString())
                 stmtins.executeUpdate()
@@ -220,7 +251,8 @@ class TenderBashneft(val status: String, val purNum: String, var urlT: String, v
         val purName = it.getCell(3)?.textContent?.trim { it <= ' ' } ?: ""
         var quantity = it.getCell(4)?.textContent?.trim { it <= ' ' } ?: ""
         var price = it.getCell(5)?.textContent?.trim { it <= ' ' } ?: ""
-        val insertPurObj = con.prepareStatement("INSERT INTO ${Prefix}purchase_object SET id_lot = ?, id_customer = ?, name = ?, quantity_value = ?, customer_quantity_value = ?, price = ?")
+        val insertPurObj =
+            con.prepareStatement("INSERT INTO ${Prefix}purchase_object SET id_lot = ?, id_customer = ?, name = ?, quantity_value = ?, customer_quantity_value = ?, price = ?")
         insertPurObj.setInt(1, idLot)
         insertPurObj.setInt(2, idCustomer)
         insertPurObj.setString(3, purName)

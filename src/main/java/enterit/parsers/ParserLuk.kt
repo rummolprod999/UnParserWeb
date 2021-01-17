@@ -48,12 +48,14 @@ class ParserLuk : Iparser {
         private fun getTendersPage(p: HtmlPage): HtmlPage {
             var p = p
             try {
-                var button = p.getByXPath<HtmlAnchor>("//a[@class = 'button button-loadmore' and . = 'Загрузить больше' and @style = '']")
+                var button =
+                    p.getByXPath<HtmlAnchor>("//a[@class = 'button button-loadmore' and . = 'Загрузить больше' and @style = '']")
 
                 while (button.size != 0) {
                     p = button[0].click()
                     p.webClient.waitForBackgroundJavaScript(5000)
-                    button = p.getByXPath<HtmlAnchor>("//a[@class = 'button button-loadmore' and . = 'Загрузить больше' and @style = '']")
+                    button =
+                        p.getByXPath<HtmlAnchor>("//a[@class = 'button button-loadmore' and . = 'Загрузить больше' and @style = '']")
                 }
             } catch (e: Exception) {
                 logger("Error in getTendersPage function", e.stackTrace, e)

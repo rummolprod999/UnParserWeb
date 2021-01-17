@@ -19,14 +19,14 @@ class ParserRfp : Iparser {
     private val maxPage = 10
 
     override fun parser() = (1..maxPage)
-            .map { "$baseUrl$it" }
-            .forEach {
-                try {
-                    parserPage(it)
-                } catch (e: Exception) {
-                    logger("Error in ParserRfp.parser function", e.stackTrace, e)
-                }
+        .map { "$baseUrl$it" }
+        .forEach {
+            try {
+                parserPage(it)
+            } catch (e: Exception) {
+                logger("Error in ParserRfp.parser function", e.stackTrace, e)
             }
+        }
 
     private fun parserPage(url: String) {
         val stPage = downloadFromUrl(url)
@@ -51,10 +51,12 @@ class ParserRfp : Iparser {
     private fun parserTender(t: Element) {
         val urlT = t.selectFirst("span:containsOwn(Наименование:) + a")?.attr("href")?.trim { it <= ' ' } ?: ""
         val urlTend = "$BaseT$urlT"
-        val datePubTmp = t.selectFirst("div:containsOwn(Опубликовано:) + span")?.ownText()?.replace("в ", "")?.trim { it <= ' ' }
+        val datePubTmp =
+            t.selectFirst("div:containsOwn(Опубликовано:) + span")?.ownText()?.replace("в ", "")?.trim { it <= ' ' }
                 ?: ""
-        val dateEndTmp = t.selectFirst("div.margin_b > span:containsOwn(до) + span")?.ownText()?.replace("в ", "")?.trim { it <= ' ' }
-                ?: ""
+        val dateEndTmp = t.selectFirst("div.margin_b > span:containsOwn(до) + span")?.ownText()?.replace("в ", "")
+            ?.trim { it <= ' ' }
+            ?: ""
         val datePub = getDateFromFormat(datePubTmp, formatterGpn)
         val dateEnd = getDateFromFormat(dateEndTmp, formatterGpn)
         if (datePub == Date(0L) || dateEnd == Date(0L)) {

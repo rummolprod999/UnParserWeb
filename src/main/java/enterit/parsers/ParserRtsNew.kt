@@ -19,23 +19,24 @@ class ParserRtsNew : Iparser {
         System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog")
     }
 
-    private val baseUrl = "https://corp.rts-tender.ru/?fl=True&SearchForm.State=1&SearchForm.TenderRuleIds=4&SearchForm.MarketPlaceIds=5&SearchForm.CurrencyCode=undefined&&FilterData.PageCount=2&FilterData.PageIndex=1"
+    private val baseUrl =
+        "https://corp.rts-tender.ru/?fl=True&SearchForm.State=1&SearchForm.TenderRuleIds=4&SearchForm.MarketPlaceIds=5&SearchForm.CurrencyCode=undefined&&FilterData.PageCount=2&FilterData.PageIndex=1"
     private val maxPage = 2
     override fun parser() {
         webClient.options.isThrowExceptionOnScriptError = false
         webClient.waitForBackgroundJavaScript(15000)
         try {
             (1..maxPage)
-                    .map { "https://corp.rts-tender.ru/?fl=True&SearchForm.State=1&SearchForm.TenderRuleIds=4&SearchForm.MarketPlaceIds=5&SearchForm.CurrencyCode=undefined&FilterData.PageSize=100&FilterData.PageCount=$it&FilterData.SortingField=DatePublished&FilterData.SortingDirection=Desc&&FilterData.PageIndex=1" }
-                    .forEach {
-                        try {
-                            val page: HtmlPage = webClient.getPage(it)
-                            webClient.waitForBackgroundJavaScript(15000)
-                            parserPage(page)
-                        } catch (e: Exception) {
-                            logger("Error in ParserRtsNew.parser function", e.stackTrace, e)
-                        }
+                .map { "https://corp.rts-tender.ru/?fl=True&SearchForm.State=1&SearchForm.TenderRuleIds=4&SearchForm.MarketPlaceIds=5&SearchForm.CurrencyCode=undefined&FilterData.PageSize=100&FilterData.PageCount=$it&FilterData.SortingField=DatePublished&FilterData.SortingDirection=Desc&&FilterData.PageIndex=1" }
+                .forEach {
+                    try {
+                        val page: HtmlPage = webClient.getPage(it)
+                        webClient.waitForBackgroundJavaScript(15000)
+                        parserPage(page)
+                    } catch (e: Exception) {
+                        logger("Error in ParserRtsNew.parser function", e.stackTrace, e)
                     }
+                }
         } catch (e: Exception) {
             logger("Error in parser function", e.stackTrace, e)
         } finally {
@@ -57,20 +58,26 @@ class ParserRtsNew : Iparser {
     private fun parserTender(t: HtmlTable) {
         val urlT = t.getFirstByXPath<HtmlAnchor>("./tbody/tr[2]/td//span[@class = 'spoiler']/a").getAttribute("href")
         val urlTend = "$urlT"
-        var purNum = t.getFirstByXPath<HtmlParagraph>("./tbody/tr[1]//li[contains(., 'Номер на площадке')]//p").textContent.trim { it <= ' ' }
+        var purNum =
+            t.getFirstByXPath<HtmlParagraph>("./tbody/tr[1]//li[contains(., 'Номер на площадке')]//p").textContent.trim { it <= ' ' }
         val ind = purNum.indexOfLast { it == '/' }
         if (ind != -1) {
 
             purNum = purNum.slice(0 until purNum.indexOfLast { it == '/' })
         }
-        val plType = t.getFirstByXPath<HtmlParagraph>("./tbody/tr[3]//li[contains(@class, 'tag')][3]/p").textContent.trim { it <= ' ' }
-        val applGuaranteeT = t.getFirstByXPath<HtmlStrong>("./tbody/tr[1]//td[@class = 'column-aside']//div[contains(., 'Обеспечение заявки:')]//p//strong").textContent.trim { it <= ' ' }
+        val plType =
+            t.getFirstByXPath<HtmlParagraph>("./tbody/tr[3]//li[contains(@class, 'tag')][3]/p").textContent.trim { it <= ' ' }
+        val applGuaranteeT =
+            t.getFirstByXPath<HtmlStrong>("./tbody/tr[1]//td[@class = 'column-aside']//div[contains(., 'Обеспечение заявки:')]//p//strong").textContent.trim { it <= ' ' }
         val applGuarantee = returnPriceEtpRf(applGuaranteeT)
-        val currency = t.getFirstByXPath<HtmlSpan>(".//h5[contains(., 'Начальная максимальная цена')]/following-sibling::p/span")?.textContent?.trim { it <= ' ' }
+        val currency =
+            t.getFirstByXPath<HtmlSpan>(".//h5[contains(., 'Начальная максимальная цена')]/following-sibling::p/span")?.textContent?.trim { it <= ' ' }
                 ?: ""
-        val contrGuaranteeT = t.getFirstByXPath<HtmlStrong>("./tbody/tr[1]//td[@class = 'column-aside']//div[contains(., 'Обеспечение контракта:')]//p//strong").textContent.trim { it <= ' ' }
+        val contrGuaranteeT =
+            t.getFirstByXPath<HtmlStrong>("./tbody/tr[1]//td[@class = 'column-aside']//div[contains(., 'Обеспечение контракта:')]//p//strong").textContent.trim { it <= ' ' }
         val contrGuarantee = returnPriceEtpRf(contrGuaranteeT)
-        val nmckT = t.getFirstByXPath<HtmlStrong>(".//h5[contains(., 'Начальная максимальная цена')]/following-sibling::p/strong")?.textContent?.trim { it <= ' ' }
+        val nmckT =
+            t.getFirstByXPath<HtmlStrong>(".//h5[contains(., 'Начальная максимальная цена')]/following-sibling::p/strong")?.textContent?.trim { it <= ' ' }
                 ?: ""
         val nmck = returnPriceEtpRf(nmckT)
         val tt = TenderRts(urlTend, purNum, plType, applGuarantee, currency, contrGuarantee, nmck)

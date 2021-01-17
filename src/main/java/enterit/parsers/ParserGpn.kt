@@ -7,7 +7,10 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 
 class ParserGpn : Iparser {
-    private val baseUrls = listOf("https://zakupki.gazprom-neft.ru/tenderix/?PAGE=", "https://zakupki.gazprom-neft.ru/tenderix/prequalification.php?PAGE=")
+    private val baseUrls = listOf(
+        "https://zakupki.gazprom-neft.ru/tenderix/?PAGE=",
+        "https://zakupki.gazprom-neft.ru/tenderix/prequalification.php?PAGE="
+    )
 
     companion object BaseTen {
         const val BaseT = "https://zakupki.gazprom-neft.ru"
@@ -16,14 +19,14 @@ class ParserGpn : Iparser {
     private val maxPage = 15
     override fun parser() = baseUrls.forEach { baseUrl ->
         (1..maxPage)
-                .map { "$baseUrl$it" }
-                .forEach {
-                    try {
-                        parserPage(it)
-                    } catch (e: Exception) {
-                        logger("Error in ParserGpn.parser function", e.stackTrace, e)
-                    }
+            .map { "$baseUrl$it" }
+            .forEach {
+                try {
+                    parserPage(it)
+                } catch (e: Exception) {
+                    logger("Error in ParserGpn.parser function", e.stackTrace, e)
                 }
+            }
     }
 
     private fun parserPage(url: String) {

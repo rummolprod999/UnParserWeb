@@ -30,16 +30,16 @@ class ParserUral : Iparser {
         tenders.forEach<Element> { t ->
             try {
                 val urlT = t.selectFirst("td a")?.attr("href")?.trim { it <= ' ' }
-                        ?: ""
+                    ?: ""
                 val urlTend = "$BaseUrl$urlT"
                 val datePubTmp = t.selectFirst("td.date_start")?.ownText()?.trim { it <= ' ' }
-                        ?: ""
+                    ?: ""
                 val dateEndTmp = t.selectFirst("td.date_end")?.ownText()?.trim { it <= ' ' }
-                        ?: ""
+                    ?: ""
                 val datePub = getDateFromFormat(datePubTmp, formatterOnlyDate)
                 val dateEnd = getDateFromFormat(dateEndTmp, formatterOnlyDate)
                 val purObj = t.selectFirst("td a")?.ownText()?.trim { it <= ' ' }
-                        ?: ""
+                    ?: ""
                 val purNum = regExpTester("""/ru/tenders/(\d+)\.html""", urlTend)
                 val tt = TenderUral(purNum, purObj, datePub, dateEnd, urlTend)
                 tt.parsing()

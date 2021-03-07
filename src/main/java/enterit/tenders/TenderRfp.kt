@@ -2,6 +2,7 @@ package enterit.tenders
 
 import enterit.*
 import org.jsoup.Jsoup
+import org.jsoup.select.Elements
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.Statement
@@ -167,6 +168,23 @@ data class TenderRfp(val status: String, val datePub: Date, val dateEnd: Date, v
                 insertCusRec.setString(4, delivPlace)
                 insertCusRec.executeUpdate()
                 insertCusRec.close()
+            }
+            val documents: Elements = html.select("a[href ^='/media/upload/tender']")
+            documents.forEach { doc ->
+                var href = doc.attr("href")?.trim { it <= ' ' } ?: ""
+                if (href != "") {
+                    href = "http://www.rfp.ltd$href"
+                }
+                val nameDoc = doc.text()?.trim { it <= ' ' } ?: "Скачать документацию"
+                if (href != "") {
+                    val insertDoc =
+                        con.prepareStatement("INSERT INTO ${Prefix}attachment SET id_tender = ?, file_name = ?, url = ?")
+                    insertDoc.setInt(1, idTender)
+                    insertDoc.setString(2, nameDoc)
+                    insertDoc.setString(3, href)
+                    insertDoc.executeUpdate()
+                    insertDoc.close()
+                }
             }
             try {
                 tenderKwords(idTender, con)

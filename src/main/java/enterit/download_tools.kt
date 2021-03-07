@@ -11,10 +11,7 @@ import java.util.concurrent.ExecutionException
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
-import javax.net.ssl.HttpsURLConnection
-import javax.net.ssl.SSLContext
-import javax.net.ssl.TrustManager
-import javax.net.ssl.X509TrustManager
+import javax.net.ssl.*
 
 
 var trustAllCerts: Array<TrustManager> = arrayOf<TrustManager>(
@@ -41,6 +38,12 @@ fun downloadFromUrl(urls: String, i: Int = 5, wt: Long = 3000): String {
         val sc: SSLContext = SSLContext.getInstance("SSL")
         sc.init(null, trustAllCerts, SecureRandom())
         HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory())
+        val allHostsValid: HostnameVerifier = object : HostnameVerifier {
+            override fun verify(hostname: String?, session: SSLSession?): Boolean {
+                return true
+            }
+        }
+        HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
     } catch (e: Exception) {
     }
     var count = 0

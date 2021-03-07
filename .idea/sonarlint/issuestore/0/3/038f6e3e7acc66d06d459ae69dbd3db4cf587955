@@ -1,3 +1,14 @@
 
-vkotlin:S1192'"YDefine a constant instead of duplicating this literal "Error in parser function" 3 times.(·áƒ ıÿÿÿÿ
 6kotlin:S125?"Remove this commented out code.(ÌÜÌ
+vkotlin:S1192'"YDefine a constant instead of duplicating this literal "Error in parser function" 3 times.(·áƒ ıÿÿÿÿ
+fkotlin:S1340"CRefactor this code to not nest more than 3 control flow statements.(¡»¢üùÿÿÿÿ8à¡£†ñ.
+Ykotlin:S122N"6Reformat the code to have only one statement per line.(Á˜†¶øÿÿÿÿ8à¡£†ñ.
+Ykotlin:S122U"6Reformat the code to have only one statement per line.(Ïä°‡şÿÿÿÿ8à¡£†ñ.
+Skotlin:S122["6Reformat the code to have only one statement per line.(šØïC8à¡£†ñ.
+Tkotlin:S122]"6Reformat the code to have only one statement per line.(ô…ô8à¡£†ñ.
+Tkotlin:S122_"6Reformat the code to have only one statement per line.(ôÊÔ«8à¡£†ñ.
+Ykotlin:S122i"6Reformat the code to have only one statement per line.(Á˜†¶øÿÿÿÿ8à¡£†ñ.
+Tkotlin:S122m"6Reformat the code to have only one statement per line.(•™„•8à¡£†ñ.
+Tkotlin:S122s"6Reformat the code to have only one statement per line.(À¼¯8à¡£†ñ.
+Ykotlin:S122u"6Reformat the code to have only one statement per line.(™àıòùÿÿÿÿ8à¡£†ñ.
+Tkotlin:S122w"6Reformat the code to have only one statement per line.(àƒ›ú8à¡£†ñ.

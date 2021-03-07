@@ -1,8 +1,15 @@
 
-kkotlin:S3776"SRefactor this method to reduce its Cognitive Complexity from 112 to the 15 allowed.(ˆÖŞé
-ikotlin:S117L"RRename this local variable to match the regular expression "^[_a-z][a-zA-Z0-9]*$".(‘ŠÏ•
-hkotlin:S117e"RRename this local variable to match the regular expression "^[_a-z][a-zA-Z0-9]*$".(˜ÇÉm
-@kotlin:S108")Either remove or fill this block of code.(ª³‘
-okotlin:S117‚"RRename this local variable to match the regular expression "^[_a-z][a-zA-Z0-9]*$".(»°‰—úÿÿÿÿ
-jkotlin:S117à"RRename this local variable to match the regular expression "^[_a-z][a-zA-Z0-9]*$".(ë€Ü 
-Fkotlin:S108Ü")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ
+skotlin:S117–"VRename this local variable to match the regular expression "^`?[_a-z][a-zA-Z0-9]*`?$".(»°‰—úÿÿÿÿ
+nkotlin:S117ˆ"VRename this local variable to match the regular expression "^`?[_a-z][a-zA-Z0-9]*`?$".(ë€Ü 
+lkotlin:S117v"VRename this local variable to match the regular expression "^`?[_a-z][a-zA-Z0-9]*`?$".(˜ÇÉm
+kkotlin:S3776"SRefactor this method to reduce its Cognitive Complexity from 112 to the 15 allowed.(ˆÖŞé
+mkotlin:S117Z"VRename this local variable to match the regular expression "^`?[_a-z][a-zA-Z0-9]*`?$".(‘ŠÏ•
+Akotlin:S108“")Either remove or fill this block of code.(ª³‘
+Fkotlin:S108")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ
+ikotlin:S103½"KSplit this 324 characters long line (which is greater than 200 authorized).(Ù‰Ä8à £†ñ.
+jkotlin:S103÷"KSplit this 239 characters long line (which is greater than 200 authorized).(üşÔ8à £†ñ.
+kotlin:S138"oThis function has 300 lines of code, which is greater than the 100 authorized. Split it into smaller functions.(ˆÖŞé8à £†ñ.
+kotlin:S138$"oThis function has 294 lines of code, which is greater than the 100 authorized. Split it into smaller functions.(¡­àÎ8à £†ñ.
+gkotlin:S134ï"CRefactor this code to not nest more than 3 control flow statements.(û˜æÓÿÿÿÿÿ8à £†ñ.
+akotlin:S134ó"CRefactor this code to not nest more than 3 control flow statements.(íÙ»"8à £†ñ.
+bkotlin:S134ù"CRefactor this code to not nest more than 3 control flow statements.(Ï€¢ş8à £†ñ.

@@ -23,6 +23,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/enterit/download_tools.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/enterit/parsers/ParserEtpRf.kt">
           <value>
             <set />
@@ -39,6 +44,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/main/java/enterit/parsers/ParserPolNew.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/enterit/parsers/ParserRfp.kt">
           <value>
             <set />
           </value>
@@ -73,12 +83,22 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/enterit/tenders/TenderRfp.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/enterit/tenders/TenderRzdRts.kt">
           <value>
             <set />
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/main/java/enterit/utils_for_tenders.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="/usr/lib/jvm/java-8-oracle/jre/lib/rt.jar!/javax/net/ssl/HostnameVerifier.class">
           <value>
             <set />
           </value>

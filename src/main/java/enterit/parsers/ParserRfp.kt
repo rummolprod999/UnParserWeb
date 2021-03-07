@@ -10,10 +10,10 @@ import org.jsoup.nodes.Element
 import java.util.*
 
 class ParserRfp : Iparser {
-    private val baseUrl = "https://www.rfp.ltd/zakupki/?page="
+    private val baseUrl = "http://www.rfp.ltd/zakupki/?page="
 
     companion object BaseTen {
-        const val BaseT = "https://www.rfp.ltd"
+        const val BaseT = "http://www.rfp.ltd"
     }
 
     private val maxPage = 10

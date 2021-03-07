@@ -1,6 +1,9 @@
 
+skotlin:S117‡"VRename this local variable to match the regular expression "^`?[_a-z][a-zA-Z0-9]*`?$".(€¿ºÉüÿÿÿÿ
+Akotlin:S108„")Either remove or fill this block of code.(ª³‘
+lkotlin:S117g"VRename this local variable to match the regular expression "^`?[_a-z][a-zA-Z0-9]*`?$".(˜ÇÉm
 okotlin:S3776"RRefactor this method to reduce its Cognitive Complexity from 62 to the 15 allowed.(òô„ªÿÿÿÿÿ
-ikotlin:S117D"RRename this local variable to match the regular expression "^[_a-z][a-zA-Z0-9]*$".(‘ŠÏ•
-hkotlin:S117a"RRename this local variable to match the regular expression "^[_a-z][a-zA-Z0-9]*$".(˜ÇÉm
-@kotlin:S108{")Either remove or fill this block of code.(ª³‘
-nkotlin:S117~"RRename this local variable to match the regular expression "^[_a-z][a-zA-Z0-9]*$".(€¿ºÉüÿÿÿÿ
+mkotlin:S117G"VRename this local variable to match the regular expression "^`?[_a-z][a-zA-Z0-9]*`?$".(‘ŠÏ•
+jkotlin:S103"KSplit this 304 characters long line (which is greater than 200 authorized).(¿ÄŒÆ8é £†ñ.
+’kotlin:S138"oThis function has 235 lines of code, which is greater than the 100 authorized. Split it into smaller functions.(òô„ªÿÿÿÿÿ8é £†ñ.
+kotlin:S138""oThis function has 219 lines of code, which is greater than the 100 authorized. Split it into smaller functions.(¡­àÎ8é £†ñ.

@@ -1,5 +1,14 @@
 
-„kotlin:S1192 "gDefine a constant instead of duplicating this literal """^(\d{2}\.\d{2}\.\d{4} \d{2}:\d{2})""" 3 times.(ùĞ©Ëùÿÿÿÿ
-jkotlin:S3776"RRefactor this method to reduce its Cognitive Complexity from 48 to the 15 allowed.(çÃŸş
-ikotlin:S117R"RRename this local variable to match the regular expression "^[_a-z][a-zA-Z0-9]*$".(‘ŠÏ•
-pkotlin:S3776È"RRefactor this method to reduce its Cognitive Complexity from 18 to the 15 allowed.(ÙàŸßıÿÿÿÿ
+„kotlin:S1192)"gDefine a constant instead of duplicating this literal """^(\d{2}\.\d{2}\.\d{4} \d{2}:\d{2})""" 3 times.(ùĞ©Ëùÿÿÿÿ
+jkotlin:S3776""RRefactor this method to reduce its Cognitive Complexity from 48 to the 15 allowed.(çÃŸş
+pkotlin:S3776á"RRefactor this method to reduce its Cognitive Complexity from 18 to the 15 allowed.(ÙàŸßıÿÿÿÿ
+mkotlin:S117_"VRename this local variable to match the regular expression "^`?[_a-z][a-zA-Z0-9]*`?$".(‘ŠÏ•
+ikotlin:S103l"KSplit this 211 characters long line (which is greater than 200 authorized).(é‹‹8ß £†ñ.
+ikotlin:S103o"KSplit this 213 characters long line (which is greater than 200 authorized).(¯®¸ú8ß £†ñ.
+nkotlin:S103r"KSplit this 209 characters long line (which is greater than 200 authorized).(Æ·é…úÿÿÿÿ8ß £†ñ.
+okotlin:S103•"KSplit this 342 characters long line (which is greater than 200 authorized).(ŒÊÙåûÿÿÿÿ8ß £†ñ.
+okotlin:S103Á"KSplit this 263 characters long line (which is greater than 200 authorized).(öÔ«—úÿÿÿÿ8ß £†ñ.
+jkotlin:S103à"KSplit this 268 characters long line (which is greater than 200 authorized).(ê€8ß £†ñ.
+kotlin:S138""oThis function has 188 lines of code, which is greater than the 100 authorized. Split it into smaller functions.(çÃŸş8ß £†ñ.
+kotlin:S1389"oThis function has 164 lines of code, which is greater than the 100 authorized. Split it into smaller functions.(¡­àÎ8ß £†ñ.
+“kotlin:S138á"oThis function has 178 lines of code, which is greater than the 100 authorized. Split it into smaller functions.(ÙàŸßıÿÿÿÿ8ß £†ñ.

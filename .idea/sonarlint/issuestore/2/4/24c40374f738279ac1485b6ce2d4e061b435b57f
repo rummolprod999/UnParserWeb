@@ -1,6 +1,6 @@
 
-<kotlin:S126?"Add the missing "else" clause.(Ý‘ø›8ðæÿ…ñ.
-<kotlin:S126-"Add the missing "else" clause.(Ý‘ø›8ðæÿ…ñ.
-ƒkotlin:S1192"_Define a constant instead of duplicating this literal "http://etprf.ru/BRNotification" 3 times.(’Ïýÿÿÿÿ8ðæÿ…ñ.
-qkotlin:S3776%"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(¤°Ò8ðæÿ…ñ.
-ƒkotlin:S1192"_Define a constant instead of duplicating this literal "http://etprf.ru/NotificationEX" 3 times.(’Ïýÿÿÿÿ8ðæÿ…ñ.
+:kotlin:S126"Add the missing "else" clause.(Ý‘ø›8ðæÿ…ñ.
+:kotlin:S126"Add the missing "else" clause.(Ý‘ø›8ðæÿ…ñ.
+kotlin:S1192"_Define a constant instead of duplicating this literal "http://etprf.ru/NotificationEX" 3 times.(’Ïýÿÿÿÿ8ðæÿ…ñ.
+kotlin:S1192"_Define a constant instead of duplicating this literal "http://etprf.ru/BRNotification" 3 times.(’Ïýÿÿÿÿ8ðæÿ…ñ.
+okotlin:S3776"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(¤°Ò8ðæÿ…ñ.

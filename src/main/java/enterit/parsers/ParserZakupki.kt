@@ -18,7 +18,7 @@ class ParserZakupki : Iparser {
     private val _baseUrl = "https://www.zakupki.ru"
 
     companion object WebCl {
-        val webClient: WebClient = WebClient(BrowserVersion.FIREFOX_60)
+        val webClient: WebClient = WebClient(BrowserVersion.FIREFOX_78)
         const val numPage = 50
     }
 

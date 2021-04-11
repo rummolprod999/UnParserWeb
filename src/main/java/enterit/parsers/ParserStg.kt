@@ -17,7 +17,7 @@ class ParserStg : Iparser {
     }
 
     companion object WebCl {
-        val webClient: WebClient = WebClient(BrowserVersion.FIREFOX_68)
+        val webClient: WebClient = WebClient(BrowserVersion.FIREFOX_78)
         const val timeoutB = 20000L
         const val BaseUrl = "https://tender.stg.ru/main/sso/Login.aspx"
     }

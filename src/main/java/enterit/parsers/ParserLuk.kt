@@ -19,7 +19,7 @@ class ParserLuk : Iparser {
     }
 
     override fun parser() {
-        val webClient = WebClient(BrowserVersion.FIREFOX_68)
+        val webClient = WebClient(BrowserVersion.CHROME)
         webClient.options.isUseInsecureSSL = true
         webClient.options.isThrowExceptionOnScriptError = false
         val page: HtmlPage = webClient.getPage("https://lukoil.ru/Company/Tendersandauctions/Tenders")

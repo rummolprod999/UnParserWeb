@@ -1,16 +1,10 @@
 
-\
-,src/main/java/enterit/parsers/ParserEtpRf.kt,2/4/24c40374f738279ac1485b6ce2d4e061b435b57f
 W
 'src/main/java/enterit/download_tools.kt,b/1/b1e7300dd33043cd4f29e1c5c3bace665b8e4ebf
-\
-,src/main/java/enterit/tenders/TenderEtpRf.kt,c/8/c8af1d787be8c4f1939af30c0d9cdc071ac8c391
 Z
 *src/main/java/enterit/parsers/ParserGpn.kt,c/4/c4454398b180811739ff4dca004a4e21621c46b7
 T
 $src/main/java/enterit/Application.kt,4/8/48699d5e751fb05d8eef0d9e7a3af135242b9a6b
-Q
-!src/main/java/enterit/settings.kt,d/9/d93ff51ea7c6e32573a24edd2607221f53da1f5c
 Z
 *src/main/java/enterit/tenders/TenderGpn.kt,1/5/156a6eceb27a46ac80dea53e6455fe84a285d596
 Z
@@ -83,12 +77,6 @@ O
 src/main/java/enterit/test.html,2/0/2022993bc7f6d6ce4c048be3bdb97af1b4bfd27b
 T
 $target/maven-archiver/pom.properties,5/a/5acbe6c306dee4498a010b1ca2096853e29e16a4
-y
-I.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_stdlib_jdk7_1_4_10.xml,e/5/e5e022cdf5109d4d17131102457fe563fb12b666
-y
-I.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_stdlib_jdk8_1_4_10.xml,d/6/d69706cbb79fa1050098fede758d964517437273
-y
-I.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_test_common_1_4_10.xml,0/4/0441b5a21bb5688b41272582ffbcf0612b7eebbc
 R
 "src/main/java/enterit/Arguments.kt,9/f/9f0d13f0626fb2727b4017028b05236171129063
 Z
@@ -131,17 +119,3 @@ U.idea/libraries/Maven__org_eclipse_jetty_websocket_websocket_api_9_4_39_v202103
 X.idea/libraries/Maven__org_eclipse_jetty_websocket_websocket_client_9_4_39_v20210325.xml,1/5/15cbed3781c4d1af5c8c7ce219dbcbf8fc9d3fdf
 ˆ
 X.idea/libraries/Maven__org_eclipse_jetty_websocket_websocket_common_9_4_39_v20210325.xml,f/3/f38444a34bd0f0655a85cdcf3cefacf1edc75b28
-u
-E.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_reflect_1_4_32.xml,c/3/c3c7f8ccda7b82ceb372f1972cfbb05144b43c4d
-t
-D.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_stdlib_1_4_32.xml,f/a/fac88b3635ad2c898b8657e1cb78559fd1164bb2
-{
-K.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_stdlib_common_1_4_32.xml,1/0/1060b2ab65d71f89db21921e396d0d2494706342
-y
-I.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_stdlib_jdk7_1_4_32.xml,3/c/3cf7a1bd6f62366379ef98c31eb65eaf9dd934b0
-y
-I.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_stdlib_jdk8_1_4_32.xml,4/7/47b01442ef1de700f6d8a406ea545eb3ad6d39a3
-r
-B.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_test_1_4_32.xml,6/8/68cb00327d983efd8d9cc4969cab261672ea8412
-y
-I.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_test_common_1_4_32.xml,f/0/f00881b851b95428ff12ff9f9ee516a4b8fc9a47

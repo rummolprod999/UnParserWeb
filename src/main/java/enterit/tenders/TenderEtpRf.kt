@@ -7,7 +7,7 @@ import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.Statement
 import java.sql.Timestamp
-import java.util.Date
+import java.util.*
 
 class TenderEtpRf(
     val status: String,
@@ -59,8 +59,8 @@ class TenderEtpRf(
             val html = Jsoup.parse(stPage)
             val eis = html.selectFirst("td:containsOwn(Состояние извещения) ~ td")?.ownText()?.trim() ?: ""
             if (eis == "Опубликовано в ЕИС") {
-                //logger("Опубликовано в ЕИС")
-                return
+                logger("Опубликовано в ЕИС")
+                //return
             }
             var cancelstatus = 0
             var update = false

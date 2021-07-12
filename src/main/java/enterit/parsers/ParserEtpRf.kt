@@ -5,12 +5,10 @@ import com.gargoylesoftware.htmlunit.WebClient
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor
 import com.gargoylesoftware.htmlunit.html.HtmlPage
 import com.gargoylesoftware.htmlunit.html.HtmlTableRow
-import enterit.formatterEtpRf
-import enterit.formatterEtpRfN
-import enterit.getDateFromFormat
-import enterit.logger
+import enterit.*
 import enterit.tenders.TenderEtpRf
 import java.lang.Thread.sleep
+import java.util.*
 import java.util.logging.Level
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -20,7 +18,7 @@ const val PageNumEtpRf = 200
 class ParserEtpRf : Iparser {
     val BaseUrl = "http://etprf.ru"
     val urlEtprf =
-        listOf("http://etprf.ru/NotificationEX", "http://etprf.ru/BRNotification", "http://etprf.ru/NotificationCR")
+        listOf("http://etprf.ru/NotificationCR", "http://etprf.ru/NotificationEX", "http://etprf.ru/BRNotification")
 
     init {
         java.util.logging.Logger.getLogger("com.gargoylesoftware").level = Level.OFF
@@ -36,7 +34,7 @@ class ParserEtpRf : Iparser {
 
     private fun parserE(webClient: WebClient, pg: String) {
         val page: HtmlPage = webClient.getPage(pg)
-        if (pg == "http://etprf.ru/BRNotification") {
+        if (pg == "http://etprf.ru/BRNotification" || pg == "http://etprf.ru/NotificationCR") {
             try {
                 parserPage(page)
             } catch (e: Exception) {
@@ -86,18 +84,27 @@ class ParserEtpRf : Iparser {
     private fun parserTender(t: HtmlTableRow) {
         try {
             val status = t.getCell(10).textContent.trim { it <= ' ' }
-            val entNum = t.getCell(0).textContent.trim { it <= ' ' }
-            var purNum = t.getCell(1).textContent.trim { it <= ' ' }
+            val entNum = t.getCell(2).textContent.trim { it <= ' ' }
+            var purNum = t.getCell(2).textContent.trim { it <= ' ' }
             val pattern: Pattern = Pattern.compile("\\s+")
             val matcher: Matcher = pattern.matcher(purNum)
             purNum = matcher.replaceAll("")
             val purObj = t.getCell(3).textContent.trim { it <= ' ' }
             val nmck = t.getCell(4).textContent.trim { it <= ' ' }
-            val placingWay = t.getCell(6).textContent.trim { it <= ' ' }
-            val datePubTmp = t.getCell(7).textContent.trim { it <= ' ' }
-            val dateEndTmp = t.getCell(8).textContent.trim { it <= ' ' }
-            val datePub = getDateFromFormat(datePubTmp, formatterEtpRf)
-            val dateEnd = getDateFromFormat(dateEndTmp, formatterEtpRf)
+            val placingWay = t.getCell(0).textContent.trim { it <= ' ' }
+            val datePubTmp = t.getCell(8).textContent.trim { it <= ' ' }
+            val dateEndTmp = t.getCell(9).textContent.trim { it <= ' ' }
+            var datePub = getDateFromFormat(datePubTmp, formatterOnlyDate)
+            if (datePub == Date(0L)) {
+                datePub = getDateFromFormat(datePubTmp, formatterEtpRf)
+            }
+            var dateEnd = getDateFromFormat(dateEndTmp, formatterEtpRfN)
+            if (dateEnd == Date(0L)) {
+                dateEnd = getDateFromFormat(dateEndTmp, formatterEtpRf)
+            }
+            if (dateEnd == Date(0L)) {
+                dateEnd = dateAddHours(datePub, 48)
+            }
             val urlT = t.getCell(11).getElementsByTagName("a")[0].getAttribute("href")
             if (urlT.contains("zakupki.butb.by")) return
 

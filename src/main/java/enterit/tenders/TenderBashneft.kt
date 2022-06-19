@@ -119,7 +119,7 @@ class TenderBashneft(
             val addinfo1 = html.selectFirst("#ctl00_RootContentPlaceHolder_AuctionFormLayout_AuctionPageControl_C2")?.text()?.trim { it <= ' ' }*/
             val addInfo =
                 page.getFirstByXPath<HtmlDivision>("//div[@id = 'ctl00_RootContentPlaceHolder_AuctionFormLayout_AuctionPageControl_C2']")
-                    ?.asText()?.trim { it <= ' ' }
+                    ?.asNormalizedText()?.trim { it <= ' ' }
                     ?: ""
             val idEtp = getEtp(con)
             var idPlacingWay = 0

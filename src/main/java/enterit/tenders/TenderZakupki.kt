@@ -109,7 +109,8 @@ data class TenderZakupki(
                 }
             }
             val idEtp = getEtp(con)
-            val idPlacingWay = 0
+            val placingWayName = "запрос предложений в электронной форме"
+            val idPlacingWay = getPlacingWay(con, placingWayName)
             var idRegion = 0
             if (region != "") {
                 idRegion = getIdRegion(con, region)
@@ -155,14 +156,19 @@ data class TenderZakupki(
             } else {
                 AddTenderZakupki++
             }
+            val docs = mutableListOf<Pair<String, String>>()
             var tehDoc = stPage.regExpTest("location\\.href = '(/prices/[_\\w.]+)'; ")
             if (tehDoc != "") {
                 tehDoc = "https://zakupki.ru$tehDoc"
+                docs.add(Pair(tehDoc, "Документация"))
+            }
+            docs.add(Pair("https://www.zakupki.ru/attaches/Zakupki_rukovodstvo.pdf", "Инструкция по участию в торгах"))
+            docs.forEach {
                 val insertDoc =
                     con.prepareStatement("INSERT INTO ${Prefix}attachment SET id_tender = ?, file_name = ?, url = ?")
                 insertDoc.setInt(1, idTender)
-                insertDoc.setString(2, "Документация")
-                insertDoc.setString(3, tehDoc)
+                insertDoc.setString(2, it.second)
+                insertDoc.setString(3, it.first)
                 insertDoc.executeUpdate()
                 insertDoc.close()
             }

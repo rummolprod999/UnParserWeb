@@ -1,9 +1,0 @@
-
-6kotlin:S125q"Remove this commented out code.(Þ§Æí
-jkotlin:S3776"RRefactor this method to reduce its Cognitive Complexity from 37 to the 15 allowed.(çÃŸþ
-mkotlin:S117I"VRename this local variable to match the regular expression "^`?[_a-z][a-zA-Z0-9]*`?$".(‘ŠÏ•
-<kotlin:S125£"Remove this commented out code.(¯‚Ùýÿÿÿÿ
-Kkotlin:S1172Î"-Remove this unused function parameter "page".(ßÆ½þÿÿÿÿ
-jkotlin:S103ƒ"KSplit this 324 characters long line (which is greater than 200 authorized).(ºã·€8ø £†ñ.
-kotlin:S138"oThis function has 158 lines of code, which is greater than the 100 authorized. Split it into smaller functions.(çÃŸþ8ø £†ñ.
-kotlin:S138""oThis function has 154 lines of code, which is greater than the 100 authorized. Split it into smaller functions.(¡­àÎ8ø £†ñ.

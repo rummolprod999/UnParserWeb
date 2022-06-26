@@ -1,19 +1,32 @@
 package enterit.tenders
 
+import com.gargoylesoftware.htmlunit.BrowserVersion
+import com.gargoylesoftware.htmlunit.WebClient
+import com.gargoylesoftware.htmlunit.html.HtmlDivision
+import com.gargoylesoftware.htmlunit.html.HtmlPage
 import enterit.*
-import org.jsoup.Jsoup
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.Statement
 import java.sql.Timestamp
 import java.util.*
+import java.util.logging.Level
 
 data class TenderUral(var purNum: String, val purObj: String, val datePub: Date, val dateEnd: Date, val url: String) {
     companion object TypeFz {
         val typeFz = 21
     }
 
+    val webClient: WebClient = WebClient(BrowserVersion.CHROME)
+
+    init {
+        java.util.logging.Logger.getLogger("com.gargoylesoftware").level = Level.OFF
+        System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog")
+    }
+
     fun parsing() {
+        webClient.options.isThrowExceptionOnScriptError = false
+        webClient.waitForBackgroundJavaScript(15000)
         if (purNum == "") {
             logger("Empty purchase number in $url")
             return
@@ -129,14 +142,11 @@ data class TenderUral(var purNum: String, val purObj: String, val datePub: Date,
 
             }
             val IdPlacingWay = 0
-            val stPage = downloadFromUrl1251(url)
-            if (stPage == "") {
-                logger("Gets empty string ${this::class.simpleName}", url)
-                return
-            }
-            val html = Jsoup.parse(stPage)
-            val noticeVer = html.selectFirst("div.text")?.text()?.trim { it <= ' ' }
-                ?: ""
+            val stPage: HtmlPage = webClient.getPage(url)
+            webClient.waitForBackgroundJavaScript(15000)
+            val noticeVer =
+                stPage.getFirstByXPath<HtmlDivision>("//div[contains(@class, 'text')]")?.textContent?.trim { it <= ' ' }
+                    ?: ""
             var idTender = 0
             val insertTender = con.prepareStatement(
                 "INSERT INTO ${Prefix}tender SET id_xml = ?, purchase_number = ?, doc_publish_date = ?, href = ?, purchase_object_info = ?, type_fz = ?, id_organizer = ?, id_placing_way = ?, id_etp = ?, end_date = ?, cancel = ?, date_version = ?, num_version = ?, notice_version = ?, xml = ?, print_form = ?, id_region = 0, scoring_date = ?",

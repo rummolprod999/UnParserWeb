@@ -1,44 +1,66 @@
 package enterit.parsers
 
-import enterit.*
+import com.gargoylesoftware.htmlunit.BrowserVersion
+import com.gargoylesoftware.htmlunit.WebClient
+import com.gargoylesoftware.htmlunit.html.HtmlAnchor
+import com.gargoylesoftware.htmlunit.html.HtmlPage
+import com.gargoylesoftware.htmlunit.html.HtmlTableCell
+import com.gargoylesoftware.htmlunit.html.HtmlTableRow
+import enterit.formatterOnlyDate
+import enterit.getDateFromFormat
+import enterit.logger
+import enterit.regExpTester
 import enterit.tenders.TenderUral
-import org.jsoup.Jsoup
-import org.jsoup.nodes.Element
+import java.util.logging.Level
 
 class ParserUral : Iparser {
     val BaseUrl = "https://www.uralkali.com"
     private val baseUrl = "https://www.uralkali.com/ru/tenders/?PAGEN_1=8"
+    val webClient: WebClient = WebClient(BrowserVersion.CHROME)
+
+    init {
+        java.util.logging.Logger.getLogger("com.gargoylesoftware").level = Level.OFF
+        System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog")
+    }
+
     override fun parser() {
         try {
+            webClient.options.isThrowExceptionOnScriptError = false
+            webClient.waitForBackgroundJavaScript(15000)
             parserPage(baseUrl)
+            (2..5).forEach({
+                val url = "https://www.uralkali.com/ru/tenders/?PAGEN_1=8&PAGEN_5=$it";
+                parserPage(url)
+            })
         } catch (e: Exception) {
             logger("Error in ${this::class.simpleName}.parser function", e.stackTrace, e)
         }
     }
 
     private fun parserPage(url: String) {
-        val stPage = downloadFromUrl1251(url)
-        if (stPage == "") {
-            logger("Gets empty string ${this::class.simpleName}", url)
-            return
-        }
-        val html = Jsoup.parse(stPage)
-        val tenders = html.select("table[class *= competitive_tendering with_sections]  tbody  tr")
+
+        val page: HtmlPage = webClient.getPage(url)
+        webClient.waitForBackgroundJavaScript(15000)
+
+        val tenders =
+            page.getByXPath<HtmlTableRow>("//table[contains(concat(\" \",normalize-space(@class),\" \"),\" competitive_tendering \")][contains(concat(\" \",normalize-space(@class),\" \"),\" with_sections \")]//tbody//tr")
         if (tenders.isEmpty()) {
             logger("Gets empty list tenders", url)
         }
-        tenders.forEach<Element> { t ->
+        tenders.forEach { t ->
             try {
-                val urlT = t.selectFirst("td a")?.attr("href")?.trim { it <= ' ' }
+                val urlT = t.getFirstByXPath<HtmlAnchor>(".//td/a")?.getAttribute("href")?.trim { it <= ' ' }
                     ?: ""
                 val urlTend = "$BaseUrl$urlT"
-                val datePubTmp = t.selectFirst("td.date_start")?.ownText()?.trim { it <= ' ' }
-                    ?: ""
-                val dateEndTmp = t.selectFirst("td.date_end")?.ownText()?.trim { it <= ' ' }
-                    ?: ""
+                val datePubTmp =
+                    t.getFirstByXPath<HtmlTableCell>(".//td[contains(@class, 'date_start')]")?.textContent?.trim { it <= ' ' }
+                        ?: ""
+                val dateEndTmp =
+                    t.getFirstByXPath<HtmlTableCell>(".//td[contains(@class, 'date_end')]")?.textContent?.trim { it <= ' ' }
+                        ?: ""
                 val datePub = getDateFromFormat(datePubTmp, formatterOnlyDate)
                 val dateEnd = getDateFromFormat(dateEndTmp, formatterOnlyDate)
-                val purObj = t.selectFirst("td a")?.ownText()?.trim { it <= ' ' }
+                val purObj = t.getFirstByXPath<HtmlAnchor>(".//td/a")?.textContent?.trim { it <= ' ' }
                     ?: ""
                 val purNum = regExpTester("""/ru/tenders/(\d+)\.html""", urlTend)
                 val tt = TenderUral(purNum, purObj, datePub, dateEnd, urlTend)

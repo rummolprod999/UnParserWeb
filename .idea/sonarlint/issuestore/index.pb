@@ -21,8 +21,6 @@ Z
 ,src/main/java/enterit/parsers/ParserSibur.kt,2/2/22fe0d1c66415f076dd7069853cf229cb80eb4ae
 Z
 *src/main/java/enterit/parsers/ParserRts.kt,e/9/e96f2a02b931eadd74d3d538166d2f652ecff1c6
-]
--src/main/java/enterit/parsers/ParserRzdRts.kt,1/9/19c05f82cfb5bc2316e15e9530401ac06b1972ad
 _
 /src/main/java/enterit/tenders/TenderMiratorg.kt,2/a/2a44015259bd6f340a6df917d0e32657bf079b48
 Z
@@ -159,3 +157,7 @@ B.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_test_1_6_21.xml,5/2/5267c48
 pom.xml,4/4/442292b8a7efeabbe4cc176709b833b1792140ec
 _
 /src/main/java/enterit/tenders/TenderBashneft.kt,9/6/96c2a40cbe1b8a76a0cfe772641cd1404ca14d12
+_
+/src/main/java/enterit/parsers/ParserMiratorg.kt,b/7/b76f00956a6132b6af4d5c00bbaa68bf44fcec90
+j
+:.idea/dataSources/9f628663-5b32-41db-b784-94655cad7aed.xml,b/d/bd18ee2d565598f89ea842bb27ec95a1aa001cda

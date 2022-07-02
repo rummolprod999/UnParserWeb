@@ -19,18 +19,19 @@ class ParserRzdRts : Iparser {
         System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog")
     }
 
-    private val baseUrl =
-        "https://rzd.rts-tender.ru/?fl=True&SearchForm.State=1&SearchForm.TenderRuleIds=2&SearchForm.TenderRuleIds=3&SearchForm.TenderRuleIds=4&SearchForm.CurrencyCode=undefined&FilterData.PageSize=100&FilterData.PageCount=1&FilterData.SortingField=DatePublished&FilterData.SortingDirection=Desc&&FilterData.PageIndex=1"
     private val timeout = 15_000L
 
     override fun parser() {
         webClient.options.isThrowExceptionOnScriptError = false
         webClient.waitForBackgroundJavaScript(timeout)
         try {
-
-            val page: HtmlPage = webClient.getPage(baseUrl)
-            webClient.waitForBackgroundJavaScript(timeout)
-            parserPage(page)
+            (1..4).forEach({
+                val baseUrl =
+                    "https://rzd.rts-tender.ru/?fl=True&SearchForm.State=1&SearchForm.TenderRuleIds=2&SearchForm.TenderRuleIds=3&SearchForm.TenderRuleIds=4&SearchForm.CurrencyCode=undefined&FilterData.PageSize=100&FilterData.PageCount=$it&FilterData.SortingField=DatePublished&FilterData.SortingDirection=Desc&&FilterData.PageIndex=1"
+                val page: HtmlPage = webClient.getPage(baseUrl)
+                webClient.waitForBackgroundJavaScript(timeout)
+                parserPage(page)
+            })
 
 
         } catch (e: Exception) {

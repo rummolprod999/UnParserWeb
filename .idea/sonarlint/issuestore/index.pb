@@ -1,6 +1,4 @@
 
-W
-'src/main/java/enterit/download_tools.kt,b/1/b1e7300dd33043cd4f29e1c5c3bace665b8e4ebf
 Z
 *src/main/java/enterit/parsers/ParserGpn.kt,c/4/c4454398b180811739ff4dca004a4e21621c46b7
 T
@@ -89,10 +87,6 @@ Z
 X.idea/libraries/Maven__org_eclipse_jetty_websocket_websocket_common_9_4_46_v20220331.xml,c/6/c68c877f835f5087ad6fb9918f8210de302a234c
 a
 1.idea/libraries/Maven__org_jsoup_jsoup_1_14_3.xml,1/9/197474556b08613e2a03b1ee1d1abcd323940126
-^
-.src/main/java/enterit/parsers/ParserZakupki.kt,0/3/038f6e3e7acc66d06d459ae69dbd3db4cf587955
-^
-.src/main/java/enterit/tenders/TenderZakupki.kt,7/d/7dfa318798dd898c92fe769a3db6193caef68154
 w
 G.idea/sonarlint/issuestore/c/8/c8af1d787be8c4f1939af30c0d9cdc071ac8c391,9/4/94a0fcea84ee39def083542a34e3b8a378584d47
 w

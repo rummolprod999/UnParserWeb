@@ -217,7 +217,7 @@ fun downloadWaitWithRef1251(urls: String): String {
     uc.readTimeout = 600_000
     uc.addRequestProperty(
         "User-Agent",
-        "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.6) Gecko/20070802 SeaMonkey/1.1.4"
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
     )
     uc.connect()
     val `is`: InputStream = uc.getInputStream()

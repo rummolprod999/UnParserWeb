@@ -1,14 +1,8 @@
 
-Z
-*src/main/java/enterit/parsers/ParserGpn.kt,c/4/c4454398b180811739ff4dca004a4e21621c46b7
 T
 $src/main/java/enterit/Application.kt,4/8/48699d5e751fb05d8eef0d9e7a3af135242b9a6b
 Z
-*src/main/java/enterit/tenders/TenderGpn.kt,1/5/156a6eceb27a46ac80dea53e6455fe84a285d596
-Z
 *src/main/java/enterit/parsers/ParserPol.kt,4/1/419b1eb5e42f3f171553ae717ac964ee01c458cf
-Z
-*src/main/java/enterit/utils_for_tenders.kt,8/e/8e5badc755980dd05432b384c642d616ca106f3c
 _
 /src/main/java/enterit/parsers/ParserBashneft.kt,0/3/038991827bcb218a2846fb119df73b80e8cfacd2
 Z
@@ -19,8 +13,6 @@ Z
 ,src/main/java/enterit/parsers/ParserSibur.kt,2/2/22fe0d1c66415f076dd7069853cf229cb80eb4ae
 Z
 *src/main/java/enterit/parsers/ParserRts.kt,e/9/e96f2a02b931eadd74d3d538166d2f652ecff1c6
-_
-/src/main/java/enterit/tenders/TenderMiratorg.kt,2/a/2a44015259bd6f340a6df917d0e32657bf079b48
 Z
 *src/main/java/enterit/tenders/TenderRfp.kt,1/4/14e956db72823c6e7067601b752d2320d9f75642
 ]
@@ -71,8 +63,6 @@ a
 1.idea/libraries/Maven__xalan_serializer_2_7_2.xml,8/3/8302bc47f25863d1e7e8856ef3296df4f3637729
 \
 ,.idea/libraries/Maven__xalan_xalan_2_7_2.xml,0/8/0801e7fd024cb9e964f689d8d5c92c9c7dc862f9
-Q
-!src/main/java/enterit/settings.kt,d/9/d93ff51ea7c6e32573a24edd2607221f53da1f5c
 \
 ,src/main/java/enterit/parsers/ParserEtpRf.kt,2/4/24c40374f738279ac1485b6ce2d4e061b435b57f
 Z
@@ -155,3 +145,19 @@ _
 /src/main/java/enterit/parsers/ParserMiratorg.kt,b/7/b76f00956a6132b6af4d5c00bbaa68bf44fcec90
 j
 :.idea/dataSources/9f628663-5b32-41db-b784-94655cad7aed.xml,b/d/bd18ee2d565598f89ea842bb27ec95a1aa001cda
+[
++src/main/java/enterit/parsers/ParserUral.kt,a/6/a6fa6e96839eb2da8d368dbc4b1eac3c1334bad6
+[
++src/main/java/enterit/tenders/TenderUral.kt,c/4/c429f4dc98a4aa17eb920625c098b494e256e47d
+]
+-src/main/java/enterit/parsers/ParserPolNew.kt,a/f/af80939c1363d5400b6327f4cf78280134fd5752
+]
+-src/main/java/enterit/parsers/ParserRtsNew.kt,8/a/8ab0b4a772078ba8346e6986b41c681748a440fb
+]
+-src/main/java/enterit/parsers/ParserRzdRts.kt,1/9/19c05f82cfb5bc2316e15e9530401ac06b1972ad
+^
+.src/main/java/enterit/parsers/ParserZakupki.kt,0/3/038f6e3e7acc66d06d459ae69dbd3db4cf587955
+^
+.src/main/java/enterit/tenders/TenderZakupki.kt,7/d/7dfa318798dd898c92fe769a3db6193caef68154
+W
+'src/main/java/enterit/download_tools.kt,b/1/b1e7300dd33043cd4f29e1c5c3bace665b8e4ebf

@@ -31,10 +31,13 @@ class TenderGpn(val status: String, val url: String) {
             ?.trim { it <= ' ' }
             ?: ""
         val startDate = getDateFromFormatOffset(startDateT, formatterGpn, offset)
-        val endDate = getDateFromFormatOffset(endDateT, formatterGpn, offset)
+        var endDate = getDateFromFormatOffset(endDateT, formatterGpn, offset)
         if (startDate == Date(0L)) {
             logger("Empty start date in $url")
             return
+        }
+        if (endDate == Date(0L)) {
+            endDate = dateAddHours(startDate, 48)
         }
         val purNum = html.selectFirst("div.info-number span")?.ownText()?.replace("№", "")?.trim { it <= ' ' } ?: ""
         if (purNum == "") {

@@ -137,14 +137,10 @@ s
 C.idea/libraries/Maven__net_sourceforge_htmlunit_htmlunit_2_61_0.xml,b/9/b9361efc1248524b798a62005a98ec0d215c5fd2
 r
 B.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_test_1_6_21.xml,5/2/5267c4807acabd6988e598b0c31191ef5bc2740e
-7
-pom.xml,4/4/442292b8a7efeabbe4cc176709b833b1792140ec
 _
 /src/main/java/enterit/tenders/TenderBashneft.kt,9/6/96c2a40cbe1b8a76a0cfe772641cd1404ca14d12
 _
 /src/main/java/enterit/parsers/ParserMiratorg.kt,b/7/b76f00956a6132b6af4d5c00bbaa68bf44fcec90
-j
-:.idea/dataSources/9f628663-5b32-41db-b784-94655cad7aed.xml,b/d/bd18ee2d565598f89ea842bb27ec95a1aa001cda
 [
 +src/main/java/enterit/parsers/ParserUral.kt,a/6/a6fa6e96839eb2da8d368dbc4b1eac3c1334bad6
 [
@@ -161,3 +157,5 @@ j
 .src/main/java/enterit/tenders/TenderZakupki.kt,7/d/7dfa318798dd898c92fe769a3db6193caef68154
 W
 'src/main/java/enterit/download_tools.kt,b/1/b1e7300dd33043cd4f29e1c5c3bace665b8e4ebf
+Z
+*src/main/java/enterit/utils_for_tenders.kt,8/e/8e5badc755980dd05432b384c642d616ca106f3c

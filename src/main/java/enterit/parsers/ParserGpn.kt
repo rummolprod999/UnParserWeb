@@ -9,7 +9,6 @@ import org.jsoup.nodes.Element
 
 class ParserGpn : Iparser {
     private val baseUrls = listOf(
-        "https://zakupki.gazprom-neft.ru/tenderix/announcements/?PAGE=",
         "https://zakupki.gazprom-neft.ru/tenderix/?PAGE=",
         "https://zakupki.gazprom-neft.ru/tenderix/prequalification.php?PAGE="
     )

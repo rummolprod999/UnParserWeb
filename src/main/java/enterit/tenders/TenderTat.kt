@@ -76,6 +76,7 @@ class TenderTat(
             var page: HtmlPage? = null
             if (url != "") {
                 webClient.waitForBackgroundJavaScript(2000)
+                webClient.getOptions().setUseInsecureSSL(true);
                 page = webClient.getPage(url)
 
 

@@ -31,6 +31,7 @@ class ParserTat : Iparser {
     override fun parser() {
 
         webClient.waitForBackgroundJavaScript(5000)
+        webClient.getOptions().setUseInsecureSSL(true);
         val page: HtmlPage = webClient.getPage(Url)
         try {
             try {

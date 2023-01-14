@@ -6,8 +6,6 @@ Z
 _
 /src/main/java/enterit/parsers/ParserBashneft.kt,0/3/038991827bcb218a2846fb119df73b80e8cfacd2
 Z
-*src/main/java/enterit/parsers/ParserTat.kt,6/7/67d10534ea38209de5d4a2a329785cc25d79db17
-Z
 *src/main/java/enterit/parsers/ParserStg.kt,5/e/5e3b23ab4ca38faa5bdfeb242ee144ef98f38110
 \
 ,src/main/java/enterit/parsers/ParserSibur.kt,2/2/22fe0d1c66415f076dd7069853cf229cb80eb4ae
@@ -21,8 +19,6 @@ Z
 ,src/main/java/enterit/tenders/TenderSibur.kt,1/1/1146fee7c9dea64cce13a4e57f9773755cb43173
 Z
 *src/main/java/enterit/tenders/TenderStg.kt,7/5/7569fd20a714df7ad43bf127dc0763ea6da5ea0c
-Z
-*src/main/java/enterit/tenders/TenderTat.kt,7/d/7d9ac63477e4c1320cfe73f3ecb5aefea7427a6d
 t
 D.idea/libraries/Maven__org_apache_httpcomponents_httpcore_4_4_13.xml,2/f/2fe0ee98e594b29b75739481e1703b150241831b
 _
@@ -141,3 +137,17 @@ _
 .src/main/java/enterit/tenders/TenderZakupki.kt,7/d/7dfa318798dd898c92fe769a3db6193caef68154
 W
 'src/main/java/enterit/download_tools.kt,b/1/b1e7300dd33043cd4f29e1c5c3bace665b8e4ebf
+Q
+!src/main/java/enterit/settings.kt,d/9/d93ff51ea7c6e32573a24edd2607221f53da1f5c
+_
+/src/main/java/enterit/tenders/TenderMiratorg.kt,2/a/2a44015259bd6f340a6df917d0e32657bf079b48
+]
+-src/main/java/enterit/tenders/TenderGpnAnn.kt,5/a/5a539138dc9dd8b87b9e63b29f5a18208c0baf99
+Z
+*src/main/java/enterit/utils_for_tenders.kt,8/e/8e5badc755980dd05432b384c642d616ca106f3c
+Z
+*src/main/java/enterit/tenders/TenderGpn.kt,1/5/156a6eceb27a46ac80dea53e6455fe84a285d596
+Z
+*src/main/java/enterit/parsers/ParserGpn.kt,c/4/c4454398b180811739ff4dca004a4e21621c46b7
+7
+pom.xml,4/4/442292b8a7efeabbe4cc176709b833b1792140ec

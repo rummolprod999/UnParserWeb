@@ -19,7 +19,7 @@ class ParserBashneft : Iparser {
     }
 
     companion object WebCl {
-        val webClient: WebClient = WebClient(BrowserVersion.FIREFOX_78)
+        val webClient: WebClient = WebClient(BrowserVersion.FIREFOX)
         const val timeoutB = 20000L
         const val BaseUrl = "http://etp.bashneft.ru/"
         const val CountPage = 2

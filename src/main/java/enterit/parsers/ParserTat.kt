@@ -41,7 +41,7 @@ class ParserTat : Iparser {
             }
             for (i in 1..PageNumTat) {
                 val button = page.getByXPath<HtmlButton>("//button[@aria-label = '>']")
-                if (!button.isEmpty()) {
+                if (button.isNotEmpty()) {
                     val b = button[0] as HtmlButton
                     val y: HtmlPage = b.click()
                     y.webClient.waitForBackgroundJavaScript(5000)
@@ -77,9 +77,13 @@ class ParserTat : Iparser {
         val purNum = t.getCell(1).textContent.trim { it <= ' ' }
         val purObj = t.getCell(2).textContent.trim { it <= ' ' }
         var url = ""
+        var em = true
         val urlT = t.getCell(2).getElementsByTagName("a")
         if (!urlT.isEmpty()) {
             url = "$BaseUrl${urlT[0].getAttribute("href")}"
+        }else{
+            url =  Url
+            em = false
         }
         val fullNameOrg = t.getCell(4).textContent.trim { it <= ' ' }
         val nMckT = t.getCell(5).textContent.trim { it <= ' ' }
@@ -90,7 +94,7 @@ class ParserTat : Iparser {
         val datePub = getDateFromFormat(datePubTmp, formatterGpn)
         val dateEnd = getDateFromFormat(dateEndTmp, formatterGpn)
         val wb = WebClient(BrowserVersion.CHROME)
-        val tt = TenderTat(status, purNum, purObj, nMck, datePub, dateEnd, url, fullNameOrg, currency, wb)
+        val tt = TenderTat(status, purNum, purObj, nMck, datePub, dateEnd, url, fullNameOrg, currency, wb, em)
         try {
             tt.parsing()
         } catch (e: Exception) {

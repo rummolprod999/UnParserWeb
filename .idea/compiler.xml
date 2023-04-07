@@ -9,8 +9,5 @@
         <module name="UnParserWeb" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="UnParserWeb" target="1.5" />
-    </bytecodeTargetLevel>
   </component>
 </project>

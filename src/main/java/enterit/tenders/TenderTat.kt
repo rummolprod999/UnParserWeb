@@ -22,7 +22,8 @@ class TenderTat(
     val url: String,
     val fullnameOrg: String,
     val currency: String,
-    val webClient: WebClient
+    val webClient: WebClient,
+    val em: Boolean
 ) {
     companion object O {
         const val typeFz = 16
@@ -74,7 +75,7 @@ class TenderTat(
             rs.close()
             stmt.close()
             var page: HtmlPage? = null
-            if (url != "") {
+            if (url != "" && em) {
                 webClient.waitForBackgroundJavaScript(2000)
                 webClient.getOptions().setUseInsecureSSL(true);
                 page = webClient.getPage(url)
@@ -306,7 +307,7 @@ class TenderTat(
                     stmtins.close()
                 }
             }
-            if (page != null) {
+            if (page != null && em) {
                 try {
                     getPo(page, con, idLot, idCustomer)
                 } catch (e: Exception) {
@@ -322,6 +323,18 @@ class TenderTat(
                 } catch (e: Exception) {
                     logger("Error in getRest function", e.stackTrace, e)
                 }
+            }
+            else{
+                val insertPurObj =
+                    con.prepareStatement("INSERT INTO ${Prefix}purchase_object SET id_lot = ?, id_customer = ?, name = ?, quantity_value = ?, okei = ?, customer_quantity_value = ?")
+                insertPurObj.setInt(1, idLot)
+                insertPurObj.setInt(2, idCustomer)
+                insertPurObj.setString(3, purObj)
+                insertPurObj.setString(4, "")
+                insertPurObj.setString(5, "")
+                insertPurObj.setString(6, "")
+                insertPurObj.executeUpdate()
+                insertPurObj.close()
             }
             try {
                 tenderKwords(idTender, con)

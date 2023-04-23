@@ -125,7 +125,7 @@ fun parserRts() {
 
 fun parserSibur() {
     logger("Начало парсинга")
-    val p = ParserSibur()
+    val p = ParserSiburNew()
     p.parser()
     logger("Добавили тендеров $AddTenderSibur")
     logger("Обновили тендеров $UpTenderSibur")

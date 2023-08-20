@@ -2,23 +2,33 @@ package enterit.parsers
 
 import com.gargoylesoftware.htmlunit.BrowserVersion
 import com.gargoylesoftware.htmlunit.WebClient
-import com.gargoylesoftware.htmlunit.html.HtmlAnchor
-import com.gargoylesoftware.htmlunit.html.HtmlPage
-import com.gargoylesoftware.htmlunit.html.HtmlTableRow
+import com.gargoylesoftware.htmlunit.html.*
+import com.twocaptcha.TwoCaptcha
+import com.twocaptcha.captcha.Normal
 import enterit.*
 import enterit.tenders.TenderEtpRf
+import java.io.File
 import java.lang.Thread.sleep
+import java.net.URL
+import java.nio.file.Files
+import java.nio.file.Paths
+import java.security.SecureRandom
 import java.util.*
 import java.util.logging.Level
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+import javax.net.ssl.HostnameVerifier
+import javax.net.ssl.HttpsURLConnection
+import javax.net.ssl.SSLContext
+import javax.net.ssl.SSLSession
+
 
 const val PageNumEtpRf = 200
 
 class ParserEtpRf : Iparser {
-    val BaseUrl = "http://etprf.ru"
+    val BaseUrl = "https://webppo.etprf.ru"
     val urlEtprf =
-        listOf("http://etprf.ru/NotificationCR", "http://etprf.ru/NotificationEX", "http://etprf.ru/BRNotification")
+        listOf("https://webppo.etprf.ru/NotificationCR", "https://webppo.etprf.ru/NotificationEX", "https://webppo.etprf.ru/BRNotification")
 
     init {
         java.util.logging.Logger.getLogger("com.gargoylesoftware").level = Level.OFF
@@ -27,20 +37,46 @@ class ParserEtpRf : Iparser {
 
     override fun parser() {
         val webClient = WebClient(BrowserVersion.CHROME)
+        webClient.options.isUseInsecureSSL = true
         webClient.options.isThrowExceptionOnScriptError = false
+        val page: HtmlPage = webClient.getPage("https://webppo.etprf.ru/Logon/Participants")
+        val inputName = page.getHtmlElementById("userName") as HtmlInput;
+        inputName.valueAttribute = UserEtprf
+        val inputPass = page.getHtmlElementById("password") as HtmlInput;
+        inputPass.valueAttribute = PassEtprf
+        val captchaSrc = page.getHtmlElementById("ImageKey") as HtmlImage;
+        captchaSrc.saveAs(File("./captcha.jpg"))
+        val solver = TwoCaptcha(Token)
+        solver.setHost("2captcha.com")
+        solver.setDefaultTimeout(120);
+        solver.setRecaptchaTimeout(600);
+        solver.setPollingInterval(10);
+        val captcha = Normal()
+        captcha.setFile("./captcha.jpg")
+        captcha.setMinLen(2)
+        captcha.setMaxLen(20)
+        captcha.setCaseSensitive(true)
+        captcha.setLang("en")
+        solver.solve(captcha)
+        val inputC = page.getHtmlElementById("TextImageKey") as HtmlInput;
+        inputC.valueAttribute = captcha.code
+        val inp = page.getFirstByXPath<HtmlButton>("//button[@id='bt_Ok']")
+        inp.click<HtmlPage>()
         urlEtprf.forEach { i -> parserE(webClient, i) }
         webClient.close()
     }
 
     private fun parserE(webClient: WebClient, pg: String) {
         val page: HtmlPage = webClient.getPage(pg)
-        if (pg == "http://etprf.ru/BRNotification" || pg == "http://etprf.ru/NotificationCR") {
+        val cookies = webClient.getCookies(URL("https://webppo.etprf.ru"))
+        Cookies = cookies.map { c -> c.name + "=" + c.value }.joinToString(separator=";")
+        if (pg == "https://webppo.etprf.ru/BRNotification" || pg == "https://webppo.etprf.ru/NotificationCR") {
             try {
                 parserPage(page)
             } catch (e: Exception) {
                 logger("Error in parserE function", e.stackTrace, e)
             }
-        } else if (pg == "http://etprf.ru/NotificationEX") {
+        } else if (pg == "https://webppo.etprf.ru/NotificationEX") {
             try {
                 parserPageN(page)
             } catch (e: Exception) {
@@ -52,13 +88,13 @@ class ParserEtpRf : Iparser {
             val b = button[0] as HtmlAnchor
             val y: HtmlPage = b.click()
             sleep(2000)
-            if (pg == "http://etprf.ru/BRNotification" || pg == "http://etprf.ru/NotificationCR") {
+            if (pg == "https://webppo.etprf.ru/BRNotification" || pg == "https://webppo.etprf.ru/NotificationCR") {
                 try {
                     parserPage(y)
                 } catch (e: Exception) {
                     logger("Error in parserPage function", e.stackTrace, e)
                 }
-            } else if (pg == "http://etprf.ru/NotificationEX") {
+            } else if (pg == "https://webppo.etprf.ru/NotificationEX") {
                 try {
                     parserPageN(y)
                 } catch (e: Exception) {

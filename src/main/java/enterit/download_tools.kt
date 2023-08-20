@@ -1,6 +1,9 @@
 package enterit
 
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import java.io.BufferedReader
+import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.lang.Thread.sleep
@@ -85,6 +88,18 @@ fun downloadFromUrl(urls: String, i: Int = 5, wt: Long = 3000): String {
 }
 
 fun downloadFromUrlEtpRf(urls: String, i: Int = 5, wt: Long = 3000): String {
+    try {
+        val sc: SSLContext = SSLContext.getInstance("SSL")
+        sc.init(null, trustAllCerts, SecureRandom())
+        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory())
+        val allHostsValid: HostnameVerifier = object : HostnameVerifier {
+            override fun verify(hostname: String?, session: SSLSession?): Boolean {
+                return true
+            }
+        }
+        HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+    } catch (e: Exception) {
+    }
     var count = 0
     while (true) {
         //val i = 50
@@ -95,7 +110,7 @@ fun downloadFromUrlEtpRf(urls: String, i: Int = 5, wt: Long = 3000): String {
         try {
             var s: String
             val executor = Executors.newCachedThreadPool()
-            val task = { downloadWaitWithRef(urls) }
+            val task = { downloadWaitWithRefOkko(urls) }
             val future = executor.submit(task)
             try {
                 s = future.get(60, TimeUnit.SECONDS)
@@ -104,7 +119,7 @@ fun downloadFromUrlEtpRf(urls: String, i: Int = 5, wt: Long = 3000): String {
             } catch (ex: InterruptedException) {
                 throw ex
             } catch (ex: ExecutionException) {
-                return ""
+                throw ex
             } catch (ex: Exception) {
                 throw ex
             } finally {
@@ -169,6 +184,67 @@ fun downloadWaitWithRef(urls: String): String {
     `is`.close()
     return s.toString()
 }
+
+fun downloadWaitWithRefEtprf(urls: String): String {
+    val s = StringBuilder()
+    val url = URL(urls)
+    val uc = url.openConnection()
+    uc.connectTimeout = 30_000
+    uc.readTimeout = 600_000
+    uc.addRequestProperty("User-Agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36")
+    uc.addRequestProperty("Cookie", Cookies)
+    uc.connect()
+    val `is`: InputStream = uc.getInputStream()
+    val br = BufferedReader(InputStreamReader(`is`))
+    var inputLine: String?
+    var value = true
+    while (value) {
+        inputLine = br.readLine()
+        if (inputLine == null) {
+            value = false
+        } else {
+            s.append(inputLine)
+        }
+
+    }
+    br.close()
+    `is`.close()
+    return s.toString()
+}
+
+fun downloadWaitWithRefCurl(urls: String): String {
+    val commands = "curl -k \"$urls\" \\\n" +
+            "  -H \"Cookie: $Cookies\" \\\n" +
+            "  --compressed"
+    val process = Runtime.getRuntime().exec(commands)
+    val stdInput = process.errorStream.bufferedReader(Charsets.UTF_8).use { it.readText() }
+return stdInput
+}
+
+fun downloadWaitWithRefOkko(urls: String): String {
+    val TRUST_ALL_CERTS: TrustManager = object : X509TrustManager {
+        override fun checkClientTrusted(chain: Array<X509Certificate?>?, authType: String?) {}
+        override fun checkServerTrusted(chain: Array<X509Certificate?>?, authType: String?) {}
+        override fun getAcceptedIssuers(): Array<X509Certificate> {
+            return arrayOf()
+        }
+    }
+    val sslContext = SSLContext.getInstance("SSL")
+    sslContext.init(null, arrayOf(TRUST_ALL_CERTS), SecureRandom())
+    val client = OkHttpClient.Builder().sslSocketFactory(sslContext.socketFactory, TRUST_ALL_CERTS as X509TrustManager).build()
+
+    val request = Request.Builder()
+        .url(urls)
+        .header("Cookie", Cookies!!)
+        .build()
+    var resp = ""
+    client.newCall(request).execute().use { response ->
+        if (!response.isSuccessful) throw IOException("Unexpected code $response")
+        resp = response.body!!.string()
+    }
+    return resp
+}
+
 
 fun downloadFromUrl1251(urls: String, i: Int = 5): String {
     var count = 0

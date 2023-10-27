@@ -24,8 +24,6 @@ Z
 Z
 *src/main/java/enterit/tenders/TenderRts.kt,5/7/5775cec55b69ccde0d44e5bfbc9dba767eb0b1cc
 w
-G.idea/sonarlint/issuestore/c/8/c8af1d787be8c4f1939af30c0d9cdc071ac8c391,9/4/94a0fcea84ee39def083542a34e3b8a378584d47
-w
 G.idea/sonarlint/issuestore/9/4/9431cc8edfbf8338c015fdaa1ee2bf9b431849b7,6/f/6ffd6fc3d4ec24e1fbfdd39f357de35085e8c9ba
 T
 $.idea/codeStyles/codeStyleConfig.xml,d/d/dd7b3350c29c49497756c7f32c69a3bed18b1cba
@@ -89,3 +87,15 @@ _
 ,src/main/java/enterit/tenders/TenderSibur.kt,1/1/1146fee7c9dea64cce13a4e57f9773755cb43173
 ]
 -src/main/java/enterit/tenders/TenderGpnAnn.kt,5/a/5a539138dc9dd8b87b9e63b29f5a18208c0baf99
+Z
+*src/main/java/enterit/parsers/ParserStg.kt,5/e/5e3b23ab4ca38faa5bdfeb242ee144ef98f38110
+\
+,src/main/java/enterit/parsers/ParserEtpRf.kt,2/4/24c40374f738279ac1485b6ce2d4e061b435b57f
+\
+,src/main/java/enterit/tenders/TenderEtpRf.kt,c/8/c8af1d787be8c4f1939af30c0d9cdc071ac8c391
+Q
+!src/main/java/enterit/settings.kt,d/9/d93ff51ea7c6e32573a24edd2607221f53da1f5c
+7
+pom.xml,4/4/442292b8a7efeabbe4cc176709b833b1792140ec
+W
+'src/main/java/enterit/download_tools.kt,b/1/b1e7300dd33043cd4f29e1c5c3bace665b8e4ebf

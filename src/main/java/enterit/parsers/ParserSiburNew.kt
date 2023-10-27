@@ -14,7 +14,7 @@ class ParserSiburNew : Iparser{
     }
 
     override fun parser() = (1..maxPage)
-        .map { "https://www.sibur.ru/procurement/buy/?PAGEN_1=$it" }
+        .map { "https://www.sibur.ru/ru//procurement/buy/?lang=ru&PAGEN_1=$it" }
         .forEach {
             try {
                 parserPage(it)

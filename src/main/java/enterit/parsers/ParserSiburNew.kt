@@ -5,7 +5,7 @@ import enterit.tenders.TenderSiburNew
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 
-class ParserSiburNew : Iparser{
+class ParserSiburNew : Iparser {
     private val maxPage = 30
 
     companion object BaseTen {
@@ -59,7 +59,19 @@ class ParserSiburNew : Iparser{
                 val dateEndT = t.selectFirst("td:eq(5) > div:eq(0)")?.ownText()?.trim { it <= ' ' }
                     ?: ""
                 val dateEnd = getDateFromFormat(dateEndT, formatterGpn)
-                val tt = TenderSiburNew(purNum, purName, purObj, pwName, datePub, dateEnd, orgName, status, person, phone, email)
+                val tt = TenderSiburNew(
+                    purNum,
+                    purName,
+                    purObj,
+                    pwName,
+                    datePub,
+                    dateEnd,
+                    orgName,
+                    status,
+                    person,
+                    phone,
+                    email
+                )
                 tt.parsing()
             } catch (e: Exception) {
                 logger("error in ParserSiburNew.parserPage()", e.stackTrace, e)

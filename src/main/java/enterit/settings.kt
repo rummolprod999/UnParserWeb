@@ -115,60 +115,88 @@ fun getSettings() = try {
                 "database" -> Database = it.childNodes.item(0).textContent
                 "tempdir_tenders_etprf" -> tempDirTendersEtpRf =
                     executePath + File.separator + it.childNodes.item(0).textContent
+
                 "logdir_tenders_etprf" -> logDirTendersEtpRf =
                     executePath + File.separator + it.childNodes.item(0).textContent
+
                 "tempdir_tenders_gpn" -> tempDirTendersGpn =
                     executePath + File.separator + it.childNodes.item(0).textContent
+
                 "logdir_tenders_gpn" -> logDirTendersGpn =
                     executePath + File.separator + it.childNodes.item(0).textContent
+
                 "tempdir_tenders_pol" -> tempDirTendersPol =
                     executePath + File.separator + it.childNodes.item(0).textContent
+
                 "logdir_tenders_pol" -> logDirTendersPol =
                     executePath + File.separator + it.childNodes.item(0).textContent
+
                 "tempdir_tenders_luk" -> tempDirTendersLuk =
                     executePath + File.separator + it.childNodes.item(0).textContent
+
                 "logdir_tenders_luk" -> logDirTendersLuk =
                     executePath + File.separator + it.childNodes.item(0).textContent
+
                 "tempdir_tenders_tat" -> tempDirTendersTat =
                     executePath + File.separator + it.childNodes.item(0).textContent
+
                 "logdir_tenders_tat" -> logDirTendersTat =
                     executePath + File.separator + it.childNodes.item(0).textContent
+
                 "tempdir_tenders_rts" -> tempDirTendersRts =
                     executePath + File.separator + it.childNodes.item(0).textContent
+
                 "logdir_tenders_rts" -> logDirTendersRts =
                     executePath + File.separator + it.childNodes.item(0).textContent
+
                 "tempdir_tenders_sibur" -> tempDirTendersSibur =
                     executePath + File.separator + it.childNodes.item(0).textContent
+
                 "logdir_tenders_sibur" -> logDirTendersSibur =
                     executePath + File.separator + it.childNodes.item(0).textContent
+
                 "tempdir_tenders_ural" -> tempDirTendersUral =
                     executePath + File.separator + it.childNodes.item(0).textContent
+
                 "logdir_tenders_ural" -> logDirTendersUral =
                     executePath + File.separator + it.childNodes.item(0).textContent
+
                 "tempdir_tenders_miratorg" -> tempDirTendersMiratorg =
                     executePath + File.separator + it.childNodes.item(0).textContent
+
                 "logdir_tenders_miratorg" -> logDirTendersMiratorg =
                     executePath + File.separator + it.childNodes.item(0).textContent
+
                 "tempdir_tenders_stg" -> tempDirTendersStg =
                     executePath + File.separator + it.childNodes.item(0).textContent
+
                 "logdir_tenders_stg" -> logDirTendersStg =
                     executePath + File.separator + it.childNodes.item(0).textContent
+
                 "tempdir_tenders_bashneft" -> tempDirTendersBashneft =
                     executePath + File.separator + it.childNodes.item(0).textContent
+
                 "logdir_tenders_bashneft" -> logDirTendersBashneft =
                     executePath + File.separator + it.childNodes.item(0).textContent
+
                 "tempdir_tenders_rfp" -> tempDirTenderRfp =
                     executePath + File.separator + it.childNodes.item(0).textContent
+
                 "logdir_tenders_rfp" -> logDirTendersRfp =
                     executePath + File.separator + it.childNodes.item(0).textContent
+
                 "tempdir_tenders_zakupki" -> tempDirTenderZakupki =
                     executePath + File.separator + it.childNodes.item(0).textContent
+
                 "logdir_tenders_zakupki" -> logDirTendersZakupki =
                     executePath + File.separator + it.childNodes.item(0).textContent
+
                 "tempdir_tenders_rtsrzd" -> tempDirTenderRtsRzd =
                     executePath + File.separator + it.childNodes.item(0).textContent
+
                 "logdir_tenders_rtsrzd" -> logDirTendersRtsRzd =
                     executePath + File.separator + it.childNodes.item(0).textContent
+
                 "prefix" -> Prefix = try {
                     it.childNodes.item(0).textContent
                 } catch (e: Exception) {

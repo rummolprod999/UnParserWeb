@@ -191,7 +191,10 @@ fun downloadWaitWithRefEtprf(urls: String): String {
     val uc = url.openConnection()
     uc.connectTimeout = 30_000
     uc.readTimeout = 600_000
-    uc.addRequestProperty("User-Agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36")
+    uc.addRequestProperty(
+        "User-Agent",
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36"
+    )
     uc.addRequestProperty("Cookie", Cookies)
     uc.connect()
     val `is`: InputStream = uc.getInputStream()
@@ -218,7 +221,7 @@ fun downloadWaitWithRefCurl(urls: String): String {
             "  --compressed"
     val process = Runtime.getRuntime().exec(commands)
     val stdInput = process.errorStream.bufferedReader(Charsets.UTF_8).use { it.readText() }
-return stdInput
+    return stdInput
 }
 
 fun downloadWaitWithRefOkko(urls: String): String {
@@ -231,7 +234,8 @@ fun downloadWaitWithRefOkko(urls: String): String {
     }
     val sslContext = SSLContext.getInstance("SSL")
     sslContext.init(null, arrayOf(TRUST_ALL_CERTS), SecureRandom())
-    val client = OkHttpClient.Builder().sslSocketFactory(sslContext.socketFactory, TRUST_ALL_CERTS as X509TrustManager).build()
+    val client =
+        OkHttpClient.Builder().sslSocketFactory(sslContext.socketFactory, TRUST_ALL_CERTS as X509TrustManager).build()
 
     val request = Request.Builder()
         .url(urls)

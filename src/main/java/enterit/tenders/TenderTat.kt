@@ -323,8 +323,7 @@ class TenderTat(
                 } catch (e: Exception) {
                     logger("Error in getRest function", e.stackTrace, e)
                 }
-            }
-            else{
+            } else {
                 val insertPurObj =
                     con.prepareStatement("INSERT INTO ${Prefix}purchase_object SET id_lot = ?, id_customer = ?, name = ?, quantity_value = ?, okei = ?, customer_quantity_value = ?")
                 insertPurObj.setInt(1, idLot)

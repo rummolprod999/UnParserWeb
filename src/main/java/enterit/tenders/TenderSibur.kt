@@ -146,9 +146,11 @@ class TenderSibur(val urlTend: String, val purNum: String, val currency: String)
                 PlacingWayT.contains("Запрос") -> {
                     placingWay = "Запрос предложений"
                 }
+
                 PlacingWayT.contains("Тендер") -> {
                     placingWay = "Тендер"
                 }
+
                 else -> {
                     logger("placing way not known", PlacingWayT)
                 }

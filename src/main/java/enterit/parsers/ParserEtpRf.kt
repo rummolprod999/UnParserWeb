@@ -21,7 +21,11 @@ const val PageNumEtpRf = 200
 class ParserEtpRf : Iparser {
     val BaseUrl = "https://webppo.etprf.ru"
     val urlEtprf =
-        listOf("https://webppo.etprf.ru/NotificationCR", "https://webppo.etprf.ru/NotificationEX", "https://webppo.etprf.ru/BRNotification")
+        listOf(
+            "https://webppo.etprf.ru/NotificationCR",
+            "https://webppo.etprf.ru/NotificationEX",
+            "https://webppo.etprf.ru/BRNotification"
+        )
 
     init {
         java.util.logging.Logger.getLogger("com.gargoylesoftware").level = Level.OFF
@@ -62,7 +66,7 @@ class ParserEtpRf : Iparser {
     private fun parserE(webClient: WebClient, pg: String) {
         val page: HtmlPage = webClient.getPage(pg)
         val cookies = webClient.getCookies(URL("https://webppo.etprf.ru"))
-        Cookies = cookies.map { c -> c.name + "=" + c.value }.joinToString(separator=";")
+        Cookies = cookies.map { c -> c.name + "=" + c.value }.joinToString(separator = ";")
         if (pg == "https://webppo.etprf.ru/BRNotification" || pg == "https://webppo.etprf.ru/NotificationCR") {
             try {
                 parserPage(page)

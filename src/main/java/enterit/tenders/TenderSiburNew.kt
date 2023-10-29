@@ -257,7 +257,7 @@ class TenderSiburNew(
             } catch (e: Exception) {
                 logger("Ошибка добавления ключевых слов", e.stackTrace, e)
             }
-            
+
             try {
                 addVNum(con, purNum, typeFz)
             } catch (e: Exception) {

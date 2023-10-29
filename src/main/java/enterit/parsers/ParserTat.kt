@@ -81,8 +81,8 @@ class ParserTat : Iparser {
         val urlT = t.getCell(2).getElementsByTagName("a")
         if (!urlT.isEmpty()) {
             url = "$BaseUrl${urlT[0].getAttribute("href")}"
-        }else{
-            url =  Url
+        } else {
+            url = Url
             em = false
         }
         val fullNameOrg = t.getCell(4).textContent.trim { it <= ' ' }

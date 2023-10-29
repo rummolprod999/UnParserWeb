@@ -25,7 +25,7 @@ class ParserRzdRts : Iparser {
         webClient.options.isThrowExceptionOnScriptError = false
         webClient.waitForBackgroundJavaScript(timeout)
         try {
-            (1..10).forEach({
+            (1..30).forEach({
                 val baseUrl =
                     "https://rzd.rts-tender.ru/?fl=True&SearchForm.State=1&SearchForm.TenderRuleIds=2&SearchForm.TenderRuleIds=3&SearchForm.TenderRuleIds=4&SearchForm.CurrencyCode=undefined&FilterData.PageSize=100&FilterData.PageCount=1&FilterData.SortingField=DatePublished&FilterData.SortingDirection=Desc&&FilterData.PageIndex=$it#"
                 val page: HtmlPage = webClient.getPage(baseUrl)

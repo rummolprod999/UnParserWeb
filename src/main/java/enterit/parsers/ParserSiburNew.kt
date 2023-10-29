@@ -1,7 +1,6 @@
 package enterit.parsers
 
 import enterit.*
-import enterit.formatterGpn
 import enterit.tenders.TenderSiburNew
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element

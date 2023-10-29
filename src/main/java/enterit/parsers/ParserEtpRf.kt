@@ -10,17 +10,10 @@ import enterit.tenders.TenderEtpRf
 import java.io.File
 import java.lang.Thread.sleep
 import java.net.URL
-import java.nio.file.Files
-import java.nio.file.Paths
-import java.security.SecureRandom
 import java.util.*
 import java.util.logging.Level
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import javax.net.ssl.HostnameVerifier
-import javax.net.ssl.HttpsURLConnection
-import javax.net.ssl.SSLContext
-import javax.net.ssl.SSLSession
 
 
 const val PageNumEtpRf = 200

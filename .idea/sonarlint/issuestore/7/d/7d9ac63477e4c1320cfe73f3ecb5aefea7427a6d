@@ -1,0 +1,15 @@
+
+ikotlin:S103¿"KSplit this 324 characters long line (which is greater than 200 authorized).(Ù‰Ä8ƒË°ãõ0
+jkotlin:S103ù"KSplit this 239 characters long line (which is greater than 200 authorized).(üşÔ8ŒË°ãõ0
+Hkotlin:S108•")Either remove or fill this block of code.(ª³‘8›Ë°ãõ0
+Mkotlin:S108›")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ8¢Ë°ãõ0
+kotlin:S138 "oThis function has 313 lines of code, which is greater than the 100 authorized. Split it into smaller functions.(ˆÖŞé8¿Ë°ãõ0
+kotlin:S138%"oThis function has 307 lines of code, which is greater than the 100 authorized. Split it into smaller functions.(¡­àÎ8ÄË°ãõ0
+rkotlin:S3776 "SRefactor this method to reduce its Cognitive Complexity from 115 to the 15 allowed.(ˆÖŞé8àÌ°ãõ0
+gkotlin:S134ñ"CRefactor this code to not nest more than 3 control flow statements.(û˜æÓÿÿÿÿÿ8æÌ°ãõ0
+akotlin:S134õ"CRefactor this code to not nest more than 3 control flow statements.(íÙ»"8çÌ°ãõ0
+bkotlin:S134û"CRefactor this code to not nest more than 3 control flow statements.(Ï€¢ş8îÌ°ãõ0
+qkotlin:S117\"SRename this local variable to match the regular expression ^`?[_a-z][a-zA-Z0-9]*`?$(‘ŠÏ•8ïÌ°ãõ0
+pkotlin:S117x"SRename this local variable to match the regular expression ^`?[_a-z][a-zA-Z0-9]*`?$(˜ÇÉm8ïÌ°ãõ0
+wkotlin:S117˜"SRename this local variable to match the regular expression ^`?[_a-z][a-zA-Z0-9]*`?$(»°‰—úÿÿÿÿ8ïÌ°ãõ0
+rkotlin:S117Š"SRename this local variable to match the regular expression ^`?[_a-z][a-zA-Z0-9]*`?$(ë€Ü 8ğÌ°ãõ0

@@ -1,0 +1,17 @@
+
+Mkotlin:S108»")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ8¿êÂ¢¦0
+Mkotlin:S108Æ")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ8¿êÂ¢¦0
+Mkotlin:S108Ş")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ8¿êÂ¢¦0
+Mkotlin:S108ø")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ8ÀêÂ¢¦0
+Mkotlin:S108¬")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ8ÀêÂ¢¦0
+Mkotlin:S108¶")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ8ÁêÂ¢¦0
+Mkotlin:S108Ş")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ8ÁêÂ¢¦0
+Mkotlin:S108ë")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ8ÁêÂ¢¦0
+Mkotlin:S108°")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ8ÂêÂ¢¦0
+Mkotlin:S108†")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ8ÃêÂ¢¦0
+Okotlin:S1172”"*Remove this unused function parameter "d".(ì¯¢üÿÿÿÿ8ÆêÂ¢¦0
+Bkotlin:S1874"#Deprecated code should not be used.(Î²°î8´ëÂ¢¦0
+Ckotlin:S1874ñ"#Deprecated code should not be used.(‚œÔÉ8´ëÂ¢¦0
+^kotlin:S1479ò"9Reduce the number of when branches from 88 to at most 30.(ê¥°ˆùÿÿÿÿ8½ëÂ¢¦0
+qkotlin:S3776@"RRefactor this method to reduce its Cognitive Complexity from 24 to the 15 allowed.(­ˆï–8¿ëÂ¢¦0
+pkotlin:S117+"SRename this local variable to match the regular expression ^`?[_a-z][a-zA-Z0-9]*`?$(§¢\8ÄëÂ¢¦0

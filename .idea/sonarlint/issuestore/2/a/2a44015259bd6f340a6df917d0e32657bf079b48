@@ -1,0 +1,7 @@
+
+jkotlin:S103€"KSplit this 324 characters long line (which is greater than 200 authorized).(“¼ê‹8¯ŠñŒ¦0
+kotlin:S138"oThis function has 210 lines of code, which is greater than the 100 authorized. Split it into smaller functions.(ˆÖŞé8×ŠñŒ¦0
+kotlin:S1380"oThis function has 182 lines of code, which is greater than the 100 authorized. Split it into smaller functions.(¡­àÎ8íŠñŒ¦0
+qkotlin:S3776"RRefactor this method to reduce its Cognitive Complexity from 39 to the 15 allowed.(ˆÖŞé8™‹ñŒ¦0
+qkotlin:S117V"SRename this local variable to match the regular expression ^`?[_a-z][a-zA-Z0-9]*`?$(‘ŠÏ•8œ‹ñŒ¦0
+rkotlin:S117¬"SRename this local variable to match the regular expression ^`?[_a-z][a-zA-Z0-9]*`?$(ë€Ü 8‹ñŒ¦0

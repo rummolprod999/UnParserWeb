@@ -1,0 +1,24 @@
+
+^kotlin:S5527-"?Enable server hostname verification on this SSL/TLS connection.(¦Å÷œ8ãşœ›¡1
+^kotlin:S5527`"?Enable server hostname verification on this SSL/TLS connection.(¦Å÷œ8äşœ›¡1
+`kotlin:S4830â"@Enable server certificate validation on this SSL/TLS connection.(ë—ùŒ8åşœ›¡1
+`kotlin:S4830ã"@Enable server certificate validation on this SSL/TLS connection.(õÖË‹8åşœ›¡1
+dkotlin:S4830"@Enable server certificate validation on this SSL/TLS connection.(èñôÑùÿÿÿÿ8åşœ›¡1
+dkotlin:S4830"@Enable server certificate validation on this SSL/TLS connection.(’™ÅÙùÿÿÿÿ8åşœ›¡1
+Lkotlin:S4423è",Change this code to use a stronger protocol.(³Æ‹8êşœ›¡1
+Pkotlin:S4423)",Change this code to use a stronger protocol.(å¶¥òıÿÿÿÿ8ëşœ›¡1
+Pkotlin:S4423\",Change this code to use a stronger protocol.(å¶¥òıÿÿÿÿ8ëşœ›¡1
+rkotlin:S117á"SRename this local variable to match the regular expression ^`?[_a-z][a-zA-Z0-9]*`?$(²âœ»8ëşœ›¡1
+Lkotlin:S1082")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ8òşœ›¡1
+Lkotlin:S108e")Either remove or fill this block of code.(ÍÖ¥ºÿÿÿÿÿ8óşœ›¡1
+œkotlin:S11928"xDefine a constant instead of duplicating this literal "ĞĞµ ÑĞºĞ°Ñ‡Ğ°Ğ»Ğ¸ ÑÑ‚Ñ€Ğ¾ĞºÑƒ Ğ·Ğ° %d Ğ¿Ğ¾Ğ¿Ñ‹Ñ‚Ğ¾Ğº" 3 times.(ÂŒİ€üÿÿÿÿ8ışœ›¡1
+kkotlin:S1192¨"KDefine a constant instead of duplicating this literal "User-Agent" 3 times.(» ™æ8ışœ›¡1
+pkotlin:S6516,"LReplace explicit functional interface implementation with lambda expression.(’ÕêÃşÿÿÿÿ8‚ÿœ›¡1
+pkotlin:S6516_"LReplace explicit functional interface implementation with lambda expression.(’ÕêÃşÿÿÿÿ8‚ÿœ›¡1
+zkotlin:S1186â"ZAdd a nested comment explaining why this function is empty or complete the implementation.(ë—ùŒ8‚ÿœ›¡1
+zkotlin:S1186ã"ZAdd a nested comment explaining why this function is empty or complete the implementation.(õÖË‹8ƒÿœ›¡1
+ykotlin:S1186"ZAdd a nested comment explaining why this function is empty or complete the implementation.(­ïã8ƒÿœ›¡1
+ykotlin:S1186"ZAdd a nested comment explaining why this function is empty or complete the implementation.(­ïã8ƒÿœ›¡1
+Kkotlin:S6518A",Replace function call with indexed accessor.(•»˜Í8…ÿœ›¡1
+Kkotlin:S6518t",Replace function call with indexed accessor.(•»˜Í8…ÿœ›¡1
+Lkotlin:S6518‡",Replace function call with indexed accessor.(•»˜Í8…ÿœ›¡1

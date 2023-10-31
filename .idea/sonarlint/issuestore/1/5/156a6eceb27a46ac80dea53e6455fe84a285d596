@@ -1,0 +1,10 @@
+
+okotlin:S103Â"KSplit this 342 characters long line (which is greater than 200 authorized).(¦›åşÿÿÿÿ8îáÆ¢¦0
+Hkotlin:S108™")Either remove or fill this block of code.(ª³‘8òáÆ¢¦0
+‹kotlin:S5612"kThis lambda has 96 lines of code, which is greater than the 20 authorized. Split it into smaller functions.(Ë´î¬8ôáÆ¢¦0
+kotlin:S138"oThis function has 360 lines of code, which is greater than the 100 authorized. Split it into smaller functions.(ˆÖŞé8âÆ¢¦0
+kotlin:S138/"oThis function has 330 lines of code, which is greater than the 100 authorized. Split it into smaller functions.(¡­àÎ8‚âÆ¢¦0
+qkotlin:S3776"RRefactor this method to reduce its Cognitive Complexity from 94 to the 15 allowed.(ˆÖŞé8œâÆ¢¦0
+qkotlin:S117W"SRename this local variable to match the regular expression ^`?[_a-z][a-zA-Z0-9]*`?$(‘ŠÏ•8ŸâÆ¢¦0
+pkotlin:S117|"SRename this local variable to match the regular expression ^`?[_a-z][a-zA-Z0-9]*`?$(˜ÇÉm8ŸâÆ¢¦0
+wkotlin:S117œ"SRename this local variable to match the regular expression ^`?[_a-z][a-zA-Z0-9]*`?$(»°‰—úÿÿÿÿ8ŸâÆ¢¦0

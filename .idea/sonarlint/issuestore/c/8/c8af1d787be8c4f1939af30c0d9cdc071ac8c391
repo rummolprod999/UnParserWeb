@@ -1,0 +1,16 @@
+
+kotlin:S138"oThis function has 381 lines of code, which is greater than the 100 authorized. Split it into smaller functions.(ˆÖŞé8í¦şèú0
+kotlin:S138'"oThis function has 369 lines of code, which is greater than the 100 authorized. Split it into smaller functions.(¡­àÎ8ò¦şèú0
+qkotlin:S117Y"SRename this local variable to match the regular expression ^`?[_a-z][a-zA-Z0-9]*`?$(‘ŠÏ•8Ş§¦ğß0
+qkotlin:S117"SRename this local variable to match the regular expression ^`?[_a-z][a-zA-Z0-9]*`?$(˜ÇÉm8Ş§¦ğß0
+wkotlin:S117¯"SRename this local variable to match the regular expression ^`?[_a-z][a-zA-Z0-9]*`?$(»°‰—úÿÿÿÿ8Ş§¦ğß0
+rkotlin:S117‘"SRename this local variable to match the regular expression ^`?[_a-z][a-zA-Z0-9]*`?$(ë€Ü 8Ş§¦ğß0
+okotlin:S103Ş"KSplit this 342 characters long line (which is greater than 200 authorized).(¦›åşÿÿÿÿ8¨¦şèú0
+jkotlin:S103Ô"KSplit this 252 characters long line (which is greater than 200 authorized).(Ëî›8­¦şèú0
+okotlin:S103ñ"KSplit this 205 characters long line (which is greater than 200 authorized).(Éşşıÿÿÿÿ8­¦şèú0
+Hkotlin:S108¬")Either remove or fill this block of code.(ª³‘8¬§¦ğß0
+‹kotlin:S5612Á"kThis lambda has 30 lines of code, which is greater than the 20 authorized. Split it into smaller functions.(ï†Í8Ä¦şèú0
+qkotlin:S3776"RRefactor this method to reduce its Cognitive Complexity from 93 to the 15 allowed.(ˆÖŞé8Ü§¦ğß0
+Ukotlin:S6529"1Replace collection size check with "isNotEmpty()"(È‰ê¿ıÿÿÿÿ8§ü–¡1
+Qkotlin:S6529ÿ"1Replace collection size check with "isNotEmpty()"(Ä–©Ä8¨ü–¡1
+Vkotlin:S6529À"1Replace collection size check with "isNotEmpty()"(™Ü‰§ÿÿÿÿÿ8©ü–¡1
